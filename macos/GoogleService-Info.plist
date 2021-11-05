@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>216593913852-qkdtrcbi0ssnq4eetkuc9h24o220j874.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.216593913852-qkdtrcbi0ssnq4eetkuc9h24o220j874</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>216593913852-o0pvg9kmmh9vn4bnv0fld52p9dohicr9.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCOw2JXy1IAeEDde-azU95GfBK6V2EPrjs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>216593913852</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ernestosoft.nmwhitelabel.manager</string>
+	<key>PROJECT_ID</key>
+	<string>nearby-menus-be6e3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>nearby-menus-be6e3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:216593913852:ios:8a1ad672548a0e8d2f8479</string>
+	<key>DATABASE_URL</key>
+	<string>https://nearby-menus-be6e3.firebaseio.com</string>
+</dict>
+</plist>

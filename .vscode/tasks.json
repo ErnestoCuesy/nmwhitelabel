@@ -1,0 +1,89 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"appbundle",
+				"-t",
+				"lib/main_manager.dart",
+				"--flavor",
+				"manager"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "flutter: flutter build appbundle manager"
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"appbundle",
+				"-t",
+				"lib/main_staff.dart",
+				"--flavor",
+				"staff"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "flutter: flutter build appbundle staff"
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"appbundle",
+				"-t",
+				"lib/main_patron.dart",
+				"--flavor",
+				"patron"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "flutter: flutter build appbundle patron"
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"ios",
+				"-t",
+				"lib/main_manager.dart"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "flutter: flutter build ios manager"
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"ios",
+				"-t",
+				"lib/main_staff.dart"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "flutter: flutter build ios staff"
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"ios",
+				"-t",
+				"lib/main_patron.dart"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "flutter: flutter build ios patron"
+		}
+	]
+}

@@ -1,0 +1,66 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "main_admin",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_admin.dart",
+            "args": [
+                "--flavor",
+                "admin"
+            ]
+        },
+        {
+            "name": "main_manager",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_manager.dart",
+            "args": [
+                "--flavor",
+                "manager"
+            ]
+        },
+        {
+            "name": "main_staff",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_staff.dart",
+            "args": [
+                "--flavor",
+                "staff"
+            ]
+        },
+        {
+            "name": "main_patron",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_patron.dart",
+            "args": [
+                "--flavor",
+                "patron"
+            ]
+        },
+        {
+            "name": "main_managerIOS",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_manager.dart",
+        },
+        {
+            "name": "main_staffIOS",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_staff.dart",
+        },
+        {
+            "name": "main_patronIOS",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_patron.dart",
+        }
+    ]
+}
