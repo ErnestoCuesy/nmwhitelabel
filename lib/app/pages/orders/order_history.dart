@@ -138,20 +138,20 @@ class _OrderHistoryState extends State<OrderHistory> {
   Color? _determineTileColor(Order order) {
     Color? tileColor;
     if (FlavourConfig.isPatron()) {
-      tileColor = Colors.white;
+      tileColor = Colors.black45;
     } else {
       if (order.isBlocked!) {
         tileColor = Colors.brown;
       } else {
         switch (order.status) {
           case ORDER_PLACED:
-            tileColor = Colors.deepOrangeAccent;
+            tileColor = Colors.deepOrange;
             break;
           case ORDER_ACCEPTED:
-            tileColor = Colors.greenAccent;
+            tileColor = Colors.pinkAccent;
             break;
           case ORDER_READY:
-            tileColor = Colors.white;
+            tileColor = Colors.green;
             break;
           case ORDER_REJECTED_BUSY:
           case ORDER_REJECTED_STOCK:
