@@ -67,7 +67,7 @@ packages:
   calendarro:
     dependency: "direct main"
     description:
-      path: "../../../Experiments/Flutter/calendarro/calendarro"
+      path: "../calendarro"
       relative: true
     source: path
     version: "1.2.0"

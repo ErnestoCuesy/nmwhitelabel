@@ -100,27 +100,19 @@ class _ViewOrderState extends State<ViewOrder> {
   }
 
   Future<bool?> _confirmCancelOrder(BuildContext context) async {
-    return await PlatformAlertDialog(
+    bool? result = await PlatformAlertDialog(
       title: 'Confirm order cancellation',
       content: 'Do you really want to cancel this order?',
       cancelActionText: 'No',
       defaultActionText: 'Yes',
     ).show(context);
+    return result;
   }
 
   void _cancelOrder(BuildContext context) async {
-    final bool cancelOrder = await (_confirmCancelOrder(context) as FutureOr<bool>);
-    if (cancelOrder) {
+    final bool? cancelOrder = await (_confirmCancelOrder(context));
+    if (cancelOrder!) {
       model!.cancelOnHoldOrder();
-      // scaffoldKey.currentState
-      //   ..removeCurrentSnackBar()
-      //   ..showSnackBar(
-      //     SnackBar(
-      //       content: Text(
-      //           'Order cancelled'
-      //       ),
-      //     ),
-      //   );
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
