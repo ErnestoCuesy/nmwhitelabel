@@ -471,6 +471,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  macos_ui:
+    dependency: "direct main"
+    description:
+      name: macos_ui
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.0+1"
   matcher:
     dependency: transitive
     description:
@@ -492,6 +499,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.15"
+  native_context_menu:
+    dependency: transitive
+    description:
+      name: native_context_menu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0+3"
   nested:
     dependency: transitive
     description:

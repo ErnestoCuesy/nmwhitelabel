@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:nmwhitelabel/app/common_widgets/platform_widget.dart';
 
 class PlatformAlertDialog extends PlatformWidget {
@@ -39,6 +40,23 @@ class PlatformAlertDialog extends PlatformWidget {
   }
 
   @override
+  Widget buildMacOSWidget(BuildContext context) {
+    return MacosTheme(
+      data: MacosThemeData.light(),
+      child: MacosAlertDialog(
+        appIcon: Image.asset(
+          'LauncherIcon.png', 
+        ),
+        title: Text(title), 
+        message: Text(content), 
+        primaryButton: _buildMacOSPrimaryButton(context),
+        secondaryButton: _buildMacOSSecondaryButton(context),
+        horizontalActions: false,
+      ),
+    );
+  }
+
+  @override
   Widget buildMaterialWidget(BuildContext context) {
     return AlertDialog(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -68,6 +86,29 @@ class PlatformAlertDialog extends PlatformWidget {
     ));
     return actions;
   }
+
+  Widget _buildMacOSPrimaryButton(BuildContext context) {
+    return PlatformAlertDialogAction(
+      child: Text(
+        defaultActionText,
+        style: Theme.of(context).textTheme.button,
+      ),
+      onPressed: () => Navigator.of(context).pop(true),
+    );
+  }
+
+  Widget? _buildMacOSSecondaryButton(BuildContext context) {
+    if (cancelActionText != null) {
+      return PlatformAlertDialogAction(
+        child: Text(
+          cancelActionText!,
+          style: Theme.of(context).textTheme.button,
+        ),
+        onPressed: () => Navigator.of(context).pop(false),
+      );
+    }
+    return null;
+  }
 }
 
 class PlatformAlertDialogAction extends PlatformWidget {
@@ -87,6 +128,15 @@ class PlatformAlertDialogAction extends PlatformWidget {
   @override
   Widget buildMaterialWidget(BuildContext context) {
     return TextButton(
+      child: child!,
+      onPressed: onPressed,
+    );
+  }
+
+  @override
+  Widget buildMacOSWidget(BuildContext context) {
+    return PushButton(
+      buttonSize: ButtonSize.large,
       child: child!,
       onPressed: onPressed,
     );

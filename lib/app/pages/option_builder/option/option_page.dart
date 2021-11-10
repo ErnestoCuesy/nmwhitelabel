@@ -76,23 +76,26 @@ class _OptionPageState extends State<OptionPage> {
         });
       }
     }
+    late bool? result;
     if (inUse || hasChildren) {
-      return !await (PlatformExceptionAlertDialog(
+      result = await (PlatformExceptionAlertDialog(
         title: 'Option is in use or is not empty',
         exception: PlatformException(
           code: 'MAP_IS_NOT_EMPTY',
           message: message,
           details: message,
         ),
-      ).show(context) as FutureOr<bool>);
+      ).show(context));
+      result = !result!;
     } else {
-      return await PlatformAlertDialog(
+      result = await PlatformAlertDialog(
         title: 'Confirm option deletion',
         content: 'Do you really want to delete this option?',
         cancelActionText: 'No',
         defaultActionText: 'Yes',
       ).show(context);
     }
+    return result;
   }
 
   Widget _buildContents(BuildContext context) {

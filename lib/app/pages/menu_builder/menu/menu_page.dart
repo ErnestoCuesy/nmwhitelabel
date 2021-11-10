@@ -65,23 +65,26 @@ class _MenuPageState extends State<MenuPage> {
         hasStuff = true;
       }
     });
+    late bool? result;
     if (hasStuff) {
-      return !await (PlatformExceptionAlertDialog(
+      result = await (PlatformExceptionAlertDialog(
         title: 'Menu is not empty',
         exception: PlatformException(
           code: 'MAP_IS_NOT_EMPTY',
           message:  'Please delete all the menu items first.',
           details:  'Please delete all the menu items first.',
         ),
-      ).show(context) as FutureOr<bool>);
+      ).show(context));
+      result = !result!;
     } else {
-      return await PlatformAlertDialog(
+      result = await PlatformAlertDialog(
         title: 'Confirm menu deletion',
         content: 'Do you really want to delete this menu?',
         cancelActionText: 'No',
         defaultActionText: 'Yes',
       ).show(context);
     }
+    return result;
   }
 
   Widget _buildContents(BuildContext context) {
