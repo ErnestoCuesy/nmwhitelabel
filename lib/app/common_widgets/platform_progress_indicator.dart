@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class PlatformProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
+    if (Platform.isIOS || Platform.isMacOS) {
       return CupertinoActivityIndicator();
     } else {
       return CircularProgressIndicator();

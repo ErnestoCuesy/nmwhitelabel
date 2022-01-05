@@ -92,13 +92,15 @@ class _MenuItemViewState extends State<MenuItemView> {
       itemBuilder: (BuildContext context, int index) {
         final menuItem = sortedMenuItems[sortedKeys[index]];
         String adjustedName = menuItem['name'];
-        if (adjustedName.length > 25) {
-          adjustedName = adjustedName.substring(0, 25) + '...(more)';
+        int descriptionLength = 70;
+        if (adjustedName.length > 20) {
+          adjustedName = adjustedName.substring(0, 20) + '...(more)';
+          descriptionLength = 50;
         }
         String adjustedDescription = menuItem['description'];
-        if (adjustedDescription.length > 70) {
+        if (adjustedDescription.length > descriptionLength) {
           adjustedDescription =
-              adjustedDescription.substring(0, 70) + '...(more)';
+              adjustedDescription.substring(0, descriptionLength) + '...(more)';
         }
         return Container(
           height: 90.0,
