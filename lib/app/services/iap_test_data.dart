@@ -1,4 +1,4 @@
-Map<dynamic, dynamic> purchaserInfoTestDataU = {
+Map<String, dynamic> purchaserInfoTestDataU = {
   "entitlements": {
     "all": {
       "pro": {
@@ -29,7 +29,7 @@ Map<dynamic, dynamic> purchaserInfoTestDataU = {
   "originalApplicationVersion": null
 };
 
-Map<dynamic, dynamic> purchaserInfoTestDataS = {
+Map<String, dynamic> purchaserInfoTestDataS = {
   "entitlements": {
     "all": {
       "pro": {
@@ -75,7 +75,7 @@ Map<dynamic, dynamic> purchaserInfoTestDataS = {
   "originalApplicationVersion": null
 };
 
-Map<dynamic, dynamic> offeringsTestData = {
+Map<String, dynamic> offeringsTestData = {
   "current": {
     "identifier": "Offering",
     "serverDescription": "RevenueCat Pro offering",

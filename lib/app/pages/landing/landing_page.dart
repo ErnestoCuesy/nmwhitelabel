@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
 import 'package:nmwhitelabel/app/config/flavour_config.dart';
 import 'package:nmwhitelabel/app/models/user_details.dart';
 import 'package:nmwhitelabel/app/pages/home/home_page.dart';
+import 'package:nmwhitelabel/app/pages/home/home_page_manager.dart';
 import 'package:nmwhitelabel/app/pages/landing/check_purchases.dart';
 import 'package:nmwhitelabel/app/pages/sign_in/sign_in_page.dart';
 import 'package:nmwhitelabel/app/services/auth.dart';
@@ -57,14 +60,18 @@ class LandingPage extends StatelessWidget {
                     session.userDetails = userDetails;
                   }
                 }
-                if (FlavourConfig.isManager()) {
+                if (FlavourConfig.isManager() && Platform.isAndroid) {
                   return Provider<IAPManagerBase>(
                     create: (context) =>
                         IAPManager(userID: user.isAnonymous ? null : session.userDetails!.email),
                     child: CheckPurchases(),
                   );
                 } else {
-                  return HomePage();
+                  if (FlavourConfig.isManager() && Platform.isMacOS) {
+                    return HomePageManager();
+                  } else {
+                    return HomePage();
+                  }  
                 }
               } else {
                 return Scaffold(
