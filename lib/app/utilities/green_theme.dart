@@ -5,7 +5,6 @@ class GreenTheme {
     primarySwatch: Colors.lightGreen,
     brightness: Brightness.light,
     primaryColor: Color(0xff8bc34a),
-    primaryColorBrightness: Brightness.light,
     primaryColorLight: Color(0xffdcedc8),
     primaryColorDark: Color(0xff689f38),
     //accentColor: Color(0xff8bc34a),
@@ -50,9 +49,7 @@ class GreenTheme {
       splashColor: Color(0x1f000000),
       colorScheme: ColorScheme(
         primary: Color(0xff8bc34a),
-        primaryVariant: Color(0xff689f38),
         secondary: Color(0xff8bc34a),
-        secondaryVariant: Color(0xff689f38),
         surface: Color(0xffffffff),
         background: Color(0xffc5e1a5),
         error: Color(0xffd32f2f),

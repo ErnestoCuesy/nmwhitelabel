@@ -5,7 +5,6 @@ class OrangeTheme {
       primarySwatch: Colors.orange,
       brightness: Brightness.light,
       primaryColor: Color(0xffff9800),
-      primaryColorBrightness: Brightness.light,
       primaryColorLight: Color(0xffffe0b2),
       primaryColorDark: Color(0xfff57c00),
       //accentColor: Color(0xffff9800),
@@ -50,9 +49,7 @@ class OrangeTheme {
         splashColor: Color(0x1f000000),
         colorScheme: ColorScheme(
           primary: Color(0xffff9800),
-          primaryVariant: Color(0xfff57c00),
           secondary: Color(0xffff9800),
-          secondaryVariant: Color(0xfff57c00),
           surface: Color(0xffffffff),
           background: Color(0xffffcc80),
           error: Color(0xffd32f2f),

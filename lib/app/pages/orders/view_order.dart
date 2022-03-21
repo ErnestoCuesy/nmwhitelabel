@@ -236,7 +236,7 @@ class _ViewOrderState extends State<ViewOrder> {
                     child: Container(
                       decoration: BoxDecoration(border: Border.all()),
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: itemsScrollController,
                         child: ListView.builder(
                           controller: itemsScrollController,
