@@ -48,6 +48,9 @@ class _MenuBrowserState extends State<MenuBrowser> {
           children: [
             Expanded(
               child: ListView.builder(
+                controller: ScrollController(),
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
                 itemCount: sortedKeys.length,
                 itemBuilder: (BuildContext context, int index) {
                   menu = menus[sortedKeys[index]];
