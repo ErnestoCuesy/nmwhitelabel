@@ -537,13 +537,13 @@ class _ViewOrderState extends State<ViewOrder> {
   void _processOrder(BuildContext context, int newOrderStatus) async {
     int orderStatus = newOrderStatus;
     if (newOrderStatus == ORDER_REJECTED_BUSY) {
-      bool rejectBusy = await (PlatformAlertDialog(
+      bool? rejectBusy = await (PlatformAlertDialog(
         title: 'Reject order',
         content: 'Tap on the suitable reason of rejection.',
         cancelActionText: 'We\'re out of stock',
         defaultActionText: 'We can\'t attend your order',
-      ).show(context) as FutureOr<bool>);
-      if (rejectBusy) {
+      ).show(context));
+      if (rejectBusy!) {
         orderStatus = ORDER_REJECTED_BUSY;
       } else {
         orderStatus = ORDER_REJECTED_STOCK;
