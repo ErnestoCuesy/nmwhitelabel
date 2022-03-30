@@ -67,7 +67,7 @@ class LandingPage extends StatelessWidget {
                     child: CheckPurchases(),
                   );
                 } else {
-                  if (FlavourConfig.isManager() && Platform.isMacOS) {
+                  if (FlavourConfig.isManager() && (Platform.isMacOS || Platform.isIOS)) {
                     return HomePageManager();
                   } else {
                     return HomePage();
