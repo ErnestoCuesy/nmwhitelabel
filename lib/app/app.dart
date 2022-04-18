@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
@@ -63,10 +64,12 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     //_determineLocationPermissions();
-    if (!Platform.isMacOS) {
-      _initNotifications();
-      _requestIOSPermissions();
-      _initRating();
+    if (!kIsWeb) {
+      if (!Platform.isMacOS) {
+        _initNotifications();
+        _requestIOSPermissions();
+        _initRating();
+      }
     }
   }
 

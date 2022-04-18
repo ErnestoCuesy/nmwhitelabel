@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nmwhitelabel/app/common_widgets/platform_alert_dialog.dart';
 import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
@@ -161,14 +162,7 @@ class _AccountPageState extends State<AccountPage> {
         onPressed: () => _convertUser(context, _changeDetails),
       ),
       // SUBSCRIPTION
-      if (FlavourConfig.isManager() && Platform.isAndroid)
-        _userDetailsSection(
-          context: context,
-          sectionTitle: 'Bundle details',
-          cardTitle: 'Orders left: $_ordersLeft',
-          cardSubtitle: 'Last purchase was on: $_lastBundlePurchase',
-          onPressed: () => _convertUser(context, _upSell),
-        ),
+      _bundleDetails(),
       if (FlavourConfig.isManager())
         _userDetailsSection(
           context: context,
@@ -186,6 +180,29 @@ class _AccountPageState extends State<AccountPage> {
         onPressed: () => _aboutPage(context),
       ),
     ];
+  }
+
+  Widget _bundleDetails() {
+    late Widget details;
+    if (!kIsWeb) {
+      if (FlavourConfig.isManager() && Platform.isAndroid)
+        details = _userDetailsSection(
+          context: context,
+          sectionTitle: 'Bundle details',
+          cardTitle: 'Orders left: $_ordersLeft',
+          cardSubtitle: 'Last purchase was on: $_lastBundlePurchase',
+          onPressed: () => _convertUser(context, _upSell),
+        );
+    } else {
+        details = _userDetailsSection(
+          context: context,
+          sectionTitle: 'Bundle information unavailable on this platform',
+          cardTitle: '',
+          cardSubtitle: '',
+          onPressed: null,
+        );
+    }
+    return details;
   }
 
   void _aboutPage(BuildContext context) async {

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -18,7 +19,8 @@ class PlatformAlertDialog extends PlatformWidget {
   final String defaultActionText;
 
   Future<bool?> show(BuildContext? context) async {
-    return Platform.isIOS
+    if (!kIsWeb) {
+      return Platform.isIOS
         ? await showCupertinoDialog<bool>(
             context: context!,
             builder: (context) => this,
@@ -28,6 +30,13 @@ class PlatformAlertDialog extends PlatformWidget {
             barrierDismissible: false,
             builder: (context) => this,
           );
+    } else {
+      return await showDialog<bool>(
+            context: context!,
+            barrierDismissible: false,
+            builder: (context) => this,
+          );
+    }
   }
 
   @override

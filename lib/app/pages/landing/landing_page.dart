@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
 import 'package:nmwhitelabel/app/config/flavour_config.dart';
@@ -60,18 +61,26 @@ class LandingPage extends StatelessWidget {
                     session.userDetails = userDetails;
                   }
                 }
-                if (FlavourConfig.isManager() && Platform.isAndroid) {
-                  return Provider<IAPManagerBase>(
-                    create: (context) =>
-                        IAPManager(userID: user.isAnonymous ? null : session.userDetails!.email),
-                    child: CheckPurchases(),
-                  );
+                if (!kIsWeb) {
+                  if (FlavourConfig.isManager() && Platform.isAndroid) {
+                    return Provider<IAPManagerBase>(
+                      create: (context) =>
+                          IAPManager(userID: user.isAnonymous ? null : session.userDetails!.email),
+                      child: CheckPurchases(),
+                    );
+                  } else {
+                    if (FlavourConfig.isManager() && (Platform.isMacOS || Platform.isIOS)) {
+                      return HomePageManager();
+                    } else {
+                      return HomePage();
+                    }  
+                  }
                 } else {
-                  if (FlavourConfig.isManager() && (Platform.isMacOS || Platform.isIOS)) {
+                  if (FlavourConfig.isManager()) {
                     return HomePageManager();
                   } else {
                     return HomePage();
-                  }  
+                  }
                 }
               } else {
                 return Scaffold(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nmwhitelabel/app/common_widgets/custom_raised_button.dart';
 import 'package:nmwhitelabel/app/config/flavour_config.dart';
@@ -138,27 +139,7 @@ class _RestaurantAdministratorPageState extends State<RestaurantAdministratorPag
             SizedBox(
               width: 16.0,
             ),
-            if (FlavourConfig.isManager() && !Platform.isMacOS)
-            CustomRaisedButton(
-              height: buttonSize,
-              width: buttonSize,
-              color: Theme.of(context).buttonTheme.colorScheme!.surface,
-              onPressed: () => _convertUser(context, _images),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Images',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(height: 8.0,),
-                  Icon(
-                    Icons.image,
-                    size: 36.0,
-                  ),
-                ],
-              ),
-            ),
+            _imageButton(),
           ],
         ),
         SizedBox(
@@ -216,8 +197,15 @@ class _RestaurantAdministratorPageState extends State<RestaurantAdministratorPag
       SizedBox(
       height: 16.0,
       ),
-      if (!Platform.isMacOS)
-      Row(
+      _markersAndSalesRow(),
+      if (FlavourConfig.isManager())
+        _copyRestaurantMenu(),
+    ];
+  }
+
+  Widget _markersAndSalesRow() {
+    Widget row;
+    row = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (FlavourConfig.isManager())
@@ -266,10 +254,49 @@ class _RestaurantAdministratorPageState extends State<RestaurantAdministratorPag
             ),
           ),
         ]
+      );
+    if (!kIsWeb) {
+      if (Platform.isMacOS) {
+        return SizedBox(child: Placeholder(), height: buttonSize, width: buttonSize,);
+      } else {
+        return row;
+      }
+    } else {
+      return SizedBox(child: Placeholder(), height: buttonSize, width: buttonSize,);
+    }
+  }
+
+  Widget _imageButton() {
+    Widget button;
+    button = CustomRaisedButton(
+      height: buttonSize,
+      width: buttonSize,
+      color: Theme.of(context).buttonTheme.colorScheme!.surface,
+      onPressed: () => _convertUser(context, _images),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Images',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          SizedBox(height: 8.0,),
+          Icon(
+            Icons.image,
+            size: 36.0,
+          ),
+        ],
       ),
-      if (FlavourConfig.isManager())
-        _copyRestaurantMenu(),
-    ];
+    );
+    if (!kIsWeb) {
+      if (FlavourConfig.isManager() && !Platform.isMacOS) {
+        return button;
+      } else {
+        return SizedBox(child: Placeholder(), height: buttonSize, width: buttonSize,);
+      }
+    } else {
+      return SizedBox(child: Placeholder(), height: buttonSize, width: buttonSize,);
+    }
   }
 
   Widget _copyRestaurantMenu() {
