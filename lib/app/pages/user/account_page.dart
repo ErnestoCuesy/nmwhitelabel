@@ -196,8 +196,8 @@ class _AccountPageState extends State<AccountPage> {
     } else {
         details = _userDetailsSection(
           context: context,
-          sectionTitle: 'Bundle information unavailable on this platform',
-          cardTitle: '',
+          sectionTitle: 'Bundle details',
+          cardTitle: 'Bundle information unavailable on this platform',
           cardSubtitle: '',
           onPressed: null,
         );
