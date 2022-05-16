@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:nmwhitelabel/app/models/menu_item.dart';
 import 'package:nmwhitelabel/app/models/menu.dart';
 import 'package:nmwhitelabel/app/models/restaurant.dart';
