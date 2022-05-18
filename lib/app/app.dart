@@ -167,7 +167,7 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder<LocationPermission>(
       future: Geolocator.checkPermission(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (!snapshot.hasData && !Platform.isMacOS) {
           return SplashScreen();
         } else {
           if (snapshot.data == LocationPermission.deniedForever &&
