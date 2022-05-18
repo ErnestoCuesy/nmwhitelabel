@@ -23,7 +23,7 @@ class _MessagesListenerState extends State<MessagesListener> {
 
   Future<void> _notifyUser(UserMessage message) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'CH1', 'Role notifications', 'Channel used to notify restaurant roles',
+        'CH1', 'Role notifications', channelDescription: 'Channel used to notify restaurant roles',
         importance: Importance.high, priority: Priority.high, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
