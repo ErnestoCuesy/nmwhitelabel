@@ -248,7 +248,7 @@ class _OrderSettlementState extends State<OrderSettlement> {
     extraFields!.splitAmounts!.forEach((key, amount) {
       accumulator = accumulator + amount!;
     });
-    return accumulator - totalAmount!;
+    return double.parse((accumulator - totalAmount!).toStringAsFixed(2));
   }
 
   @override

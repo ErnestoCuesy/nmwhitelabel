@@ -162,7 +162,7 @@ class ViewOrderModel with ChangeNotifier {
       }
     }
     double orderFinalAmount =
-        order!.orderTotal - (order!.orderTotal * order!.discount!) + order!.tip!;
+        order!.orderTotal - double.parse((order!.orderTotal * order!.discount!).toStringAsFixed(2)) + order!.tip!;
     double? paymentMethodsSum = 0;
     if (order!.paymentMethods!.length > 0) {
       paymentMethodsSum =
