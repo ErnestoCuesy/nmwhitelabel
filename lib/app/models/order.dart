@@ -71,11 +71,13 @@ class Order {
     } else {
       orderItems = [];
     }
-    Map<String, double> paymentMethods;
+    Map<String, dynamic> paymentMethodsDynamic;
+    Map<String, double> paymentMethods = Map<String, double>();
     if (data['paymentMethods'] != null) {
-      paymentMethods = Map.from(data['paymentMethods']);
-    } else {
-      paymentMethods = Map<String, double>();
+      paymentMethodsDynamic = Map.from(data['paymentMethods']);
+      for (final paymentMethod in paymentMethodsDynamic.entries) {
+        paymentMethods.putIfAbsent(paymentMethod.key, () => paymentMethod.value.toDouble());
+      }
     }
     return Order(
       id: data['id'],
@@ -84,7 +86,7 @@ class Order {
       restaurantName: data['restaurantName'],
       managerId: data['managerId'],
       userId: data['userId'],
-      timestamp: data['timestamp'],
+      timestamp: data['timestamp'].toDouble(),
       status: data['status'],
       name: data['name'],
       deliveryAddress: data['deliveryAddress'],
@@ -104,9 +106,9 @@ class Order {
       deliveryOption: data['deliveryOption'],
       orderItems: orderItems,
       notes: data['notes'],
-      tip: data['tip'] ?? 0,
-      discount: data['discount'] ?? 0,
-      cashReceived: data['cashReceived'] ?? 0,
+      tip: data['tip'].toDouble() ?? 0,
+      discount: data['discount'].toDouble() ?? 0,
+      cashReceived: data['cashReceived'].toDouble() ?? 0,
       isActive: data['isActive'],
       isBlocked: data['isBlocked'],
     );
