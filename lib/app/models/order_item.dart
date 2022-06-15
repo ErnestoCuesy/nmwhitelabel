@@ -26,8 +26,8 @@ class OrderItem {
       menuCode: data['menuCode'],
       name: data['name'],
       quantity: data['quantity'],
-      price: data['price'],
-      lineTotal: data['lineTotal'],
+      price: data['price'].toDouble(),
+      lineTotal: data['lineTotal'].toDouble(),
       options: options,
     );
   }

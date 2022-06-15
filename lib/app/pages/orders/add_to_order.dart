@@ -53,7 +53,7 @@ class _AddToOrderState extends State<AddToOrder> {
   List<String> menuItemOptions = [];
   Map<String, int> optionsSelectionCounters = Map<String, int>();
   int quantity = 1;
-  double? lineTotal = 0;
+  double? lineTotal = 0.0;
   String menuCodeAndItemName = '';
 
   AddToOrderModel? get model => widget.model;
@@ -64,7 +64,7 @@ class _AddToOrderState extends State<AddToOrder> {
   }
 
   Widget _buildContents(BuildContext context) {
-    lineTotal = widget.item!['price'] * model!.quantity;
+    lineTotal = widget.item!['price'] * model!.quantity * 1.0;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(24.0),

@@ -33,7 +33,7 @@ class MenuItem {
       description: data['description'],
       sequence: data['sequence'],
       hidden: data['hidden'] ?? false,
-      price: data['price'],
+      price: data['price'].toDouble(),
       options: List.from(data['options']),
     );
   }

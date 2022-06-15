@@ -39,8 +39,8 @@ class AddToOrderModel with ChangeNotifier {
       menuCode: menuCode,
       name: item!['name'],
       quantity: quantity,
-      price: item!['price'],
-      lineTotal: item!['price'] * quantity,
+      price: item!['price'].toDouble(),
+      lineTotal: item!['price'].toDouble() * quantity,
       options: tempMenuItemOptions,
     ).toMap();
     session.currentOrder!.orderItems!.add(orderItem);
