@@ -185,7 +185,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget _bundleDetails() {
     late Widget details;
     if (!kIsWeb) {
-      if (FlavourConfig.isManager() && Platform.isAndroid)
+      if (FlavourConfig.isManager() && Platform.isAndroid) {
         details = _userDetailsSection(
           context: context,
           sectionTitle: 'Bundle details',
@@ -193,6 +193,15 @@ class _AccountPageState extends State<AccountPage> {
           cardSubtitle: 'Last purchase was on: $_lastBundlePurchase',
           onPressed: () => _convertUser(context, _upSell),
         );
+      } else {
+        details = _userDetailsSection(
+          context: context,
+          sectionTitle: 'Bundle details',
+          cardTitle: 'Bundle information unavailable on this platform',
+          cardSubtitle: '',
+          onPressed: null,
+        );
+      }
     } else {
         details = _userDetailsSection(
           context: context,
