@@ -9,7 +9,9 @@ class TermsAndConditions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Terms And Conditions'),),
+        appBar: AppBar(
+          title: Text('Terms And Conditions'),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -21,31 +23,31 @@ class TermsAndConditions extends StatelessWidget {
                   ),
                 ),
                 if (askAgreement!)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextButton(
-                    child: Text(
-                      'I AGREE TO TERMS AND CONDITIONS',
-                      style: Theme.of(context).textTheme.bodyText2,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                      child: Text(
+                        'I AGREE TO TERMS AND CONDITIONS',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
                   ),
-                ),
                 if (askAgreement!)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextButton(
-                    child: Text(
-                      'I DO NOT AGREE',
-                      style: Theme.of(context).textTheme.bodyText2,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                      child: Text(
+                        'I DO NOT AGREE',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
                   ),
-                ),
               ],
             ),
           ),

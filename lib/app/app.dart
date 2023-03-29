@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -30,15 +31,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Position _defaultLocation = Position(
-    longitude: 0,
-     latitude: 0,
-     speed: 0,
-     accuracy: 0,
-     speedAccuracy: 0,
-     heading: 0,
-     altitude: 0,
-     timestamp: DateTime.now()
-     );
+      longitude: 0,
+      latitude: 0,
+      speed: 0,
+      accuracy: 0,
+      speedAccuracy: 0,
+      heading: 0,
+      altitude: 0,
+      timestamp: DateTime.now());
   final MethodChannel platform =
       MethodChannel('crossingthestreams.io/resourceResolver');
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -54,6 +54,8 @@ class _MyAppState extends State<MyApp> {
   final BehaviorSubject<String?> selectNotificationSubject =
       BehaviorSubject<String?>();
 
+  final StreamController<String?> selectNotificationStream =
+      StreamController<String?>.broadcast();
   NotificationAppLaunchDetails? notificationAppLaunchDetails;
 
   RateMyApp? rateMyApp;
@@ -108,7 +110,7 @@ class _MyAppState extends State<MyApp> {
         AndroidInitializationSettings('launchericon');
     // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
     // of the `IOSFlutterLocalNotificationsPlugin` class
-    var initializationSettingsIOS = IOSInitializationSettings(
+    var initializationSettingsIOS = DarwinInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
         requestSoundPermission: false,
@@ -121,13 +123,27 @@ class _MyAppState extends State<MyApp> {
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String? payload) async {
-      if (payload != null) {
-        debugPrint('notification payload: ' + payload);
-      }
-      selectNotificationSubject.add(payload);
-    });
+    // await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+    //     onSelectNotification: (String? payload) async {
+    //   if (payload != null) {
+    //     debugPrint('notification payload: ' + payload);
+    //   }
+    //   selectNotificationSubject.add(payload);
+    // });
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) {
+        switch (notificationResponse.notificationResponseType) {
+          case NotificationResponseType.selectedNotification:
+            selectNotificationStream.add(notificationResponse.payload);
+            break;
+          case NotificationResponseType.selectedNotificationAction:
+            break;
+        }
+      },
+    );
   }
 
   void _requestIOSPermissions() {

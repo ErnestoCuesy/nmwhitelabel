@@ -23,20 +23,22 @@ class _MessagesListenerState extends State<MessagesListener> {
 
   Future<void> _notifyUser(UserMessage message) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'CH1', 'Role notifications', channelDescription: 'Channel used to notify restaurant roles',
-        importance: Importance.high, priority: Priority.high, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+        'CH1', 'Role notifications',
+        channelDescription: 'Channel used to notify restaurant roles',
+        importance: Importance.high,
+        priority: Priority.high,
+        ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = DarwinNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
         0,
         'Nearby Menus',
         'Notification from ${message.fromRole}: ${message.type}',
         platformChannelSpecifics,
         payload: 'item x');
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -61,55 +63,55 @@ class _MessagesListenerState extends State<MessagesListener> {
       _stream = database.adminMessages();
     }
     return StreamBuilder<List<UserMessage>>(
-      stream: _stream,
-      builder: (context, snapshot) {
-        session.broadcastMessageCounter(0);
-        int messageCounter = 0;
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            body: Center(
-              child: PlatformProgressIndicator(),
-            ),
-          );
-        }
-        if (snapshot.hasData) {
-          final notificationsList = snapshot.data!;
-          notificationsList.forEach((message) {
-            if (message.toRole == role && !message.delivered!) {
-              _notifyUser(message);
-              if (message.toRole == ROLE_PATRON ||
-                  message.toRole == ROLE_STAFF  ||
-                  message.toRole == ROLE_ADMIN) {
-                database.deleteMessage(message.id);
-              } else {
-                UserMessage readMessage = UserMessage(
-                  id: message.id,
-                  timestamp: message.timestamp,
-                  fromUid: message.fromUid,
-                  toUid: message.toUid,
-                  restaurantId: message.restaurantId,
-                  fromRole: message.fromRole,
-                  toRole: message.toRole,
-                  fromName: message.fromName,
-                  type: message.type,
-                  authFlag: message.authFlag,
-                  delivered: true,
-                  attendedFlag: message.attendedFlag,
-                );
-                database.setMessageDetails(readMessage);
+        stream: _stream,
+        builder: (context, snapshot) {
+          session.broadcastMessageCounter(0);
+          int messageCounter = 0;
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Scaffold(
+              body: Center(
+                child: PlatformProgressIndicator(),
+              ),
+            );
+          }
+          if (snapshot.hasData) {
+            final notificationsList = snapshot.data!;
+            notificationsList.forEach((message) {
+              if (message.toRole == role && !message.delivered!) {
+                _notifyUser(message);
+                if (message.toRole == ROLE_PATRON ||
+                    message.toRole == ROLE_STAFF ||
+                    message.toRole == ROLE_ADMIN) {
+                  database.deleteMessage(message.id);
+                } else {
+                  UserMessage readMessage = UserMessage(
+                    id: message.id,
+                    timestamp: message.timestamp,
+                    fromUid: message.fromUid,
+                    toUid: message.toUid,
+                    restaurantId: message.restaurantId,
+                    fromRole: message.fromRole,
+                    toRole: message.toRole,
+                    fromName: message.fromName,
+                    type: message.type,
+                    authFlag: message.authFlag,
+                    delivered: true,
+                    attendedFlag: message.attendedFlag,
+                  );
+                  database.setMessageDetails(readMessage);
+                }
               }
-            }
-            if (message.toRole == ROLE_MANAGER) {
-              if (!message.attendedFlag!) {
-                messageCounter++;
-              } else {
-                messageCounter--;
+              if (message.toRole == ROLE_MANAGER) {
+                if (!message.attendedFlag!) {
+                  messageCounter++;
+                } else {
+                  messageCounter--;
+                }
+                session.broadcastMessageCounter(messageCounter);
               }
-              session.broadcastMessageCounter(messageCounter);
-            }
-          });
-        }
-        return widget.child!;
-      });
+            });
+          }
+          return widget.child!;
+        });
   }
 }

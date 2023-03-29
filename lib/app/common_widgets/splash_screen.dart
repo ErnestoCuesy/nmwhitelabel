@@ -8,7 +8,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,7 +38,7 @@ class SplashScreenState extends State<SplashScreen> {
                       ),
                       Text(
                         "Please wait...",
-                        style: Theme.of(context).textTheme.subtitle2,
+                        style: Theme.of(context).textTheme.titleSmall,
                       )
                     ],
                   ),

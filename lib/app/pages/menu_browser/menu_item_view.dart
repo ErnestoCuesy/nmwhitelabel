@@ -19,7 +19,7 @@ class MenuItemView extends StatefulWidget {
 
 class _MenuItemViewState extends State<MenuItemView> {
   late Session session;
-  Map<dynamic, dynamic> sortedMenuItems  = Map<dynamic, dynamic>();
+  Map<dynamic, dynamic> sortedMenuItems = Map<dynamic, dynamic>();
   Map<dynamic, dynamic>? options;
   final f = NumberFormat.simpleCurrency(locale: "en_ZA");
   late var sortedKeys;
@@ -28,7 +28,8 @@ class _MenuItemViewState extends State<MenuItemView> {
 
   Map<dynamic, dynamic>? get menu => widget.menu;
 
-  Future<void> _exceptionDialog(BuildContext context, String title, String code, String message) async {
+  Future<void> _exceptionDialog(
+      BuildContext context, String title, String code, String message) async {
     await PlatformExceptionAlertDialog(
       title: title,
       exception: PlatformException(
@@ -39,7 +40,8 @@ class _MenuItemViewState extends State<MenuItemView> {
     ).show(context);
   }
 
-  Future<void> _addMenuItemToOrder(BuildContext context, String menuCode, Map<dynamic, dynamic> menuItem) async {
+  Future<void> _addMenuItemToOrder(BuildContext context, String menuCode,
+      Map<dynamic, dynamic> menuItem) async {
     if (FlavourConfig.isAdmin()) {
       return;
     }
@@ -47,22 +49,21 @@ class _MenuItemViewState extends State<MenuItemView> {
       final result = await Navigator.of(context).push(
         MaterialPageRoute<String>(
           fullscreenDialog: false,
-          builder: (context) =>
-              AddToOrder.create(
-                context: context,
-                menuCode: menuCode,
-                item: menuItem,
-                options: options,
-              ),
+          builder: (context) => AddToOrder.create(
+            context: context,
+            menuCode: menuCode,
+            item: menuItem,
+            options: options,
+          ),
         ),
       );
       if (result == 'Yes') {
-          ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Item added to the order.'),
-            ),
-          );
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Item added to the order.'),
+          ),
+        );
       }
     } else {
       _exceptionDialog(
@@ -77,7 +78,7 @@ class _MenuItemViewState extends State<MenuItemView> {
   String _menuCode(String menuName) {
     RegExp consonantFilter = RegExp(r'([^A|E|I|O|U ])');
     Iterable<Match> matchResult =
-    consonantFilter.allMatches(menuName.toUpperCase());
+        consonantFilter.allMatches(menuName.toUpperCase());
     String result = '';
     for (Match m in matchResult) {
       result = result + m.group(0)!;
@@ -115,19 +116,18 @@ class _MenuItemViewState extends State<MenuItemView> {
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
                 '$adjustedName',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             subtitle: Padding(
-              padding: const EdgeInsets.only(
-                  left: 8.0, top: 8.0, bottom: 8.0),
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
               child: Text(
                 '$adjustedDescription',
               ),
             ),
             trailing: Text(
               f.format(menuItem['price']),
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             onTap: () =>
                 _addMenuItemToOrder(context, _menuCode(menuName!), menuItem),
@@ -143,29 +143,29 @@ class _MenuItemViewState extends State<MenuItemView> {
     menuName = menu!['name'];
     options = session.currentRestaurant!.restaurantOptions;
     sortedMenuItems.clear();
-    itemCount = menu!.entries.where((element) {
-      if (element.key.toString().length > 20 &&
-          (element.value['hidden'] == null ||
-              element.value['hidden'] == false)) {
-        sortedMenuItems.putIfAbsent(
-            menu![element.key]['sequence'], () => element.value);
-        return true;
-      } else {
-        return false;
-      }
-    }).toList().length;
+    itemCount = menu!.entries
+        .where((element) {
+          if (element.key.toString().length > 20 &&
+              (element.value['hidden'] == null ||
+                  element.value['hidden'] == false)) {
+            sortedMenuItems.putIfAbsent(
+                menu![element.key]['sequence'], () => element.value);
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .toList()
+        .length;
     sortedKeys = sortedMenuItems.keys.toList()..sort();
     if (widget.isLargeScreen!) {
       return Material(child: _buildContents(context));
     } else {
       return Scaffold(
           appBar: AppBar(
-            title: Text(
-                menuName!
-            ),
+            title: Text(menuName!),
           ),
-          body: _buildContents(context)
-      );
+          body: _buildContents(context));
     }
   }
 }

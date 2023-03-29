@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:nmwhitelabel/app/models/menu_item.dart';
 import 'package:nmwhitelabel/app/models/menu.dart';
 import 'package:nmwhitelabel/app/models/restaurant.dart';
@@ -33,13 +33,12 @@ class MenuItemDetailsPage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Card(
             child: MenuItemDetailsForm.create(
-              context: context,
-              menu: menu,
-              restaurant: restaurant!,
-              item: item,
-              menuItemStream: menuItemStream,
-              sequence: sequence
-            ),
+                context: context,
+                menu: menu,
+                restaurant: restaurant!,
+                item: item,
+                menuItemStream: menuItemStream,
+                sequence: sequence),
           ),
         ),
       ),

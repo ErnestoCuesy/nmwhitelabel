@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum Flavour { PATRON, MANAGER, STAFF, ADMIN }
+
 enum ColorTheme { BLACK, ORANGE, GREEN }
 
 class StringUtils {
@@ -17,11 +18,12 @@ class FlavourConfig {
   final Color bannerColor;
   static FlavourConfig? _instance;
 
-  factory FlavourConfig(
-      {required Flavour flavour,
-      required ColorTheme colorTheme,
-      Color bannerColor: Colors.blue,}) {
-      _instance ??= FlavourConfig._internal(
+  factory FlavourConfig({
+    required Flavour flavour,
+    required ColorTheme colorTheme,
+    Color bannerColor = Colors.blue,
+  }) {
+    _instance ??= FlavourConfig._internal(
       flavour,
       colorTheme,
       StringUtils.enumName(flavour.toString()),

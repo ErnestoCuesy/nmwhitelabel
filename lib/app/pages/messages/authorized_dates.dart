@@ -8,24 +8,25 @@ import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
 class AuthorizedDates extends StatelessWidget {
   final List<dynamic>? authorizedIntDates;
 
-  const AuthorizedDates({Key? key, this.authorizedIntDates,}) : super(key: key);
+  const AuthorizedDates({
+    Key? key,
+    this.authorizedIntDates,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var currentMonthStartDate = DateUtils.getFirstDayOfCurrentMonth();
     var currentMonthEndDate = DateUtils.getLastDayOfCurrentMonth();
-    var lastMonthStartDate = DateUtils.getFirstDayOfMonth(
-        DateTime(
-          currentMonthStartDate.year,
-          currentMonthStartDate.month - 1,
-          currentMonthStartDate.day,
-        ));
-    var lastMonthEndDate = DateUtils.getLastDayOfMonth(
-        DateTime(
-          currentMonthStartDate.year,
-          currentMonthStartDate.month - 1,
-          currentMonthStartDate.day,
-        ));
+    var lastMonthStartDate = DateUtils.getFirstDayOfMonth(DateTime(
+      currentMonthStartDate.year,
+      currentMonthStartDate.month - 1,
+      currentMonthStartDate.day,
+    ));
+    var lastMonthEndDate = DateUtils.getLastDayOfMonth(DateTime(
+      currentMonthStartDate.year,
+      currentMonthStartDate.month - 1,
+      currentMonthStartDate.day,
+    ));
     final DateFormat monthName = DateFormat(DateFormat.MONTH);
     final currentMonthName = monthName.format(currentMonthStartDate);
     final lastMonthName = monthName.format(lastMonthStartDate);
@@ -34,12 +35,12 @@ class AuthorizedDates extends StatelessWidget {
       selectedDates.add(DateTime.fromMillisecondsSinceEpoch(intDate));
     });
     Calendarro currentMonth = Calendarro(
-        startDate: currentMonthStartDate,
-        endDate: currentMonthEndDate,
-        displayMode: DisplayMode.MONTHS,
-        selectionMode: SelectionMode.MULTI,
-        selectedDates: selectedDates,
-        weekdayLabelsRow: CustomWeekdayLabelsRow(),
+      startDate: currentMonthStartDate,
+      endDate: currentMonthEndDate,
+      displayMode: DisplayMode.MONTHS,
+      selectionMode: SelectionMode.MULTI,
+      selectedDates: selectedDates,
+      weekdayLabelsRow: CustomWeekdayLabelsRow(),
     );
     Calendarro lastMonth = Calendarro(
       startDate: lastMonthStartDate,
@@ -57,13 +58,15 @@ class AuthorizedDates extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(height: 32.0),
-            Text(lastMonthName,
-              style: Theme.of(context).textTheme.headline4,
+            Text(
+              lastMonthName,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             lastMonth,
             Container(height: 16.0),
-            Text(currentMonthName,
-              style: Theme.of(context).textTheme.headline4,
+            Text(
+              currentMonthName,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             Container(height: 32.0),
             currentMonth,

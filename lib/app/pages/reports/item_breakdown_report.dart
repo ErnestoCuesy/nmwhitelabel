@@ -18,9 +18,9 @@ class ItemBreakdownReport extends ModalRoute<void> {
   ItemBreakdownReport({this.amounts, this.quantities}) {
     amounts!.forEach((key, value) {
       subcategoryTotals.add(SubcategoryTotal(
-          categoryName: key,
-          quantity: quantities![key],
-          amount: value,
+        categoryName: key,
+        quantity: quantities![key],
+        amount: value,
       ));
     });
   }
@@ -44,7 +44,8 @@ class ItemBreakdownReport extends ModalRoute<void> {
   Duration get transitionDuration => Duration(milliseconds: 300);
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     return Material(
       type: MaterialType.transparency,
       child: SafeArea(
@@ -72,7 +73,9 @@ class ItemBreakdownReport extends ModalRoute<void> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(
-                backgroundColor: FlavourConfig.isManager() ? Colors.black : Theme.of(context).backgroundColor,
+                backgroundColor: FlavourConfig.isManager()
+                    ? Colors.black
+                    : Theme.of(context).colorScheme.background,
                 child: Icon(Icons.clear),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -94,13 +97,9 @@ class ItemBreakdownReport extends ModalRoute<void> {
           return ListTile(
             isThreeLine: false,
             leading: Text(quantity),
-            title: Text(
-                subcategoryTotals[index].categoryName!
-            ),
-            trailing: Text(
-              f.format(subcategoryTotals[index].amount)
-            ),
+            title: Text(subcategoryTotals[index].categoryName!),
+            trailing: Text(f.format(subcategoryTotals[index].amount)),
           );
-    });
+        });
   }
 }

@@ -10,7 +10,6 @@ import 'package:nmwhitelabel/app/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 class StaffAuthorizationPage extends StatefulWidget {
-
   @override
   _StaffAuthorizationPageState createState() => _StaffAuthorizationPageState();
 }
@@ -26,53 +25,49 @@ class _StaffAuthorizationPageState extends State<StaffAuthorizationPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<Widget> _buildAccessRequestItems(BuildContext context) {
-    String staffAccessSubtitle =
-        'You are not allowed to access orders';
+    String staffAccessSubtitle = 'You are not allowed to access orders';
     if (!restaurant!.acceptingStaffRequests!) {
-      staffAccessSubtitle =
-      'Restaurant is not accepting staff requests';
+      staffAccessSubtitle = 'Restaurant is not accepting staff requests';
     }
     return [
-      Text(
-          '${restaurant!.name}',
-          style: Theme.of(context).primaryTextTheme.headline4
-      ),
+      Text('${restaurant!.name}',
+          style: Theme.of(context).primaryTextTheme.headlineMedium),
       SizedBox(
         height: 16.0,
       ),
-      Text(
-          staffAccessSubtitle,
-          style: Theme.of(context).primaryTextTheme.headline6
-      ),
+      Text(staffAccessSubtitle,
+          style: Theme.of(context).primaryTextTheme.titleLarge),
       SizedBox(
-      height: 32.0,
+        height: 32.0,
       ),
       if (restaurant!.acceptingStaffRequests!)
-      CustomRaisedButton(
+        CustomRaisedButton(
             height: buttonSize,
             width: buttonSize,
             color: Theme.of(context).buttonTheme.colorScheme!.surface,
-        onPressed: () => _convertUser(context ,_requestRestaurantAccess),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Request Access',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            SizedBox(height: 16.0,),
-            Icon(
-              Icons.error_outline,
-              size: 36.0,
-            ),
-          ],
-        )
-      )
+            onPressed: () => _convertUser(context, _requestRestaurantAccess),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Request Access',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Icon(
+                  Icons.error_outline,
+                  size: 36.0,
+                ),
+              ],
+            ))
     ];
   }
 
-  void _convertUser(BuildContext context, Function(BuildContext) nextAction) async {
+  void _convertUser(
+      BuildContext context, Function(BuildContext) nextAction) async {
     if (!session!.userProcessComplete) {
       final ConversionProcess conversionProcess = ConversionProcess(
         navigationService: navigationService,
@@ -98,7 +93,8 @@ class _StaffAuthorizationPageState extends State<StaffAuthorizationPage> {
       restaurantId: session!.currentRestaurant!.id,
       fromRole: ROLE_STAFF,
       toRole: ROLE_MANAGER,
-      fromName: '${session!.userDetails!.name} (${session!.userDetails!.email})',
+      fromName:
+          '${session!.userDetails!.name} (${session!.userDetails!.email})',
       delivered: false,
       type: 'Access to ${session!.currentRestaurant!.name}',
       authFlag: false,
@@ -129,15 +125,15 @@ class _StaffAuthorizationPageState extends State<StaffAuthorizationPage> {
       appBar: AppBar(
         title: Text(
           accountText,
-          style: Theme.of(context).primaryTextTheme.headline6,
+          style: Theme.of(context).primaryTextTheme.titleLarge,
         ),
       ),
       body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: _buildAccessRequestItems(context),
-            ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: _buildAccessRequestItems(context),
         ),
+      ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }

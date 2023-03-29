@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:nmwhitelabel/app/common_widgets/list_items_builder.dart';
@@ -37,7 +37,8 @@ class _MenuItemPageState extends State<MenuItemPage> {
   List<MenuItem>? _menuItemList;
   int? _sequence;
 
-  void _createMenuItemDetailsPage(BuildContext context, MenuItem item, int? sequence) {
+  void _createMenuItemDetailsPage(
+      BuildContext context, MenuItem item, int? sequence) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         fullscreenDialog: false,
@@ -100,7 +101,8 @@ class _MenuItemPageState extends State<MenuItemPage> {
             itemBuilder: (context, item) {
               String adjustedDescription = item.description!;
               if (adjustedDescription.length > 60) {
-                adjustedDescription = adjustedDescription.substring(0, 60) + '...(more)';
+                adjustedDescription =
+                    adjustedDescription.substring(0, 60) + '...(more)';
               }
               return Dismissible(
                 background: Container(color: Colors.red),
@@ -112,22 +114,24 @@ class _MenuItemPageState extends State<MenuItemPage> {
                   margin: EdgeInsets.all(12.0),
                   child: ListTile(
                     isThreeLine: true,
-                    leading: item.hidden! ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
+                    leading: item.hidden!
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           item.name!,
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         SizedBox(
                           height: 4.0,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top:8.0, bottom: 8.0),
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: Text(
                             adjustedDescription,
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ),
                       ],
@@ -137,14 +141,14 @@ class _MenuItemPageState extends State<MenuItemPage> {
                     ),
                     trailing: Text(
                       f.format(item.price),
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    onTap: () => _createMenuItemDetailsPage(context, item, item.sequence),
+                    onTap: () => _createMenuItemDetailsPage(
+                        context, item, item.sequence),
                   ),
                 ),
               );
-            }
-        );
+            });
       },
     );
   }
@@ -167,14 +171,12 @@ class _MenuItemPageState extends State<MenuItemPage> {
   }
 
   void _reorderMenuItem(BuildContext context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (BuildContext context) => ReorderMenuItem(
-            menuItemStream: menuItemStream,
-            menuItemList: _menuItemList,
-          ),
-        )
-    );
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) => ReorderMenuItem(
+        menuItemStream: menuItemStream,
+        menuItemList: _menuItemList,
+      ),
+    ));
   }
 
   bool _menuIsReorderable() {
@@ -192,31 +194,37 @@ class _MenuItemPageState extends State<MenuItemPage> {
   Widget build(BuildContext context) {
     session = Provider.of<Session>(context);
     database = Provider.of<Database>(context);
-    menuItemStream = MenuItemObservableStream(observable: restaurant!.restaurantMenus![menuId]);
+    menuItemStream = MenuItemObservableStream(
+        observable: restaurant!.restaurantMenus![menuId]);
     menuItemStream!.init();
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${widget.menu!.name}', style: TextStyle(color: Theme
-            .of(context)
-            .appBarTheme
-            .backgroundColor),
+          '${widget.menu!.name}',
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add, color: Theme.of(context).appBarTheme.backgroundColor,),
+            icon: Icon(
+              Icons.add,
+              color: Theme.of(context).appBarTheme.backgroundColor,
+            ),
             iconSize: 32.0,
-            onPressed: () => _createMenuItemDetailsPage(context, MenuItem(menuId: menuId), _sequence),
+            onPressed: () => _createMenuItemDetailsPage(
+                context, MenuItem(menuId: menuId), _sequence),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 32.0),
-            child: _menuIsReorderable() ? IconButton(
-              icon: Icon(
-                  Icons.import_export,
-              ),
-              iconSize: 32.0,
-              onPressed: () => _reorderMenuItem(context),
-            ) : Container(),
+            child: _menuIsReorderable()
+                ? IconButton(
+                    icon: Icon(
+                      Icons.import_export,
+                    ),
+                    iconSize: 32.0,
+                    onPressed: () => _reorderMenuItem(context),
+                  )
+                : Container(),
           ),
         ],
       ),

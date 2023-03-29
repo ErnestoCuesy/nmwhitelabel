@@ -10,7 +10,11 @@ class ExtraFields {
   double? cashReceived;
   Map<String, double?>? splitAmounts;
 
-  ExtraFields({this.tip = 0.0, this.discount = 0.0, this.cashReceived, this.splitAmounts});
+  ExtraFields(
+      {this.tip = 0.0,
+      this.discount = 0.0,
+      this.cashReceived,
+      this.splitAmounts});
 }
 
 class OrderSettlement extends StatefulWidget {
@@ -18,21 +22,24 @@ class OrderSettlement extends StatefulWidget {
   final double? orderAmount;
   final ExtraFields? extraFields;
 
-  const OrderSettlement({Key? key, this.orderStatus, this.orderAmount, this.extraFields}) : super(key: key);
+  const OrderSettlement(
+      {Key? key, this.orderStatus, this.orderAmount, this.extraFields})
+      : super(key: key);
 
   @override
   _OrderSettlementState createState() => _OrderSettlementState();
 }
 
 class _OrderSettlementState extends State<OrderSettlement> {
-  final TextEditingController _tipController =  TextEditingController();
+  final TextEditingController _tipController = TextEditingController();
   final FocusNode _tipFocusNode = FocusNode();
-  final TextEditingController _discountController =  TextEditingController();
+  final TextEditingController _discountController = TextEditingController();
   final FocusNode _discountFocusNode = FocusNode();
-  final TextEditingController _cashReceivedController =  TextEditingController();
+  final TextEditingController _cashReceivedController = TextEditingController();
   final FocusNode _cashReceivedFocusNode = FocusNode();
-  final TextEditingController _cashChangeController =  TextEditingController();
-  final Map<String, TextEditingController> _editingControllerMap = Map<String, TextEditingController>();
+  final TextEditingController _cashChangeController = TextEditingController();
+  final Map<String, TextEditingController> _editingControllerMap =
+      Map<String, TextEditingController>();
   final Map<String, FocusNode> _focusNodeMap = Map<String, FocusNode>();
   ExtraFields? extraFields;
   double? orderAmount;
@@ -51,7 +58,8 @@ class _OrderSettlementState extends State<OrderSettlement> {
     _tipController.text = ff.format(extraFields!.tip);
     _discountController.text = fff.format(extraFields!.discount! * 100);
     extraFields!.splitAmounts!.forEach((key, value) {
-      _editingControllerMap.putIfAbsent(key, () => TextEditingController(text: ff.format(value)));
+      _editingControllerMap.putIfAbsent(
+          key, () => TextEditingController(text: ff.format(value)));
       _focusNodeMap.putIfAbsent(key, () => FocusNode());
     });
     _recalculate();
@@ -77,7 +85,10 @@ class _OrderSettlementState extends State<OrderSettlement> {
 
   void _recalculate() {
     setState(() {
-      totalAmount = double.parse((orderAmount! - (orderAmount! * extraFields!.discount!) + extraFields!.tip!).toStringAsFixed(2));
+      totalAmount = double.parse((orderAmount! -
+              (orderAmount! * extraFields!.discount!) +
+              extraFields!.tip!)
+          .toStringAsFixed(2));
       final key = _editingControllerMap.keys.elementAt(0);
       extraFields!.splitAmounts![key] = totalAmount;
       _editingControllerMap.values.elementAt(0).text = ff.format(totalAmount);
@@ -106,7 +117,8 @@ class _OrderSettlementState extends State<OrderSettlement> {
         extraFields!.tip = double.tryParse(amount);
         _recalculate();
       },
-      onEditingComplete: () => FocusScope.of(context).requestFocus(_discountFocusNode),
+      onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_discountFocusNode),
     );
   }
 
@@ -134,7 +146,8 @@ class _OrderSettlementState extends State<OrderSettlement> {
         extraFields!.discount = double.parse(percentString);
         _recalculate();
       },
-      onEditingComplete: () => FocusScope.of(context).requestFocus(_tipFocusNode),
+      onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_tipFocusNode),
     );
   }
 
@@ -167,7 +180,8 @@ class _OrderSettlementState extends State<OrderSettlement> {
           _cashChangeController.text = ff.format(change);
         });
       },
-      onEditingComplete: () => FocusScope.of(context).requestFocus(_cashReceivedFocusNode),
+      onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_cashReceivedFocusNode),
     );
   }
 
@@ -256,7 +270,7 @@ class _OrderSettlementState extends State<OrderSettlement> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            FlavourConfig.isPatron() ? 'Add tip' : 'Add tip and discount',
+          FlavourConfig.isPatron() ? 'Add tip' : 'Add tip and discount',
         ),
       ),
       body: SingleChildScrollView(
@@ -277,8 +291,9 @@ class _OrderSettlementState extends State<OrderSettlement> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                  'Subtotal: ${f.format(orderAmount)}',
-                                style: Theme.of(context).textTheme.headline5,
+                                'Subtotal: ${f.format(orderAmount)}',
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               ),
                             ),
                             if (!FlavourConfig.isPatron())
@@ -289,8 +304,9 @@ class _OrderSettlementState extends State<OrderSettlement> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                  'Total: ${f.format(totalAmount)}',
-                                style: Theme.of(context).textTheme.headline4,
+                                'Total: ${f.format(totalAmount)}',
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
                               ),
                             ),
                           ],
@@ -302,23 +318,27 @@ class _OrderSettlementState extends State<OrderSettlement> {
                     padding: const EdgeInsets.all(16.0),
                     child: FloatingActionButton(
                       //backgroundColor: FlavourConfig.isManager() ? Colors.black : Theme.of(context).backgroundColor,
-                      child: Icon(Icons.check_circle, size: 48.0, color: Theme.of(context).floatingActionButtonTheme.foregroundColor),
+                      child: Icon(Icons.check_circle,
+                          size: 48.0,
+                          color: Theme.of(context)
+                              .floatingActionButtonTheme
+                              .foregroundColor),
                       onPressed: () async {
                         final amountsDifference = _amountsDifference();
                         if (amountsDifference == 0) {
                           Navigator.of(context).pop(extraFields);
                         } else {
                           await PlatformExceptionAlertDialog(
-                              title: 'Amounts don\'t match',
-                              exception: PlatformException(
+                            title: 'Amounts don\'t match',
+                            exception: PlatformException(
                               code: 'ORDER_AMOUNTS_NOT_MATCH',
                               message:
-                              'Split amounts sum and order total do not match. Difference: ${f.format(amountsDifference)}',
+                                  'Split amounts sum and order total do not match. Difference: ${f.format(amountsDifference)}',
                               details:
-                              'Split amounts sum and order total do not match.',
-                          ),
-                        ).show(context);
-                      }
+                                  'Split amounts sum and order total do not match.',
+                            ),
+                          ).show(context);
+                        }
                       },
                     ),
                   )

@@ -19,15 +19,14 @@ class _CaptureMapMarkersState extends State<CaptureMapMarkers> {
   // ignore: cancel_subscriptions
   StreamSubscription<Position>? _positionStreamSubscription;
   Position _lastPosition = Position(
-    latitude: 0, 
-    longitude: 0,
-    heading: 0,
-    speed: 0,
-    altitude: 0,
-    speedAccuracy: 0,
-    accuracy: 0,
-    timestamp: DateTime.now()
-    );
+      latitude: 0,
+      longitude: 0,
+      heading: 0,
+      speed: 0,
+      altitude: 0,
+      speedAccuracy: 0,
+      accuracy: 0,
+      timestamp: DateTime.now());
   static const String EMPTY_NAME = '>> Tap to capture position name';
 
   @override
@@ -42,16 +41,16 @@ class _CaptureMapMarkersState extends State<CaptureMapMarkers> {
     database = Provider.of<Database>(context);
     if (session.currentRestaurant!.markerCoordinates!.length == 0) {
       session.currentRestaurant!.markerCoordinates = List<Position>.generate(
-          5, (index) => Position(
-            latitude: 0, 
-            longitude: 0,
-            speed: 0,
-            speedAccuracy: 0,
-            altitude: 0,
-            accuracy: 0,
-            heading: 0,
-            timestamp: DateTime.now()
-            ));
+          5,
+          (index) => Position(
+              latitude: 0,
+              longitude: 0,
+              speed: 0,
+              speedAccuracy: 0,
+              altitude: 0,
+              accuracy: 0,
+              heading: 0,
+              timestamp: DateTime.now()));
       session.currentRestaurant!.markerNames =
           List<String?>.generate(5, (index) => EMPTY_NAME);
       database.setRestaurant(session.currentRestaurant);
@@ -82,12 +81,12 @@ class _CaptureMapMarkersState extends State<CaptureMapMarkers> {
                         width: 200,
                         child: Text(
                           'Latitude :',
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       ),
                       Text(
                         '${_lastPosition.latitude}',
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ],
                   ),
@@ -101,12 +100,12 @@ class _CaptureMapMarkersState extends State<CaptureMapMarkers> {
                         width: 200,
                         child: Text(
                           'Longitude:',
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       ),
                       Text(
                         '${_lastPosition.longitude}',
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ],
                   ),
@@ -119,18 +118,19 @@ class _CaptureMapMarkersState extends State<CaptureMapMarkers> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView.builder(
-                  itemCount: session.currentRestaurant!.markerCoordinates!.length,
+                  itemCount:
+                      session.currentRestaurant!.markerCoordinates!.length,
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
                         leading: Icon(Icons.location_on),
                         title: Text(
                           session.currentRestaurant!.markerNames![index]!,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         subtitle: Text(
                           '${session.currentRestaurant!.markerCoordinates![index].latitude}, ${session.currentRestaurant!.markerCoordinates![index].longitude}',
-                          style: Theme.of(context).textTheme.subtitle2,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         onTap: () => _capturePositionName(context, index),
                       ),
@@ -166,23 +166,20 @@ class _CaptureMapMarkersState extends State<CaptureMapMarkers> {
               heading: 0,
               speedAccuracy: 0,
               altitude: 0,
-              timestamp: DateTime.now()
-              );
+              timestamp: DateTime.now());
         });
       } else {
         setState(() {
           session.currentRestaurant!.markerNames![index] = EMPTY_NAME;
-          session.currentRestaurant!.markerCoordinates![index] =
-              Position(
-                latitude: 0, 
-                longitude: 0,
-                speed: 0,
-                accuracy: 0,
-                speedAccuracy: 0,
-                heading: 0,
-                altitude: 0,
-                timestamp: DateTime.now()
-                );
+          session.currentRestaurant!.markerCoordinates![index] = Position(
+              latitude: 0,
+              longitude: 0,
+              speed: 0,
+              accuracy: 0,
+              speedAccuracy: 0,
+              heading: 0,
+              altitude: 0,
+              timestamp: DateTime.now());
         });
       }
       database.setRestaurant(session.currentRestaurant);

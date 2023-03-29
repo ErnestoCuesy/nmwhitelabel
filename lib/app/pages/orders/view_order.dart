@@ -32,8 +32,7 @@ class ViewOrder extends StatefulWidget {
           database: database,
           session: session,
           order: order,
-          automaticallyCloseOrder: false
-      ),
+          automaticallyCloseOrder: false),
       child: Consumer<ViewOrderModel>(
         builder: (context, model, _) => ViewOrder(
           scaffoldKey: scaffoldKey,
@@ -114,23 +113,20 @@ class _ViewOrderState extends State<ViewOrder> {
       model!.cancelOnHoldOrder();
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-                'Order cancelled'
-            ),
-          ),
-      );  
+        SnackBar(
+          content: Text('Order cancelled'),
+        ),
+      );
       Navigator.of(context).pop();
     }
   }
 
   void _orderSettlement(BuildContext context) async {
     ExtraFields? extraFields = ExtraFields();
-    await Navigator.of(context).push(
-        MaterialPageRoute<ExtraFields>(
+    await Navigator.of(context)
+        .push(MaterialPageRoute<ExtraFields>(
             fullscreenDialog: true,
-            builder: (context) =>
-                OrderSettlement(
+            builder: (context) => OrderSettlement(
                   orderStatus: model!.order!.status,
                   orderAmount: model!.order!.orderTotal,
                   extraFields: ExtraFields(
@@ -139,9 +135,8 @@ class _ViewOrderState extends State<ViewOrder> {
                     cashReceived: model!.order!.cashReceived,
                     splitAmounts: model!.order!.paymentMethods,
                   ),
-                )
-        )
-    ).then((value) {
+                )))
+        .then((value) {
       extraFields = value;
     });
     if (extraFields != null) {
@@ -169,8 +164,7 @@ class _ViewOrderState extends State<ViewOrder> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-            'Order successfully placed at ${session.currentRestaurant!.name}!'
-        ),
+            'Order successfully placed at ${session.currentRestaurant!.name}!'),
       ),
     );
     Navigator.of(context).pop();
@@ -201,18 +195,18 @@ class _ViewOrderState extends State<ViewOrder> {
                     height: 16.0,
                   ),
                   if (model!.order!.status != ORDER_ON_HOLD)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 24, right: 24.0),
-                    child: Text(
-                      'Order # ${model!.order!.orderNumber}',
-                      style: Theme.of(context).textTheme.headline5,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 24, right: 24.0),
+                      child: Text(
+                        'Order # ${model!.order!.orderNumber}',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
                     ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 24, right: 24.0),
                     child: Text(
                       'Deliver to:',
-                      style: Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                   Padding(
@@ -228,10 +222,11 @@ class _ViewOrderState extends State<ViewOrder> {
                     child: Text('Tel: ${model!.order!.telephone}'),
                   ),
                   if (!FlavourConfig.isPatron())
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text('Order placed $orderDistance metres from you'),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child:
+                          Text('Order placed $orderDistance metres from you'),
+                    ),
                   SizedBox(
                     child: Container(
                       decoration: BoxDecoration(border: Border.all()),
@@ -239,101 +234,111 @@ class _ViewOrderState extends State<ViewOrder> {
                         trackVisibility: true,
                         controller: itemsScrollController,
                         child: ListView.builder(
-                          controller: itemsScrollController,
-                          shrinkWrap: true,
-                          itemCount: model!.order!.orderItems!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                          final orderItem = model!.order!.orderItems![index];
-                          final List<dynamic> orderItemOptions = orderItem['options'];
-                          return Dismissible(
-                            background: Container(
-                              color: Colors.red,
-                              child: model!.order!.status == ORDER_ON_HOLD
-                                  ? Icon(Icons.delete, size: 32.0,)
-                                  : Icon(Icons.block, size: 32.0),
-                            ),
-                            key: Key('${orderItem['id']}'),
-                            direction: DismissDirection.endToStart,
-                            confirmDismiss: (_) => _confirmDismiss(context),
-                            onDismissed: (direction) => _deleteItem(index),
-                            child: Card(
-                              child: ListTile(
-                                isThreeLine: false,
-                                leading: Text(
-                                  orderItem['quantity'].toString(),
+                            controller: itemsScrollController,
+                            shrinkWrap: true,
+                            itemCount: model!.order!.orderItems!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final orderItem =
+                                  model!.order!.orderItems![index];
+                              final List<dynamic> orderItemOptions =
+                                  orderItem['options'];
+                              return Dismissible(
+                                background: Container(
+                                  color: Colors.red,
+                                  child: model!.order!.status == ORDER_ON_HOLD
+                                      ? Icon(
+                                          Icons.delete,
+                                          size: 32.0,
+                                        )
+                                      : Icon(Icons.block, size: 32.0),
                                 ),
-                                title: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 80.0,
-                                      child: Text(orderItem['menuCode']),
+                                key: Key('${orderItem['id']}'),
+                                direction: DismissDirection.endToStart,
+                                confirmDismiss: (_) => _confirmDismiss(context),
+                                onDismissed: (direction) => _deleteItem(index),
+                                child: Card(
+                                  child: ListTile(
+                                    isThreeLine: false,
+                                    leading: Text(
+                                      orderItem['quantity'].toString(),
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        orderItem['name'],
-                                      ),
+                                    title: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 80.0,
+                                          child: Text(orderItem['menuCode']),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            orderItem['name'],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                    subtitle: orderItemOptions.isEmpty
+                                        ? Text('')
+                                        : Text(
+                                            orderItem['options']
+                                                .toString()
+                                                .replaceAll(
+                                                    RegExp(r'\[|\]'), ''),
+                                          ),
+                                    trailing:
+                                        Text(f.format(orderItem['lineTotal'])),
+                                  ),
                                 ),
-                                subtitle: orderItemOptions.isEmpty ? Text('') : Text(
-                                  orderItem['options'].toString().replaceAll(RegExp(r'\[|\]'), ''),
-                                ),
-                                trailing: Text(
-                                    f.format(orderItem['lineTotal'])
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
+                              );
+                            }),
                       ),
                     ),
                   ),
                   if (model!.order!.status == ORDER_ON_HOLD)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Swipe items to the left to remove.'),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Swipe items to the left to remove.'),
+                    ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Subtotal: ' + f.format(model!.order!.orderTotal),
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                   if (model!.order!.discount! > 0)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Discount: ' + f.format(discount),
-                      style: Theme.of(context).textTheme.headline5,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Discount: ' + f.format(discount),
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
                     ),
-                  ),
                   if (model!.order!.tip! > 0)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Tip: ' + f.format(model!.order!.tip),
-                      style: Theme.of(context).textTheme.headline5,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Tip: ' + f.format(model!.order!.tip),
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
                     ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Total: ' + f.format(orderTotal),
-                      style: Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                   if (model!.order!.status == ORDER_ON_HOLD)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      'Select payment method',
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        'Select payment method',
+                      ),
                     ),
-                  ),
                   Column(
-                     children: _buildPaymentMethods(),
+                    children: _buildPaymentMethods(),
                   ),
-                  if (model!.order!.status == ORDER_ON_HOLD && deliveryOptionsAvailable > 0)
+                  if (model!.order!.status == ORDER_ON_HOLD &&
+                      deliveryOptionsAvailable > 0)
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
@@ -344,17 +349,16 @@ class _ViewOrderState extends State<ViewOrder> {
                     children: _buildFoodDeliveryOptions(),
                   ),
                   Text(
-                      Format.formatDateTime(model!.order!.timestamp!.toInt()),
+                    Format.formatDateTime(model!.order!.timestamp!.toInt()),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Order status: ${model!.order!.statusString}'
-                    ),
+                    child: Text('Order status: ${model!.order!.statusString}'),
                   ),
                   _notesField(context, model!.order!.notes),
                   if (model!.order!.status == ORDER_ON_HOLD ||
-                      (!FlavourConfig.isPatron() && model!.order!.status != ORDER_CLOSED))
+                      (!FlavourConfig.isPatron() &&
+                          model!.order!.status != ORDER_CLOSED))
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: FormSubmitButton(
@@ -363,49 +367,54 @@ class _ViewOrderState extends State<ViewOrder> {
                         color: model!.canSettleOrder
                             ? Theme.of(context).primaryColor
                             : Theme.of(context).disabledColor,
-                        onPressed: model!.canSettleOrder ? () => _orderSettlement(context) : null,
+                        onPressed: model!.canSettleOrder
+                            ? () => _orderSettlement(context)
+                            : null,
                       ),
                     ),
                   if (model!.order!.status == ORDER_ON_HOLD)
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            FormSubmitButton(
-                              context: context,
-                              text: 'Cancel',
-                              color: Theme.of(context).primaryColor,
-                              onPressed: () => _cancelOrder(context),
-                            ),
-                            Builder(
-                              builder: (context) => FormSubmitButton(
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              FormSubmitButton(
                                 context: context,
-                                text: 'Submit',
-                                color: model!.canSave
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).disabledColor,
-                                onPressed: model!.canSave ? () => _save(context) : null,
+                                text: 'Cancel',
+                                color: Theme.of(context).primaryColor,
+                                onPressed: () => _cancelOrder(context),
+                              ),
+                              Builder(
+                                builder: (context) => FormSubmitButton(
+                                  context: context,
+                                  text: 'Submit',
+                                  color: model!.canSave
+                                      ? Theme.of(context).primaryColor
+                                      : Theme.of(context).disabledColor,
+                                  onPressed: model!.canSave
+                                      ? () => _save(context)
+                                      : null,
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (!FlavourConfig.isPatron())
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CheckboxListTile(
+                                title: Text(
+                                  'Automatically close order',
+                                ),
+                                value: model!.automaticallyCloseOrder,
+                                onChanged: (flag) =>
+                                    model!.updateAutomaticallyCloseOrder(flag),
                               ),
                             ),
-                          ],
-                        ),
-                        if (!FlavourConfig.isPatron())
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CheckboxListTile(
-                            title: Text(
-                            'Automatically close order',
-                            ),
-                            value: model!.automaticallyCloseOrder,
-                            onChanged: (flag) => model!.updateAutomaticallyCloseOrder(flag),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
                   // ORDER PROCESSING
                   if (_canCancelOrder())
                     Padding(
@@ -420,7 +429,8 @@ class _ViewOrderState extends State<ViewOrder> {
                               context: context,
                               text: 'CANCEL',
                               color: Theme.of(context).primaryColor,
-                              onPressed: () => _processOrder(context, ORDER_CANCELLED),
+                              onPressed: () =>
+                                  _processOrder(context, ORDER_CANCELLED),
                             ),
                           ),
                         ],
@@ -447,7 +457,9 @@ class _ViewOrderState extends State<ViewOrder> {
                                   : null,
                             ),
                           ),
-                          SizedBox(height: 16.0,),
+                          SizedBox(
+                            height: 16.0,
+                          ),
                           SizedBox(
                             width: 200.0,
                             child: FormSubmitButton(
@@ -457,11 +469,14 @@ class _ViewOrderState extends State<ViewOrder> {
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).disabledColor,
                               onPressed: model!.canDoThis(ORDER_REJECTED_BUSY)!
-                                  ? () => _processOrder(context, ORDER_REJECTED_BUSY)
+                                  ? () => _processOrder(
+                                      context, ORDER_REJECTED_BUSY)
                                   : null,
                             ),
                           ),
-                          SizedBox(height: 16.0,),
+                          SizedBox(
+                            height: 16.0,
+                          ),
                           SizedBox(
                             width: 200.0,
                             child: FormSubmitButton(
@@ -475,7 +490,9 @@ class _ViewOrderState extends State<ViewOrder> {
                                   : null,
                             ),
                           ),
-                          SizedBox(height: 16.0,),
+                          SizedBox(
+                            height: 16.0,
+                          ),
                           SizedBox(
                             width: 200.0,
                             child: FormSubmitButton(
@@ -489,7 +506,9 @@ class _ViewOrderState extends State<ViewOrder> {
                                   : null,
                             ),
                           ),
-                          SizedBox(height: 16.0,),
+                          SizedBox(
+                            height: 16.0,
+                          ),
                           SizedBox(
                             width: 200.0,
                             child: FormSubmitButton(
@@ -530,8 +549,8 @@ class _ViewOrderState extends State<ViewOrder> {
 
   bool _canCancelOrder() {
     return FlavourConfig.isPatron() &&
-            session.currentRestaurant!.allowCancellations! &&
-            model!.order!.status == ORDER_PLACED;
+        session.currentRestaurant!.allowCancellations! &&
+        model!.order!.status == ORDER_PLACED;
   }
 
   void _processOrder(BuildContext context, int newOrderStatus) async {
@@ -555,7 +574,8 @@ class _ViewOrderState extends State<ViewOrder> {
 
   Widget _notesField(BuildContext context, String? notes) {
     var notesField;
-    if (session.currentOrder != null && session.currentOrder!.status == ORDER_ON_HOLD) {
+    if (session.currentOrder != null &&
+        session.currentOrder!.status == ORDER_ON_HOLD) {
       notesField = TextField(
         style: Theme.of(context).inputDecorationTheme.labelStyle,
         controller: _notesController,
@@ -581,7 +601,7 @@ class _ViewOrderState extends State<ViewOrder> {
       children: [
         Text(
           'Notes',
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         Padding(
           padding: EdgeInsets.all(16.0),
@@ -597,34 +617,36 @@ class _ViewOrderState extends State<ViewOrder> {
 
   List<Widget> _buildPaymentMethods() {
     List<Widget> paymentOptionsList = [];
-    Map<dynamic, dynamic> restaurantPaymentOptions = session.currentRestaurant!.paymentFlags!;
+    Map<dynamic, dynamic> restaurantPaymentOptions =
+        session.currentRestaurant!.paymentFlags!;
     restaurantPaymentOptions.forEach((key, value) {
       if (value) {
         paymentOptionsList.add(
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: CheckboxListTile(
-                    title: Text(
-                      key,
-                    ),
-                    value: model!.order!.paymentMethod == ''
-                        ? model!.paymentOptionsCheck(key)
-                        : model!.paymentOptionCheck(key),
-                    onChanged: (flag) => model!.updatePaymentMethods(key, flag),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: CheckboxListTile(
+                  title: Text(
+                    key,
                   ),
+                  value: model!.order!.paymentMethod == ''
+                      ? model!.paymentOptionsCheck(key)
+                      : model!.paymentOptionCheck(key),
+                  onChanged: (flag) => model!.updatePaymentMethods(key, flag),
                 ),
-                Expanded(
-                  child: Text(
-                      model!.order!.paymentMethods![key] != null && model!.order!.paymentMethods![key]! > 0
-                          ? f.format(model!.order!.paymentMethods![key])
-                          : '',
-                  ),
+              ),
+              Expanded(
+                child: Text(
+                  model!.order!.paymentMethods![key] != null &&
+                          model!.order!.paymentMethods![key]! > 0
+                      ? f.format(model!.order!.paymentMethods![key])
+                      : '',
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
         );
       }
     });
@@ -633,7 +655,8 @@ class _ViewOrderState extends State<ViewOrder> {
 
   List<Widget> _buildFoodDeliveryOptions() {
     List<Widget> foodDeliveryOptionsList = [];
-    Map<dynamic, dynamic> foodDeliveryOptions = session.currentRestaurant!.foodDeliveryFlags!;
+    Map<dynamic, dynamic> foodDeliveryOptions =
+        session.currentRestaurant!.foodDeliveryFlags!;
     foodDeliveryOptions.forEach((key, value) {
       if (value) {
         foodDeliveryOptionsList.add(CheckboxListTile(
@@ -655,7 +678,8 @@ class _ViewOrderState extends State<ViewOrder> {
       appBar: AppBar(
         title: Text(
           'Your order details',
-          style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
       ),
       body: _buildContents(context),

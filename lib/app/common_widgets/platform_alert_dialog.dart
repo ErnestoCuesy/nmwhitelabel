@@ -21,21 +21,21 @@ class PlatformAlertDialog extends PlatformWidget {
   Future<bool?> show(BuildContext? context) async {
     if (!kIsWeb) {
       return Platform.isIOS
-        ? await showCupertinoDialog<bool>(
-            context: context!,
-            builder: (context) => this,
-          )
-        : await showDialog<bool>(
-            context: context!,
-            barrierDismissible: false,
-            builder: (context) => this,
-          );
+          ? await showCupertinoDialog<bool>(
+              context: context!,
+              builder: (context) => this,
+            )
+          : await showDialog<bool>(
+              context: context!,
+              barrierDismissible: false,
+              builder: (context) => this,
+            );
     } else {
       return await showDialog<bool>(
-            context: context!,
-            barrierDismissible: false,
-            builder: (context) => this,
-          );
+        context: context!,
+        barrierDismissible: false,
+        builder: (context) => this,
+      );
     }
   }
 
@@ -54,10 +54,10 @@ class PlatformAlertDialog extends PlatformWidget {
       data: MacosThemeData.light(),
       child: MacosAlertDialog(
         appIcon: Image.asset(
-          'LauncherIcon.png', 
+          'LauncherIcon.png',
         ),
-        title: Text(title), 
-        message: Text(content), 
+        title: Text(title),
+        message: Text(content),
         primaryButton: _buildMacOSPrimaryButton(context),
         secondaryButton: _buildMacOSSecondaryButton(context),
         horizontalActions: false,
@@ -68,7 +68,7 @@ class PlatformAlertDialog extends PlatformWidget {
   @override
   Widget buildMaterialWidget(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Text(title),
       content: Text(content),
       actions: _buildActions(context),
@@ -81,7 +81,7 @@ class PlatformAlertDialog extends PlatformWidget {
       actions.add(PlatformAlertDialogAction(
         child: Text(
           cancelActionText!,
-          style: Theme.of(context).textTheme.button,
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         onPressed: () => Navigator.of(context).pop(false),
       ));
@@ -89,7 +89,7 @@ class PlatformAlertDialog extends PlatformWidget {
     actions.add(PlatformAlertDialogAction(
       child: Text(
         defaultActionText,
-        style: Theme.of(context).textTheme.button,
+        style: Theme.of(context).textTheme.labelLarge,
       ),
       onPressed: () => Navigator.of(context).pop(true),
     ));
@@ -100,7 +100,7 @@ class PlatformAlertDialog extends PlatformWidget {
     return PlatformAlertDialogAction(
       child: Text(
         defaultActionText,
-        style: Theme.of(context).textTheme.button,
+        style: Theme.of(context).textTheme.labelLarge,
       ),
       onPressed: () => Navigator.of(context).pop(true),
     );
@@ -111,7 +111,7 @@ class PlatformAlertDialog extends PlatformWidget {
       return PlatformAlertDialogAction(
         child: Text(
           cancelActionText!,
-          style: Theme.of(context).textTheme.button,
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         onPressed: () => Navigator.of(context).pop(false),
       );

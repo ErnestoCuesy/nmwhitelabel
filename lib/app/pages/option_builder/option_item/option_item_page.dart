@@ -16,7 +16,8 @@ class OptionItemPage extends StatefulWidget {
   final Restaurant? restaurant;
   final Option? option;
 
-  const OptionItemPage({Key? key, this.restaurant, this.option}) : super(key: key);
+  const OptionItemPage({Key? key, this.restaurant, this.option})
+      : super(key: key);
 
   @override
   _OptionItemPageState createState() => _OptionItemPageState();
@@ -28,7 +29,8 @@ class _OptionItemPageState extends State<OptionItemPage> {
   OptionItemObservableStream? optionItemStream;
   String? get optionId => widget.option!.id;
   Restaurant? get restaurant => session.currentRestaurant;
-  Option? get menu => Option.fromMap(restaurant!.restaurantOptions![optionId], null);
+  Option? get menu =>
+      Option.fromMap(restaurant!.restaurantOptions![optionId], null);
 
   void _createOptionItemDetailsPage(BuildContext context, OptionItem item) {
     Navigator.of(context).push(
@@ -89,7 +91,7 @@ class _OptionItemPageState extends State<OptionItemPage> {
                       children: <Widget>[
                         Text(
                           item.name!,
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         SizedBox(
                           height: 4.0,
@@ -100,8 +102,7 @@ class _OptionItemPageState extends State<OptionItemPage> {
                   ),
                 ),
               );
-            }
-        );
+            });
       },
     );
   }
@@ -110,22 +111,26 @@ class _OptionItemPageState extends State<OptionItemPage> {
   Widget build(BuildContext context) {
     session = Provider.of<Session>(context);
     database = Provider.of<Database>(context);
-    optionItemStream = OptionItemObservableStream(observable: restaurant!.restaurantOptions![optionId]);
+    optionItemStream = OptionItemObservableStream(
+        observable: restaurant!.restaurantOptions![optionId]);
     optionItemStream!.init();
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${widget.option!.name}', style: TextStyle(color: Theme
-            .of(context)
-            .appBarTheme
-            .backgroundColor),
+          '${widget.option!.name}',
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add, color: Theme.of(context).appBarTheme.backgroundColor,),
+            icon: Icon(
+              Icons.add,
+              color: Theme.of(context).appBarTheme.backgroundColor,
+            ),
             iconSize: 32.0,
             padding: const EdgeInsets.only(right: 32.0),
-            onPressed: () => _createOptionItemDetailsPage(context, OptionItem(optionId: widget.option!.id)),
+            onPressed: () => _createOptionItemDetailsPage(
+                context, OptionItem(optionId: widget.option!.id)),
           ),
         ],
       ),

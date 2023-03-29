@@ -10,7 +10,8 @@ class ReorderMenu extends StatefulWidget {
   final MenuObservableStream? menuStream;
   final List<Menu>? menuList;
 
-  const ReorderMenu({Key? key, this.menuStream, this.menuList}) : super(key: key);
+  const ReorderMenu({Key? key, this.menuStream, this.menuList})
+      : super(key: key);
 
   @override
   _ReorderMenuState createState() => _ReorderMenuState();
@@ -22,15 +23,14 @@ class _ReorderMenuState extends State<ReorderMenu> {
   List<Menu>? get menuList => widget.menuList;
   Restaurant? get restaurant => session.currentRestaurant;
 
-  Card _buildTenableListTile(int index, Menu menu) =>
-      Card(
+  Card _buildTenableListTile(int index, Menu menu) => Card(
         key: ValueKey(menu.id),
         child: ListTile(
           isThreeLine: false,
           leading: Text('#$index'),
           title: Text(
             menu.name!,
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
       );
@@ -45,7 +45,8 @@ class _ReorderMenuState extends State<ReorderMenu> {
     menuList!.forEach((menu) {
       restaurant!.restaurantMenus![menu.id]['sequence'] = menu.sequence;
     });
-    widget.menuStream!.broadcastEvent(restaurant!.restaurantMenus as Map<String?, dynamic>?);
+    widget.menuStream!
+        .broadcastEvent(restaurant!.restaurantMenus as Map<String?, dynamic>?);
     Restaurant.setRestaurant(database, restaurant);
     Navigator.of(context).pop();
   }

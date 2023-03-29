@@ -68,7 +68,8 @@ class _AccountPageState extends State<AccountPage> {
         appBar: AppBar(
           title: Text(
             'Change your details',
-            style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+            style:
+                TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
           ),
           elevation: 2.0,
         ),
@@ -203,13 +204,13 @@ class _AccountPageState extends State<AccountPage> {
         );
       }
     } else {
-        details = _userDetailsSection(
-          context: context,
-          sectionTitle: 'Bundle details',
-          cardTitle: 'Bundle information unavailable on this platform',
-          cardSubtitle: '',
-          onPressed: null,
-        );
+      details = _userDetailsSection(
+        context: context,
+        sectionTitle: 'Bundle details',
+        cardTitle: 'Bundle information unavailable on this platform',
+        cardSubtitle: '',
+        onPressed: null,
+      );
     }
     return details;
   }
@@ -252,7 +253,7 @@ class _AccountPageState extends State<AccountPage> {
           padding: const EdgeInsets.only(left: 16.0, top: 8.0),
           child: Text(
             sectionTitle,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         SizedBox(
@@ -320,14 +321,14 @@ class _AccountPageState extends State<AccountPage> {
       appBar: AppBar(
         title: Text(
           accountText,
-          style: Theme.of(context).primaryTextTheme.headline6,
+          style: Theme.of(context).primaryTextTheme.titleLarge,
         ),
         actions: <Widget>[
           if (!session!.isAnonymousUser)
             TextButton(
               child: Text(
                 'Logout',
-                style: Theme.of(context).primaryTextTheme.button,
+                style: Theme.of(context).primaryTextTheme.labelLarge,
               ),
               onPressed: () => _confirmSignOut(context),
             ),
@@ -344,7 +345,8 @@ class _AccountPageState extends State<AccountPage> {
               if (FlavourConfig.isManager()) {
                 _lastBundlePurchase = '\nYou haven\'t bought any bundles';
                 return FutureBuilder<List<Bundle>>(
-                    future: database!.bundlesSnapshot(session!.userDetails!.email),
+                    future:
+                        database!.bundlesSnapshot(session!.userDetails!.email),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState != ConnectionState.waiting &&
                           snapshot.hasData) {

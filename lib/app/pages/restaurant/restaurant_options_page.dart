@@ -16,10 +16,8 @@ import 'package:nmwhitelabel/app/services/database.dart';
 import 'package:provider/provider.dart';
 
 class RestaurantOptionsPage extends StatefulWidget {
-
   @override
-  _RestaurantOptionsPageState createState() =>
-      _RestaurantOptionsPageState();
+  _RestaurantOptionsPageState createState() => _RestaurantOptionsPageState();
 }
 
 class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
@@ -28,22 +26,27 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
   late List<Restaurant> _restaurantList;
 
   void _loadRestaurants() async {
-    await database.restaurantSnapshot().then((value) => _restaurantList = value);
+    await database
+        .restaurantSnapshot()
+        .then((value) => _restaurantList = value);
   }
 
   void _expandableMenuBrowserPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         fullscreenDialog: false,
-        builder: (context) => session.currentRestaurant!.restaurantMenus!.isNotEmpty
-            ? MenuBrowser()
-            : Scaffold(
-              appBar: AppBar(title: Text(''),),
-              body: EmptyContent(
-                  title: 'Empty menu',
-                  message: 'This restaurant hasn\'t loaded any menus yet',
-                ),
-            ),
+        builder: (context) =>
+            session.currentRestaurant!.restaurantMenus!.isNotEmpty
+                ? MenuBrowser()
+                : Scaffold(
+                    appBar: AppBar(
+                      title: Text(''),
+                    ),
+                    body: EmptyContent(
+                      title: 'Empty menu',
+                      message: 'This restaurant hasn\'t loaded any menus yet',
+                    ),
+                  ),
       ),
     );
   }
@@ -61,12 +64,10 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
     return [
       Padding(
         padding: const EdgeInsets.only(top: 16.0),
-        child: Text(
-            session.currentRestaurant!.name!,
+        child: Text(session.currentRestaurant!.name!,
             style: FlavourConfig.isAdmin()
-                ? Theme.of(context).textTheme.headline4
-                : Theme.of(context).primaryTextTheme.headline4
-        ),
+                ? Theme.of(context).textTheme.headlineMedium
+                : Theme.of(context).primaryTextTheme.headlineMedium),
       ),
       SizedBox(
         height: 32.0,
@@ -77,7 +78,9 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
         color: Theme.of(context).buttonTheme.colorScheme!.surface,
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (BuildContext context) => ItemImagePage(viewOnly: true,),
+            builder: (BuildContext context) => ItemImagePage(
+              viewOnly: true,
+            ),
           ),
         ),
         child: Column(
@@ -85,9 +88,11 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
           children: [
             Text(
               'Food Gallery',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: 8.0,),
+            SizedBox(
+              height: 8.0,
+            ),
             Icon(
               Icons.image,
               size: 36.0,
@@ -108,9 +113,11 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
           children: [
             Text(
               'Menu',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: 16.0,),
+            SizedBox(
+              height: 16.0,
+            ),
             Icon(
               Icons.import_contacts,
               size: 36.0,
@@ -119,55 +126,63 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
         ),
       ),
       if (!FlavourConfig.isAdmin())
-      SizedBox(
-        height: 32.0,
-      ),
+        SizedBox(
+          height: 32.0,
+        ),
       if (!FlavourConfig.isAdmin())
-      CustomRaisedButton(
-        height: 150.0,
-        width: 250.0,
-        color: Theme.of(context).buttonTheme.colorScheme!.surface,
-        onPressed: () => _orderHistoryPage(context),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Order History',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            SizedBox(height: 16.0,),
-            Icon(
-              Icons.assignment,
-              size: 36.0,
-            ),
-          ],
+        CustomRaisedButton(
+          height: 150.0,
+          width: 250.0,
+          color: Theme.of(context).buttonTheme.colorScheme!.surface,
+          onPressed: () => _orderHistoryPage(context),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Order History',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Icon(
+                Icons.assignment,
+                size: 36.0,
+              ),
+            ],
+          ),
         ),
-      ),
       if (FlavourConfig.isAdmin())
-      SizedBox(
-        height: 32.0,
-      ),
-      if (FlavourConfig.isAdmin())
-      CustomRaisedButton(
-        height: 150.0,
-        width: 250.0,
-        color: Theme.of(context).buttonTheme.colorScheme!.surface,
-        onPressed: () => _approveRestaurant(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              session.currentRestaurant!.adminVerified! ? 'Block Restaurant' : 'Approve Restaurant',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            SizedBox(height: 16.0,),
-            Icon(
-              session.currentRestaurant!.adminVerified! ? Icons.block : Icons.assignment_turned_in,
-              size: 36.0,
-            ),
-          ],
+        SizedBox(
+          height: 32.0,
         ),
-      ),
+      if (FlavourConfig.isAdmin())
+        CustomRaisedButton(
+          height: 150.0,
+          width: 250.0,
+          color: Theme.of(context).buttonTheme.colorScheme!.surface,
+          onPressed: () => _approveRestaurant(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                session.currentRestaurant!.adminVerified!
+                    ? 'Block Restaurant'
+                    : 'Approve Restaurant',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Icon(
+                session.currentRestaurant!.adminVerified!
+                    ? Icons.block
+                    : Icons.assignment_turned_in,
+                size: 36.0,
+              ),
+            ],
+          ),
+        ),
       if (FlavourConfig.isAdmin())
         SizedBox(
           height: 32.0,
@@ -183,9 +198,11 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
             children: [
               Text(
                 'Delete Restaurant',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              SizedBox(height: 16.0,),
+              SizedBox(
+                height: 16.0,
+              ),
               Icon(
                 Icons.delete_forever,
                 size: 36.0,
@@ -197,53 +214,51 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
         SizedBox(
           height: 32.0,
         ),
-      if (FlavourConfig.isAdmin())
-        _copyRestaurantMenu()
+      if (FlavourConfig.isAdmin()) _copyRestaurantMenu()
     ];
   }
 
   Widget _copyRestaurantMenu() {
     return PopupMenuButton<Restaurant>(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(Icons.content_copy),
-            Text('Copy menu to another restaurant'),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Icon(Icons.content_copy),
+              Text('Copy menu to another restaurant'),
+            ],
+          ),
         ),
-      ),
-      onSelected: (Restaurant selectedRestaurant) {
-        print(selectedRestaurant.name);
-        selectedRestaurant.restaurantMenus = session.currentRestaurant!.restaurantMenus;
-        selectedRestaurant.restaurantOptions = session.currentRestaurant!.restaurantOptions;
-        database.setRestaurant(selectedRestaurant);
-      },
-      itemBuilder: (BuildContext context) {
-        return _restaurantList.map((Restaurant restaurant) {
-          if (restaurant.id != session.currentRestaurant!.id) {
-            return PopupMenuItem<Restaurant>(
-              child: Text(restaurant.name!),
-              value: restaurant,
-            );
-          } else {
-            return PopupMenuItem<Restaurant>(
-              child: Text(restaurant.name!),
-              value: restaurant,
-            );
-
-          }
+        onSelected: (Restaurant selectedRestaurant) {
+          print(selectedRestaurant.name);
+          selectedRestaurant.restaurantMenus =
+              session.currentRestaurant!.restaurantMenus;
+          selectedRestaurant.restaurantOptions =
+              session.currentRestaurant!.restaurantOptions;
+          database.setRestaurant(selectedRestaurant);
+        },
+        itemBuilder: (BuildContext context) {
+          return _restaurantList.map((Restaurant restaurant) {
+            if (restaurant.id != session.currentRestaurant!.id) {
+              return PopupMenuItem<Restaurant>(
+                child: Text(restaurant.name!),
+                value: restaurant,
+              );
+            } else {
+              return PopupMenuItem<Restaurant>(
+                child: Text(restaurant.name!),
+                value: restaurant,
+              );
+            }
           }).toList();
-        }
-    );
+        });
   }
 
   void _deleteRestaurant(BuildContext context) async {
     if (await (PlatformAlertDialog(
       title: 'Confirm restaurant deletion',
-      content:
-      'Do you really want to delete this restaurant?',
+      content: 'Do you really want to delete this restaurant?',
       cancelActionText: 'No',
       defaultActionText: 'Yes',
     ).show(context) as FutureOr<bool>)) {
@@ -252,14 +267,17 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
   }
 
   void _approveRestaurant() {
-    session.currentRestaurant!.adminVerified = !session.currentRestaurant!.adminVerified!;
-    session.currentRestaurant!.restaurantFlags!.update('active', (value) => session.currentRestaurant!.adminVerified);
+    session.currentRestaurant!.adminVerified =
+        !session.currentRestaurant!.adminVerified!;
+    session.currentRestaurant!.restaurantFlags!
+        .update('active', (value) => session.currentRestaurant!.adminVerified);
     database.setRestaurant(session.currentRestaurant);
     String message;
     if (session.currentRestaurant!.adminVerified!) {
       message = 'We have approved your restaurant';
     } else {
-      message = 'We have blocked your restaurant due to non-conformance to our Terms and Conditions';
+      message =
+          'We have blocked your restaurant due to non-conformance to our Terms and Conditions';
     }
     final double timestamp = dateFromCurrentDate() / 1.0;
     database.setMessageDetails(UserMessage(
@@ -295,30 +313,34 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
         appBar: AppBar(
           title: Text(
             roleOptions,
-            style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+            style:
+                TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
           ),
         ),
         body: StreamBuilder<Restaurant>(
-          stream: database.selectedRestaurantStream(session.currentRestaurant!.id),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: PlatformProgressIndicator());
-            } else {
-              if (snapshot.hasData) {
-                session.currentRestaurant = snapshot.data;
-                return SingleChildScrollView(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _buildContents(context),
-                    ),
-                  ),
-                );
+            stream: database
+                .selectedRestaurantStream(session.currentRestaurant!.id),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: PlatformProgressIndicator());
               } else {
-                return EmptyContent(title: 'Restaurant not found', message: '',);
+                if (snapshot.hasData) {
+                  session.currentRestaurant = snapshot.data;
+                  return SingleChildScrollView(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: _buildContents(context),
+                      ),
+                    ),
+                  );
+                } else {
+                  return EmptyContent(
+                    title: 'Restaurant not found',
+                    message: '',
+                  );
+                }
               }
-            }
-          }
-        ));
+            }));
   }
 }

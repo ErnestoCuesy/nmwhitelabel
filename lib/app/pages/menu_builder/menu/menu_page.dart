@@ -17,7 +17,6 @@ import 'package:nmwhitelabel/app/services/menu_observable_stream.dart';
 import 'package:provider/provider.dart';
 
 class MenuPage extends StatefulWidget {
-
   @override
   _MenuPageState createState() => _MenuPageState();
 }
@@ -47,7 +46,8 @@ class _MenuPageState extends State<MenuPage> {
   Future<void> _deleteMenu(BuildContext context, Menu menu) async {
     try {
       restaurant!.restaurantMenus!.remove(menu.id);
-      menuStream!.broadcastEvent(restaurant!.restaurantMenus as Map<String?, dynamic>?);
+      menuStream!.broadcastEvent(
+          restaurant!.restaurantMenus as Map<String?, dynamic>?);
       Restaurant.setRestaurant(database, restaurant);
     } on PlatformException catch (e) {
       PlatformExceptionAlertDialog(
@@ -60,7 +60,7 @@ class _MenuPageState extends State<MenuPage> {
   Future<bool?> _confirmDismiss(BuildContext context, Menu menu) async {
     var hasStuff = false;
     restaurant!.restaurantMenus![menu.id].forEach((key, value) {
-      if (key.toString().length > 20){
+      if (key.toString().length > 20) {
         hasStuff = true;
       }
     });
@@ -70,8 +70,8 @@ class _MenuPageState extends State<MenuPage> {
         title: 'Menu is not empty',
         exception: PlatformException(
           code: 'MAP_IS_NOT_EMPTY',
-          message:  'Please delete all the menu items first.',
-          details:  'Please delete all the menu items first.',
+          message: 'Please delete all the menu items first.',
+          details: 'Please delete all the menu items first.',
         ),
       ).show(context));
       result = !result!;
@@ -109,18 +109,20 @@ class _MenuPageState extends State<MenuPage> {
                   margin: EdgeInsets.all(12.0),
                   child: ListTile(
                     isThreeLine: false,
-                    leading: menu.hidden! ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
+                    leading: menu.hidden!
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           menu.name!,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ],
                     ),
                     subtitle: Padding(
-                      padding: const EdgeInsets.only(top:8.0),
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: Text(menu.notes ?? ''),
                     ),
                     trailing: IconButton(
@@ -134,7 +136,8 @@ class _MenuPageState extends State<MenuPage> {
                       ),
                       icon: PlatformTrailingIcon(),
                     ),
-                    onTap: () => _createMenuDetailsPage(context, menu, menu.sequence),
+                    onTap: () =>
+                        _createMenuDetailsPage(context, menu, menu.sequence),
                   ),
                 ),
               );
@@ -144,19 +147,18 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   void _reorderMenu(BuildContext context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (BuildContext context) => ReorderMenu(
-            menuStream: menuStream,
-            menuList: _menuList,
-          ),
-        )
-    );
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) => ReorderMenu(
+        menuStream: menuStream,
+        menuList: _menuList,
+      ),
+    ));
   }
 
   bool _menuIsReorderable() {
     int counter = 0;
-    Map<String?, dynamic> menuFields = restaurant!.restaurantMenus as Map<String?, dynamic>;
+    Map<String?, dynamic> menuFields =
+        restaurant!.restaurantMenus as Map<String?, dynamic>;
     menuFields.forEach((key, value) {
       if (key!.length > 20) {
         counter++;
@@ -169,13 +171,16 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     session = Provider.of<Session>(context);
     database = Provider.of<Database>(context);
-    menuStream = MenuObservableStream(observable: session.currentRestaurant!.restaurantMenus as Map<String?, dynamic>?);
+    menuStream = MenuObservableStream(
+        observable: session.currentRestaurant!.restaurantMenus
+            as Map<String?, dynamic>?);
     menuStream!.init();
     return Scaffold(
       appBar: AppBar(
         title: Text(
           '${restaurant!.name}',
-          style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
         actions: <Widget>[
           IconButton(
@@ -188,13 +193,15 @@ class _MenuPageState extends State<MenuPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 32.0),
-            child: _menuIsReorderable() ? IconButton(
-              icon: Icon(
-                  Icons.import_export,
-              ),
-              iconSize: 32.0,
-              onPressed: () => _reorderMenu(context),
-            ) : Container(),
+            child: _menuIsReorderable()
+                ? IconButton(
+                    icon: Icon(
+                      Icons.import_export,
+                    ),
+                    iconSize: 32.0,
+                    onPressed: () => _reorderMenu(context),
+                  )
+                : Container(),
           ),
         ],
       ),

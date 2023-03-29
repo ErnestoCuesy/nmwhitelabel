@@ -12,7 +12,9 @@ class AddToOrder extends StatefulWidget {
   final Map<dynamic, dynamic>? item;
   final Map<dynamic, dynamic>? options;
 
-  const AddToOrder({Key? key, this.model, this.menuCode, this.item, this.options}) : super(key: key);
+  const AddToOrder(
+      {Key? key, this.model, this.menuCode, this.item, this.options})
+      : super(key: key);
 
   static Widget create({
     required BuildContext context,
@@ -24,12 +26,11 @@ class AddToOrder extends StatefulWidget {
     final session = Provider.of<Session>(context);
     return ChangeNotifierProvider<AddToOrderModel>(
       create: (context) => AddToOrderModel(
-        database: database,
-        session: session,
-        menuCode: menuCode,
-        item: item,
-        options: options
-      ),
+          database: database,
+          session: session,
+          menuCode: menuCode,
+          item: item,
+          options: options),
       child: Consumer<AddToOrderModel>(
         builder: (context, model, _) => AddToOrder(
           model: model,
@@ -83,7 +84,7 @@ class _AddToOrderState extends State<AddToOrder> {
                     padding: const EdgeInsets.only(left: 24.0, right: 24.0),
                     child: Text(
                       item!['name'],
-                      style: Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                   SizedBox(
@@ -100,9 +101,9 @@ class _AddToOrderState extends State<AddToOrder> {
                     height: 16.0,
                   ),
                   if (item!['options'].isNotEmpty)
-                  Column(
-                    children: _buildOptions(),
-                  ),
+                    Column(
+                      children: _buildOptions(),
+                    ),
                   Column(
                     children: _buildQuantityField(),
                   ),
@@ -111,7 +112,7 @@ class _AddToOrderState extends State<AddToOrder> {
                   ),
                   Text(
                     f.format(lineTotal),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 32.0,
@@ -144,7 +145,8 @@ class _AddToOrderState extends State<AddToOrder> {
           children: <Widget>[
             new IconButton(
               icon: new Icon(Icons.remove),
-              onPressed: model!.quantity == 1 ? null : () => model!.updateQuantity(-1),
+              onPressed:
+                  model!.quantity == 1 ? null : () => model!.updateQuantity(-1),
             ),
             new Container(
               decoration: new BoxDecoration(
@@ -158,7 +160,7 @@ class _AddToOrderState extends State<AddToOrder> {
                 height: 45.0,
                 child: new Center(
                     child: new Text('${model!.quantity}',
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme.of(context).textTheme.titleMedium,
                         textAlign: TextAlign.center)),
               ),
             ),
@@ -179,7 +181,7 @@ class _AddToOrderState extends State<AddToOrder> {
       optionList.add(
         Text(
           '${optionValue['name']}',
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       );
       var selectionNote;
@@ -190,7 +192,9 @@ class _AddToOrderState extends State<AddToOrder> {
       } else {
         selectionNote = 'only';
       }
-      optionList.add(SizedBox(height: 8.0,));
+      optionList.add(SizedBox(
+        height: 8.0,
+      ));
       optionList.add(
         Text(
           'Please select $selectionNote ${optionValue['numberAllowed']} option$singular',
@@ -198,12 +202,17 @@ class _AddToOrderState extends State<AddToOrder> {
       );
       optionValue.forEach((key, value) {
         if (key.toString().length > 20) {
-            optionList.add(CheckboxListTile(
+          optionList.add(
+            CheckboxListTile(
               title: Text(
                 '${value['name']}',
               ),
-              value: model!.optionCheck('${optionValue['name']}: ${value['name']}'),
-              onChanged: (addFlag) => model!.updateOptionsList(optionValue['name'], '${optionValue['name']}: ${value['name']}', addFlag!),
+              value: model!
+                  .optionCheck('${optionValue['name']}: ${value['name']}'),
+              onChanged: (addFlag) => model!.updateOptionsList(
+                  optionValue['name'],
+                  '${optionValue['name']}: ${value['name']}',
+                  addFlag!),
             ),
           );
         }
@@ -218,7 +227,8 @@ class _AddToOrderState extends State<AddToOrder> {
       appBar: AppBar(
         title: Text(
           'Select your options',
-          style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
       ),
       body: _buildContents(context),

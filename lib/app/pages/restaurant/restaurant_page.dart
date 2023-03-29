@@ -43,7 +43,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
     }
   }
 
-  Future<bool?> _confirmDismiss(BuildContext context, Restaurant? restaurant) async {
+  Future<bool?> _confirmDismiss(
+      BuildContext context, Restaurant? restaurant) async {
     if (restaurant!.acceptingStaffRequests! ||
         restaurant.active! ||
         restaurant.open!) {
@@ -84,78 +85,76 @@ class _RestaurantPageState extends State<RestaurantPage> {
             message: 'Tap the + button to add a new restaurant',
             snapshot: snapshot,
             itemBuilder: (context, restaurant) {
-            return Dismissible(
-              background: Container(color: Colors.red),
-              key: Key('res-${restaurant?.id}'),
-              direction: DismissDirection.endToStart,
-              confirmDismiss: (_) => _confirmDismiss(context, restaurant),
-              onDismissed: (direction) =>
-                  _deleteRestaurant(context, restaurant),
-              child: Card(
-                margin: EdgeInsets.all(12.0),
-                child: ListTile(
-                  isThreeLine: true,
-                  leading: IconButton(
-                    onPressed: () =>
-                        _createRestaurantDetailsPage(context, restaurant),
-                    icon: Icon(
-                      Icons.edit,
+              return Dismissible(
+                background: Container(color: Colors.red),
+                key: Key('res-${restaurant?.id}'),
+                direction: DismissDirection.endToStart,
+                confirmDismiss: (_) => _confirmDismiss(context, restaurant),
+                onDismissed: (direction) =>
+                    _deleteRestaurant(context, restaurant),
+                child: Card(
+                  margin: EdgeInsets.all(12.0),
+                  child: ListTile(
+                    isThreeLine: true,
+                    leading: IconButton(
+                      onPressed: () =>
+                          _createRestaurantDetailsPage(context, restaurant),
+                      icon: Icon(
+                        Icons.edit,
+                      ),
                     ),
-                  ),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        restaurant!.name!,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline6,
-                      ),
-                      Text(restaurant.address1!),
-                    ],
-                  ),
-                  // subtitle: Text('${restaurant.restaurantLocation}'),
-                  subtitle: Column(
-                    children: <Widget>[
-                      CheckboxListTile(
-                        title: Text('Listing is active'),
-                        value: restaurant.active,
-                        onChanged: null,
-                      ),
-                      CheckboxListTile(
-                        title: Text('Restaurant shows as open'),
-                        value: restaurant.open,
-                        onChanged: null,
-                      ),
-                      CheckboxListTile(
-                        title: Text('Accepting staff requests'),
-                        value: restaurant.acceptingStaffRequests,
-                        onChanged: null,
-                      ),
-                      Text(
-                          'Tap on pencil to edit. Tap on arrow for more. Swipe left to delete.'),
-                    ],
-                  ),
-                  trailing: IconButton(
-                    onPressed: () {
-                      session.currentRestaurant = restaurant;
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              RestaurantAdministratorPage(restaurantList: restaurantList,),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          restaurant!.name!,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.arrow_forward,
+                        Text(restaurant.address1!),
+                      ],
+                    ),
+                    // subtitle: Text('${restaurant.restaurantLocation}'),
+                    subtitle: Column(
+                      children: <Widget>[
+                        CheckboxListTile(
+                          title: Text('Listing is active'),
+                          value: restaurant.active,
+                          onChanged: null,
+                        ),
+                        CheckboxListTile(
+                          title: Text('Restaurant shows as open'),
+                          value: restaurant.open,
+                          onChanged: null,
+                        ),
+                        CheckboxListTile(
+                          title: Text('Accepting staff requests'),
+                          value: restaurant.acceptingStaffRequests,
+                          onChanged: null,
+                        ),
+                        Text(
+                            'Tap on pencil to edit. Tap on arrow for more. Swipe left to delete.'),
+                      ],
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        session.currentRestaurant = restaurant;
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                RestaurantAdministratorPage(
+                              restaurantList: restaurantList,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          }
-        );
+              );
+            });
       },
     );
   }
@@ -168,7 +167,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
       appBar: AppBar(
         title: Text(
           'Your managed restaurants',
-          style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
         actions: <Widget>[
           IconButton(

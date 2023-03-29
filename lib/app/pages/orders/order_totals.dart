@@ -22,8 +22,8 @@ class _OrderTotalsState extends State<OrderTotals> {
   late Session session;
   late Database database;
   Stream<List<Order>>? _stream;
-  Authorizations _authorizations =
-  Authorizations(authorizedRoles: {}, authorizedNames: {}, authorizedDates: {});
+  Authorizations _authorizations = Authorizations(
+      authorizedRoles: {}, authorizedNames: {}, authorizedDates: {});
   List<dynamic> _intDates = [];
   List<String> _stringDates = [];
   String _selectedStringDate = '';
@@ -33,14 +33,14 @@ class _OrderTotalsState extends State<OrderTotals> {
 
   void _determineSearchDate() {
     if (session.userDetails!.role == ROLE_VENUE) {
-      _intDates = _authorizations.authorizedDates![database.userId]
-                  ?? [DateTime.now().millisecondsSinceEpoch];
+      _intDates = _authorizations.authorizedDates![database.userId] ??
+          [DateTime.now().millisecondsSinceEpoch];
       _intDates.sort((a, b) => b.compareTo(a));
       _stringDates.clear();
       _intDates.forEach((intDate) {
         final date = DateTime.fromMillisecondsSinceEpoch(intDate);
-        final strDate = '${date.year}' + '/' + '${date.month}' + '/' +
-            '${date.day}';
+        final strDate =
+            '${date.year}' + '/' + '${date.month}' + '/' + '${date.day}';
         _stringDates.add(strDate);
       });
       if (_selectedStringDate == '') {
@@ -59,8 +59,12 @@ class _OrderTotalsState extends State<OrderTotals> {
       if (_selectedDate != null) {
         startDate = _selectedDate;
       }
-      _searchDate = DateTime(startDate!.year, startDate.month, startDate.day).millisecondsSinceEpoch;
-      _selectedStringDate = '${startDate.year}' + '/' + '${startDate.month}' + '/' +
+      _searchDate = DateTime(startDate!.year, startDate.month, startDate.day)
+          .millisecondsSinceEpoch;
+      _selectedStringDate = '${startDate.year}' +
+          '/' +
+          '${startDate.month}' +
+          '/' +
           '${startDate.day}';
     }
   }
@@ -72,15 +76,15 @@ class _OrderTotalsState extends State<OrderTotals> {
           icon: Icon(Icons.calendar_today),
           onSelected: (String date) {
             setState(() {
-            _selectedStringDate = date;
+              _selectedStringDate = date;
             });
           },
           itemBuilder: (BuildContext context) {
             return _stringDates.map((String date) {
-                return PopupMenuItem<String>(
-                  child: Text(date),
-                  value: date,
-                );
+              return PopupMenuItem<String>(
+                child: Text(date),
+                value: date,
+              );
             }).toList();
           }),
     );
@@ -89,66 +93,62 @@ class _OrderTotalsState extends State<OrderTotals> {
   Future<void> _calendarButton(BuildContext context) async {
     var currentMonthStartDate = DateUtils.getFirstDayOfCurrentMonth();
     var currentMonthEndDate = DateUtils.getLastDayOfCurrentMonth();
-    var lastMonthStartDate = DateUtils.getFirstDayOfMonth(
-        DateTime(
-            currentMonthStartDate.year,
-            currentMonthStartDate.month - 1,
-            currentMonthStartDate.day,
-        ));
-    var lastMonthEndDate = DateUtils.getLastDayOfMonth(
-        DateTime(
-          currentMonthStartDate.year,
-          currentMonthStartDate.month - 1,
-          currentMonthStartDate.day,
-        ));
+    var lastMonthStartDate = DateUtils.getFirstDayOfMonth(DateTime(
+      currentMonthStartDate.year,
+      currentMonthStartDate.month - 1,
+      currentMonthStartDate.day,
+    ));
+    var lastMonthEndDate = DateUtils.getLastDayOfMonth(DateTime(
+      currentMonthStartDate.year,
+      currentMonthStartDate.month - 1,
+      currentMonthStartDate.day,
+    ));
     final DateFormat monthName = DateFormat(DateFormat.MONTH);
     final currentMonth = monthName.format(currentMonthStartDate);
     final lastMonth = monthName.format(lastMonthStartDate);
     _selectedDate = await Navigator.of(context).push(
-      MaterialPageRoute<DateTime>(builder: (_) => Scaffold(
-          appBar: new AppBar(
-            title: new Text('Select query date'),
-          ),
-          body: Column(
-            children: [
-              Container(height: 32.0),
-              Text(lastMonth,
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              Container(height: 32.0),
-              Calendarro(
-                  startDate: lastMonthStartDate,
-                  endDate: lastMonthEndDate,
-                  displayMode: DisplayMode.MONTHS,
-                  selectionMode: SelectionMode.SINGLE,
-                  weekdayLabelsRow: CustomWeekdayLabelsRow(),
-                  onTap: (date) {
-                    Navigator.of(context).pop(date);
-                  }
-              ),
-              Container(height: 16.0),
-              Text(currentMonth,
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              Container(height: 32.0),
-              Calendarro(
-                  startDate: currentMonthStartDate,
-                  endDate: currentMonthEndDate,
-                  displayMode: DisplayMode.MONTHS,
-                  selectionMode: SelectionMode.SINGLE,
-                  weekdayLabelsRow: CustomWeekdayLabelsRow(),
-                  onTap: (date) {
-                    Navigator.of(context).pop(date);
-                  }
-              ),
-            ],
-          ),
-        )
-      ),
+      MaterialPageRoute<DateTime>(
+          builder: (_) => Scaffold(
+                appBar: new AppBar(
+                  title: new Text('Select query date'),
+                ),
+                body: Column(
+                  children: [
+                    Container(height: 32.0),
+                    Text(
+                      lastMonth,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Container(height: 32.0),
+                    Calendarro(
+                        startDate: lastMonthStartDate,
+                        endDate: lastMonthEndDate,
+                        displayMode: DisplayMode.MONTHS,
+                        selectionMode: SelectionMode.SINGLE,
+                        weekdayLabelsRow: CustomWeekdayLabelsRow(),
+                        onTap: (date) {
+                          Navigator.of(context).pop(date);
+                        }),
+                    Container(height: 16.0),
+                    Text(
+                      currentMonth,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Container(height: 32.0),
+                    Calendarro(
+                        startDate: currentMonthStartDate,
+                        endDate: currentMonthEndDate,
+                        displayMode: DisplayMode.MONTHS,
+                        selectionMode: SelectionMode.SINGLE,
+                        weekdayLabelsRow: CustomWeekdayLabelsRow(),
+                        onTap: (date) {
+                          Navigator.of(context).pop(date);
+                        }),
+                  ],
+                ),
+              )),
     );
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   Widget _buildContents(BuildContext context) {
@@ -158,17 +158,19 @@ class _OrderTotalsState extends State<OrderTotals> {
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.waiting &&
               snapshot.hasData) {
-            _authorizations = snapshot.data!.firstWhere((authorization) => authorization.id == session.currentRestaurant!.id);
+            _authorizations = snapshot.data!.firstWhere((authorization) =>
+                authorization.id == session.currentRestaurant!.id);
             _determineSearchDate();
             if (_selectedStringDate == NOT_AUTH) {
               return VenueAuthorizationPage();
             } else {
               _stream = database.dayRestaurantOrders(
                   session.currentRestaurant!.id,
-                  DateTime.fromMillisecondsSinceEpoch(_searchDate)
-              );
+                  DateTime.fromMillisecondsSinceEpoch(_searchDate));
               return OrderTotalsPage(
-                stream: _stream, selectedStringDate: _selectedStringDate,);
+                stream: _stream,
+                selectedStringDate: _selectedStringDate,
+              );
             }
           } else {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -181,11 +183,12 @@ class _OrderTotalsState extends State<OrderTotals> {
       );
     } else {
       _determineSearchDate();
-      _stream = database.dayRestaurantOrders(
-        session.currentRestaurant!.id,
-        DateTime.fromMillisecondsSinceEpoch(_searchDate));
+      _stream = database.dayRestaurantOrders(session.currentRestaurant!.id,
+          DateTime.fromMillisecondsSinceEpoch(_searchDate));
       return OrderTotalsPage(
-        stream: _stream, selectedStringDate: _selectedStringDate,);
+        stream: _stream,
+        selectedStringDate: _selectedStringDate,
+      );
     }
   }
 
@@ -196,11 +199,13 @@ class _OrderTotalsState extends State<OrderTotals> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-              '${session.currentRestaurant!.name}',
-          style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          '${session.currentRestaurant!.name}',
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
         actions: [
-          if (FlavourConfig.isManager() || session.userDetails!.role == ROLE_STAFF)
+          if (FlavourConfig.isManager() ||
+              session.userDetails!.role == ROLE_STAFF)
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: IconButton(
@@ -208,8 +213,7 @@ class _OrderTotalsState extends State<OrderTotals> {
                 onPressed: () => _calendarButton(context),
               ),
             ),
-          if (session.userDetails!.role == ROLE_VENUE)
-            _datesMenuButton()
+          if (session.userDetails!.role == ROLE_VENUE) _datesMenuButton()
         ],
       ),
       body: _buildContents(context),

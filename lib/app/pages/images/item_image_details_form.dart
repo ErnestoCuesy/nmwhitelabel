@@ -114,7 +114,7 @@ class _ItemImageDetailsFormState extends State<ItemImageDetailsForm> {
                 Text(
                   'Tap to change image',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(
                   height: 8.0,

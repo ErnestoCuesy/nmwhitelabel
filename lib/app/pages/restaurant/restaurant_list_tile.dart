@@ -10,48 +10,48 @@ class RestaurantListTile extends StatelessWidget {
       : super(key: key);
 
   Widget _buildTitle(BuildContext context) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width - 150,
-                  child: Text(
-                    restaurant!.name!,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ),
-                Container(
-                  width: 30.00,
-                    child: Icon(
-                      Icons.arrow_forward,
-                    ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  Icons.location_on,
-                  size: 20.0,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width - 150,
+                child: Text(
+                  restaurant!.name!,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
-              Text(
-                '${restaurant!.address1}, ${restaurant!.address2}',
+              Container(
+                width: 30.00,
+                child: Icon(
+                  Icons.arrow_forward,
+                ),
               ),
             ],
           ),
-          if (restaurant!.address3 != '')
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                Icons.location_on,
+                size: 20.0,
+              ),
+            ),
+            Text(
+              '${restaurant!.address1}, ${restaurant!.address2}',
+            ),
+          ],
+        ),
+        if (restaurant!.address3 != '')
           Row(
             children: <Widget>[
               Padding(
@@ -66,36 +66,40 @@ class RestaurantListTile extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  Icons.restaurant,
-                  size: 20.0,
-                ),
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                Icons.restaurant,
+                size: 20.0,
               ),
-              Text(
-                restaurant!.typeOfFood!,
+            ),
+            Text(
+              restaurant!.typeOfFood!,
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                Icons.info_outline,
+                size: 20.0,
               ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  Icons.info_outline,
-                  size: 20.0,
-                ),
-              ),
-              Text(
-                restaurant!.notes!.substring(0, restaurant!.notes!.length > 30 ? 30 : restaurant!.notes!.length),
-              ),
-            ],
-          ),
-        ],
-      );
+            ),
+            Text(
+              restaurant!.notes!.substring(
+                  0,
+                  restaurant!.notes!.length > 30
+                      ? 30
+                      : restaurant!.notes!.length),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildSubtitle(BuildContext context) {
@@ -178,12 +182,11 @@ class RestaurantListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTitle(context),
-            _buildSubtitle(context),
-          ]
-      );
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildTitle(context),
+          _buildSubtitle(context),
+        ]);
   }
 }

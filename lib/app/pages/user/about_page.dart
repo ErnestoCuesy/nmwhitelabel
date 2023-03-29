@@ -29,20 +29,19 @@ class _AboutPageState extends State<AboutPage> {
       await PlatformAlertDialog(
         title: 'You have restaurants',
         content:
-        'Please delete all your restaurants first with NM Manager before deleting your account.',
+            'Please delete all your restaurants first with NM Manager before deleting your account.',
         defaultActionText: 'OK',
       ).show(context);
     } else if (await (PlatformAlertDialog(
       title: 'Confirm account deletion',
-      content:
-      'Do you really want to delete your account?' + extraNotice,
+      content: 'Do you really want to delete your account?' + extraNotice,
       cancelActionText: 'No',
       defaultActionText: 'Yes',
     ).show(context) as FutureOr<bool>)) {
       try {
-        database.deleteUser(database.userId)
-            .then((value) => Future.delayed(Duration(seconds: 3))
-            .then((value) => auth.deleteUser()));
+        database.deleteUser(database.userId).then((value) =>
+            Future.delayed(Duration(seconds: 3))
+                .then((value) => auth.deleteUser()));
       } catch (e) {
         print(e);
       }
@@ -53,7 +52,9 @@ class _AboutPageState extends State<AboutPage> {
     await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => TermsAndConditions(askAgreement: false,),
+        builder: (context) => TermsAndConditions(
+          askAgreement: false,
+        ),
       ),
     );
   }
@@ -70,9 +71,11 @@ class _AboutPageState extends State<AboutPage> {
           children: [
             Text(
               'Terms And Conditions',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: 8.0,),
+            SizedBox(
+              height: 8.0,
+            ),
             Icon(
               Icons.info_outline,
               size: 36.0,
@@ -84,26 +87,28 @@ class _AboutPageState extends State<AboutPage> {
         height: 32.0,
       ),
       if (!FlavourConfig.isAdmin())
-      CustomRaisedButton(
-        height: 150.0,
-        width: 250.0,
-        color: Theme.of(context).buttonTheme.colorScheme!.surface,
-        onPressed: () => _deleteAccount(context),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Delete Account',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            SizedBox(height: 16.0,),
-            Icon(
-              Icons.account_box,
-              size: 36.0,
-            ),
-          ],
+        CustomRaisedButton(
+          height: 150.0,
+          width: 250.0,
+          color: Theme.of(context).buttonTheme.colorScheme!.surface,
+          onPressed: () => _deleteAccount(context),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Delete Account',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Icon(
+                Icons.account_box,
+                size: 36.0,
+              ),
+            ],
+          ),
         ),
-      ),
     ];
   }
 

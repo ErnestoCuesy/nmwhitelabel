@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:nmwhitelabel/app/models/menu_item.dart';
 import 'package:nmwhitelabel/app/models/menu.dart';
 import 'package:nmwhitelabel/app/models/option.dart';
@@ -30,21 +30,21 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
   Map<String?, Option?> stagedOptions = {};
   Restaurant? get restaurant => session.currentRestaurant;
 
-  MenuItemDetailsModel(
-      {required this.database,
-       required this.session,
-       required this.menu,
-       required this.menuItemStream,
-        this.id,
-        this.name,
-        this.description,
-        this.sequence,
-        this.hidden,
-        this.price = 0.00,
-        this.optionIdList,
-        this.isLoading = false,
-        this.submitted = false,
-      }) {
+  MenuItemDetailsModel({
+    required this.database,
+    required this.session,
+    required this.menu,
+    required this.menuItemStream,
+    this.id,
+    this.name,
+    this.description,
+    this.sequence,
+    this.hidden,
+    this.price = 0.00,
+    this.optionIdList,
+    this.isLoading = false,
+    this.submitted = false,
+  }) {
     restaurantObjectStagedOptions = restaurant!.restaurantOptions;
     if (id == null || id == '') {
       id = documentIdFromCurrentDate();
@@ -62,7 +62,7 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
       }
     });
   }
-  
+
   Future<void> save() async {
     updateWith(isLoading: true, submitted: true);
     final item = MenuItem(
@@ -77,11 +77,13 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
       options: optionIdList,
     );
     try {
-      final Map<dynamic, dynamic> items = restaurant!.restaurantMenus![menu!.id];
+      final Map<dynamic, dynamic> items =
+          restaurant!.restaurantMenus![menu!.id];
       if (items.containsKey(id)) {
         restaurant!.restaurantMenus![menu!.id].update(id, (_) => item.toMap());
       } else {
-        restaurant!.restaurantMenus![menu!.id].putIfAbsent(id, () => item.toMap());
+        restaurant!.restaurantMenus![menu!.id]
+            .putIfAbsent(id, () => item.toMap());
       }
       restaurant!.restaurantOptions = restaurantObjectStagedOptions;
       menuItemStream!.broadcastEvent(restaurant!.restaurantMenus![menu!.id]);
@@ -95,7 +97,8 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
 
   String get primaryButtonText => 'Save';
 
-  bool get canSave => menuItemNameValidator.isValid(name) &&
+  bool get canSave =>
+      menuItemNameValidator.isValid(name) &&
       menuItemPriceValidator.isValid(price);
 
   String? get menuItemNameErrorText {
@@ -140,7 +143,8 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
       if (items.containsKey(id)) {
         restaurant!.restaurantMenus![newMenuId].update(id, (_) => item.toMap());
       } else {
-        restaurant!.restaurantMenus![newMenuId].putIfAbsent(id, () => item.toMap());
+        restaurant!.restaurantMenus![newMenuId]
+            .putIfAbsent(id, () => item.toMap());
       }
       await Restaurant.setRestaurant(database, restaurant);
     } catch (e) {
@@ -152,11 +156,12 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
 
   void updateMenuItemName(String name) => updateWith(name: name);
 
-  void updateMenuItemDescription(String description) => updateWith(description: description);
+  void updateMenuItemDescription(String description) =>
+      updateWith(description: description);
 
   void updateMenuItemPrice(String price) {
-   var amount = price.replaceAll(RegExp(r','), '.');
-   updateWith(price: double.tryParse(amount));
+    var amount = price.replaceAll(RegExp(r','), '.');
+    updateWith(price: double.tryParse(amount));
   }
 
   void updateSequence(int sequence) => updateWith(sequence: sequence);

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:nmwhitelabel/app/models/menu_item.dart';
 import 'package:nmwhitelabel/app/models/restaurant.dart';
 import 'package:nmwhitelabel/app/models/session.dart';
@@ -10,7 +10,8 @@ class ReorderMenuItem extends StatefulWidget {
   final MenuItemObservableStream? menuItemStream;
   final List<MenuItem>? menuItemList;
 
-  const ReorderMenuItem({Key? key, this.menuItemStream, this.menuItemList}) : super(key: key);
+  const ReorderMenuItem({Key? key, this.menuItemStream, this.menuItemList})
+      : super(key: key);
 
   @override
   _ReorderMenuItemState createState() => _ReorderMenuItemState();
@@ -22,15 +23,14 @@ class _ReorderMenuItemState extends State<ReorderMenuItem> {
   List<MenuItem>? get menuItemList => widget.menuItemList;
   Restaurant? get restaurant => session.currentRestaurant;
 
-  Card _buildTenableListTile(int index, MenuItem menuItem) =>
-      Card(
+  Card _buildTenableListTile(int index, MenuItem menuItem) => Card(
         key: ValueKey(menuItem.id),
         child: ListTile(
           isThreeLine: false,
           leading: Text('#$index'),
           title: Text(
             menuItem.name!,
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
       );
@@ -45,7 +45,8 @@ class _ReorderMenuItemState extends State<ReorderMenuItem> {
     String? menuId;
     menuItemList!.forEach((menuItem) {
       menuId = menuItem.menuId;
-      restaurant!.restaurantMenus![menuId][menuItem.id]['sequence'] = menuItem.sequence;
+      restaurant!.restaurantMenus![menuId][menuItem.id]['sequence'] =
+          menuItem.sequence;
     });
     widget.menuItemStream!.broadcastEvent(restaurant!.restaurantMenus![menuId]);
     Restaurant.setRestaurant(database, restaurant);

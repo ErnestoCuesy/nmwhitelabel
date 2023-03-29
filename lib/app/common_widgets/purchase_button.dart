@@ -10,7 +10,8 @@ class PurchaseButton extends StatelessWidget {
   final Package? package;
   final int? blockedOrders;
 
-  PurchaseButton({Key? key, this.package, this.blockedOrders}) : super(key: key);
+  PurchaseButton({Key? key, this.package, this.blockedOrders})
+      : super(key: key);
 
   Future<void> _buyPackage(BuildContext context) async {
     final iap = Provider.of<IAPManagerBase>(context, listen: false);
@@ -19,15 +20,15 @@ class PurchaseButton extends StatelessWidget {
       message = 'You can unlock your orders now.';
     }
     try {
-      print('Trying to buy: ${package!.product.identifier}');
-      await iap.purchaseProduct(package!.product.identifier);
+      print('Trying to buy: ${package!.storeProduct.identifier}');
+      await iap.purchaseProduct(package!.storeProduct.identifier);
       //_setBundleAndUnlock(context, 5);
       await PlatformExceptionAlertDialog(
         title: 'Thank you!',
         exception: PlatformException(
           code: 'ORDER_BUNDLED_PURCHASE_SUCCESS',
-          message:  'Your purchase was successful. $message',
-          details:  'Your purchase was successful. $message',
+          message: 'Your purchase was successful. $message',
+          details: 'Your purchase was successful. $message',
         ),
       ).show(context);
     } on PlatformException catch (e) {
@@ -47,13 +48,13 @@ class PurchaseButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Text(
-              "${package!.product.description}",
-              style: Theme.of(context).textTheme.headline6,
+              "${package!.storeProduct.description}",
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             Text(
-                "Buy for ${package!.product.priceString}",
-                style: Theme.of(context).textTheme.headline6,
+              "Buy for ${package!.storeProduct.priceString}",
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ],
         ),

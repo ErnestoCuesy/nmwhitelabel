@@ -15,7 +15,6 @@ import 'package:nmwhitelabel/app/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 class MenuBrowser extends StatefulWidget {
-
   @override
   _MenuBrowserState createState() => _MenuBrowserState();
 }
@@ -40,7 +39,7 @@ class _MenuBrowserState extends State<MenuBrowser> {
       session!.currentOrder!.status == ORDER_ON_HOLD;
 
   Widget _buildContents(BuildContext context, Map<dynamic, dynamic> menus,
-    Map<dynamic, dynamic>? options, dynamic sortedKeys) {
+      Map<dynamic, dynamic>? options, dynamic sortedKeys) {
     return OrientationBuilder(
       builder: (context, orientation) {
         bool isLargeScreen = MediaQuery.of(context).size.width > 600;
@@ -57,7 +56,9 @@ class _MenuBrowserState extends State<MenuBrowser> {
                   return Container(
                     margin: EdgeInsets.symmetric(vertical: 1.0),
                     child: Card(
-                      color: (_selectedMenu[index] && isLargeScreen) ? Colors.grey : Theme.of(context).canvasColor,
+                      color: (_selectedMenu[index] && isLargeScreen)
+                          ? Colors.grey
+                          : Theme.of(context).canvasColor,
                       margin: EdgeInsets.all(12.0),
                       child: ListTile(
                         isThreeLine: false,
@@ -66,7 +67,7 @@ class _MenuBrowserState extends State<MenuBrowser> {
                           children: <Widget>[
                             Text(
                               menu!['name'],
-                              style: Theme.of(context).textTheme.headline4,
+                              style: Theme.of(context).textTheme.headlineMedium,
                             ),
                           ],
                         ),
@@ -81,18 +82,18 @@ class _MenuBrowserState extends State<MenuBrowser> {
                             Navigator.of(context).push(
                               MaterialPageRoute<void>(
                                 fullscreenDialog: false,
-                                builder: (context) =>
-                                    MenuItemView(
-                                      menu: menus[sortedKeys[index]],
-                                      isLargeScreen: false,
-                                    ),
+                                builder: (context) => MenuItemView(
+                                  menu: menus[sortedKeys[index]],
+                                  isLargeScreen: false,
+                                ),
                               ),
                             );
                           } else {
                             setState(() {
                               menu = menus[sortedKeys[index]];
                               _menuSelected = true;
-                              _selectedMenu = List.filled(_selectedMenu.length, false);
+                              _selectedMenu =
+                                  List.filled(_selectedMenu.length, false);
                               _selectedMenu[index] = true;
                             });
                           }
@@ -119,9 +120,14 @@ class _MenuBrowserState extends State<MenuBrowser> {
               ),
             ),
             if (isLargeScreen)
-            Expanded(
-              child: _menuSelected ? MenuItemView(menu: menu, isLargeScreen: true,) : Container(),
-            )
+              Expanded(
+                child: _menuSelected
+                    ? MenuItemView(
+                        menu: menu,
+                        isLargeScreen: true,
+                      )
+                    : Container(),
+              )
           ],
         );
       },
@@ -161,10 +167,8 @@ class _MenuBrowserState extends State<MenuBrowser> {
         title: 'Empty Order',
         exception: PlatformException(
           code: 'ORDER_IS_EMPTY',
-          message:
-          'Please tap on the menu items you wish to order first.',
-          details:
-          'Please tap on the menu items you wish to order first.',
+          message: 'Please tap on the menu items you wish to order first.',
+          details: 'Please tap on the menu items you wish to order first.',
         ),
       ).show(context);
     }
@@ -174,11 +178,14 @@ class _MenuBrowserState extends State<MenuBrowser> {
     final double timestamp = dateFromCurrentDate() / 1.0;
     var orderNumber = documentIdFromCurrentDate();
     if (session!.currentOrder == null) {
-      session!.currentOrder = session!.emptyOrder(orderNumber, timestamp, database!.userId);
+      session!.currentOrder =
+          session!.emptyOrder(orderNumber, timestamp, database!.userId);
     }
     session!.currentOrder!.userId = database!.userId;
-    if (session!.userDetails!.orderOnHold != null && session!.userDetails!.orderOnHold!.length > 0) {
-      session!.currentOrder = Order.fromMap(session!.userDetails!.orderOnHold, null);
+    if (session!.userDetails!.orderOnHold != null &&
+        session!.userDetails!.orderOnHold!.length > 0) {
+      session!.currentOrder =
+          Order.fromMap(session!.userDetails!.orderOnHold, null);
     }
     session!.broadcastOrderCounter(session!.currentOrder!.orderItems!.length);
   }
@@ -205,36 +212,40 @@ class _MenuBrowserState extends State<MenuBrowser> {
     var sortedKeys = sortedMenus.keys.toList()..sort();
     if (!_menuSelected) {
       _selectedMenu = List<bool>.generate(
-          session!.currentRestaurant!.restaurantMenus!.length, (index) => false);
+          session!.currentRestaurant!.restaurantMenus!.length,
+          (index) => false);
     }
     if (MediaQuery.of(context).orientation != _previousOrientation) {
       _menuSelected = false;
       _selectedMenu = List.filled(_selectedMenu.length, false);
       _previousOrientation = MediaQuery.of(context).orientation;
     }
-    return Stack(
-      children: <Widget>[
-        Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-            title: Text(
-              '${restaurant!.name}',
-              style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
-            ),
-            actions: [
-              if (!FlavourConfig.isAdmin())
+    return Stack(children: <Widget>[
+      Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text(
+            '${restaurant!.name}',
+            style:
+                TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          ),
+          actions: [
+            if (!FlavourConfig.isAdmin())
               Padding(
                 padding: const EdgeInsets.only(right: 26.0),
                 child: IconButton(
-                  icon: Icon(Icons.add_shopping_cart, size: 32.0,),
+                  icon: Icon(
+                    Icons.add_shopping_cart,
+                    size: 32.0,
+                  ),
                   onPressed: () => _shoppingCartAction(context),
                 ),
               ),
-            ],
-          ),
-          body: _buildContents(context, sortedMenus, options, sortedKeys),
+          ],
         ),
-        StreamBuilder<int>(
+        body: _buildContents(context, sortedMenus, options, sortedKeys),
+      ),
+      StreamBuilder<int>(
           stream: session!.orderCounterObservable,
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data! > 0) {
@@ -248,8 +259,7 @@ class _MenuBrowserState extends State<MenuBrowser> {
                   margin: EdgeInsets.only(top: 35.0, right: 5.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
-                      color: Colors.red
-                  ),
+                      color: Colors.red),
                   child: Text(
                     snapshot.data.toString(),
                     style: const TextStyle(
@@ -263,12 +273,13 @@ class _MenuBrowserState extends State<MenuBrowser> {
               return Positioned(
                 right: 18,
                 top: 5,
-                child: Container(height: 20.0, width: 20.0,),
+                child: Container(
+                  height: 20.0,
+                  width: 20.0,
+                ),
               );
             }
-          }
-        ),
-      ]
-    );
+          }),
+    ]);
   }
 }

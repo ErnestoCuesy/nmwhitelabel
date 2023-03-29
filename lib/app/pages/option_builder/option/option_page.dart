@@ -16,7 +16,6 @@ import 'package:nmwhitelabel/app/services/option_observable_stream.dart';
 import 'package:provider/provider.dart';
 
 class OptionPage extends StatefulWidget {
-
   @override
   _OptionPageState createState() => _OptionPageState();
 }
@@ -43,7 +42,8 @@ class _OptionPageState extends State<OptionPage> {
   Future<void> _deleteOption(BuildContext context, Option option) async {
     try {
       restaurant!.restaurantOptions!.remove(option.id);
-      optionStream!.broadcastEvent(restaurant!.restaurantOptions as Map<String?, dynamic>?);
+      optionStream!.broadcastEvent(
+          restaurant!.restaurantOptions as Map<String?, dynamic>?);
       Restaurant.setRestaurant(database, restaurant);
     } on PlatformException catch (e) {
       PlatformExceptionAlertDialog(
@@ -57,18 +57,17 @@ class _OptionPageState extends State<OptionPage> {
     var message = '';
     var inUse = false;
     var hasChildren = false;
-    if (restaurant!.restaurantOptions != null && restaurant!.restaurantOptions!.isNotEmpty) {
-      if (restaurant!.restaurantOptions![option.id]['usedByMenuItems']
-          .length > 0) {
+    if (restaurant!.restaurantOptions != null &&
+        restaurant!.restaurantOptions!.isNotEmpty) {
+      if (restaurant!.restaurantOptions![option.id]['usedByMenuItems'].length >
+          0) {
         inUse = true;
         message =
-        'Please first unselect this option from the menu items that are using it.';
+            'Please first unselect this option from the menu items that are using it.';
       }
       if (!inUse) {
         restaurant!.restaurantOptions![option.id].forEach((key, value) {
-          if (key
-              .toString()
-              .length > 20) {
+          if (key.toString().length > 20) {
             hasChildren = true;
             message = 'Please delete all the option items first.';
           }
@@ -122,7 +121,7 @@ class _OptionPageState extends State<OptionPage> {
                       children: <Widget>[
                         Text(
                           option.name!,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ],
                     ),
@@ -150,13 +149,16 @@ class _OptionPageState extends State<OptionPage> {
   Widget build(BuildContext context) {
     session = Provider.of<Session>(context);
     database = Provider.of<Database>(context);
-    optionStream = OptionObservableStream(observable: session.currentRestaurant!.restaurantOptions as Map<String?, dynamic>?);
+    optionStream = OptionObservableStream(
+        observable: session.currentRestaurant!.restaurantOptions
+            as Map<String?, dynamic>?);
     optionStream!.init();
     return Scaffold(
       appBar: AppBar(
         title: Text(
           '${restaurant!.name}',
-          style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
         actions: <Widget>[
           IconButton(

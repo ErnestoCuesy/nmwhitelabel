@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
 import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
@@ -16,7 +16,8 @@ class MenuItemDetailsForm extends StatefulWidget {
   final MenuItemDetailsModel? model;
   final Map<dynamic, dynamic>? optionsMap;
 
-  const MenuItemDetailsForm({Key? key, this.model, this.optionsMap}) : super(key: key);
+  const MenuItemDetailsForm({Key? key, this.model, this.optionsMap})
+      : super(key: key);
 
   static Widget create({
     required BuildContext context,
@@ -142,12 +143,12 @@ class _MenuItemDetailsFormState extends State<MenuItemDetailsForm> {
         height: 16.0,
       ),
       if (widget.optionsMap!.isNotEmpty)
-      Center(
-        child: Text(
-          'Tick all the options that apply',
-          style: Theme.of(context).textTheme.subtitle1,
+        Center(
+          child: Text(
+            'Tick all the options that apply',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
         ),
-      ),
       SizedBox(
         height: 8.0,
       ),

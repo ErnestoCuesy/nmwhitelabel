@@ -7,7 +7,8 @@ class UpsellScreen extends StatefulWidget {
   final int? blockedOrders;
   final int? ordersLeft;
 
-  const UpsellScreen({Key? key, this.blockedOrders, this.ordersLeft}) : super(key: key);
+  const UpsellScreen({Key? key, this.blockedOrders, this.ordersLeft})
+      : super(key: key);
 
   @override
   _UpsellScreenState createState() => _UpsellScreenState();
@@ -24,33 +25,35 @@ class _UpsellScreenState extends State<UpsellScreen> {
     if (ordersLeft != null) {
       packages.add(Text(
         'Orders left: ${ordersLeft.toString()}',
-        style: Theme
-            .of(context)
-            .textTheme
-            .headline4,
+        style: Theme.of(context).textTheme.headlineMedium,
       ));
-      packages.add(SizedBox(height: 16.0,));
+      packages.add(SizedBox(
+        height: 16.0,
+      ));
     }
     if (blockedOrders != null) {
       packages.add(Text(
         'Orders locked: $blockedOrders',
-        style: Theme
-            .of(context)
-            .textTheme
-            .headline4,
+        style: Theme.of(context).textTheme.headlineMedium,
       ));
-      packages.add(SizedBox(height: 16.0,));
+      packages.add(SizedBox(
+        height: 16.0,
+      ));
     }
-    final excludeTrial = session.subscription!.purchaserInfo!.allPurchasedProductIdentifiers.contains('in_app_mp0');
+    final excludeTrial = session
+        .subscription!.purchaserInfo!.allPurchasedProductIdentifiers
+        .contains('in_app_mp0');
     session.subscription!.availableOfferings!.forEach((pkg) {
-      if (pkg.product.identifier == 'in_app_mp0' && excludeTrial) {
+      if (pkg.storeProduct.identifier == 'in_app_mp0' && excludeTrial) {
         print('Excluding trial package');
       } else {
         packages.add(PurchaseButton(
           package: pkg,
           blockedOrders: blockedOrders,
         ));
-        packages.add(SizedBox(height: 24.0,));
+        packages.add(SizedBox(
+          height: 24.0,
+        ));
       }
     });
     return packages;

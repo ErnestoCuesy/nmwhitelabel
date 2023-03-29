@@ -36,11 +36,11 @@ class _MessagesPageState extends State<MessagesPage> {
     }
   }
 
-  Future<bool> _confirmDismiss(BuildContext context, UserMessage message) async {
+  Future<bool> _confirmDismiss(
+      BuildContext context, UserMessage message) async {
     if (message.authFlag!) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Disable access first to delete'))
-      );
+          SnackBar(content: Text('Disable access first to delete')));
     }
     return !message.authFlag!;
   }
@@ -72,7 +72,9 @@ class _MessagesPageState extends State<MessagesPage> {
                   margin: EdgeInsets.all(12.0),
                   child: ListTile(
                     isThreeLine: true,
-                    leading: message.fromRole == ROLE_STAFF ? Icon(Icons.accessibility) : Icon(Icons.message),
+                    leading: message.fromRole == ROLE_STAFF
+                        ? Icon(Icons.accessibility)
+                        : Icon(Icons.message),
                     title: Padding(
                       padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
                       child: Column(
@@ -83,21 +85,25 @@ class _MessagesPageState extends State<MessagesPage> {
                                 const EdgeInsets.only(top: 8.0, bottom: 4.0),
                             child: Text(
                               message.type!,
-                              style: Theme.of(context).textTheme.headline6,
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ),
                           Padding(
                             padding:
                                 const EdgeInsets.only(top: 4.0, bottom: 4.0),
                             child: Text(
-                              message.fromRole == ROLE_ADMIN ? 'Sent by Admin' : 'Requested by: ${message.fromName}',
+                              message.fromRole == ROLE_ADMIN
+                                  ? 'Sent by Admin'
+                                  : 'Requested by: ${message.fromName}',
                             ),
                           ),
                           Padding(
                             padding:
                                 const EdgeInsets.only(top: 4.0, bottom: 4.0),
                             child: Text(
-                              message.fromRole == ROLE_ADMIN ? '-' : 'Tap for options',
+                              message.fromRole == ROLE_ADMIN
+                                  ? '-'
+                                  : 'Tap for options',
                             ),
                           ),
                           Text(
@@ -129,15 +135,18 @@ class _MessagesPageState extends State<MessagesPage> {
   }
 
   void _accessOptions(BuildContext context, UserMessage message) {
-    Navigator.of(context).push(MaterialPageRoute(
+    Navigator.of(context).push(
+      MaterialPageRoute(
         fullscreenDialog: false,
-        builder: (context) =>
-            AccessOptions(message: message,),
+        builder: (context) => AccessOptions(
+          message: message,
+        ),
       ),
     );
   }
 
-  void _convertUser(BuildContext context, UserMessage message, Function(BuildContext, UserMessage) nextAction) async {
+  void _convertUser(BuildContext context, UserMessage message,
+      Function(BuildContext, UserMessage) nextAction) async {
     if (message.fromRole == ROLE_ADMIN) {
       return;
     }
@@ -166,7 +175,8 @@ class _MessagesPageState extends State<MessagesPage> {
       appBar: AppBar(
         title: Text(
           'Messages',
-          style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
       ),
       body: _buildContents(context),

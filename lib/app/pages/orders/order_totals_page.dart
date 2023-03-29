@@ -8,7 +8,8 @@ class OrderTotalsPage extends StatefulWidget {
   final Stream<List<Order>>? stream;
   final String? selectedStringDate;
 
-  const OrderTotalsPage({Key? key, this.stream, this.selectedStringDate}) : super(key: key);
+  const OrderTotalsPage({Key? key, this.stream, this.selectedStringDate})
+      : super(key: key);
 
   @override
   _OrderTotalsPageState createState() => _OrderTotalsPageState();
@@ -28,11 +29,15 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
   void _updateSubTotalPerStatus(Order order, String status) {
     order.orderItems!.forEach((item) {
       if (_itemizedSubTotalPerStatus[status].containsKey(item['name'])) {
-        _itemizedSubTotalPerStatus[status].update(item['name'], (value) => value + item['lineTotal']);
-        _itemizedQuantityPerStatus[status].update(item['name'], (value) => value + item['quantity']);
+        _itemizedSubTotalPerStatus[status]
+            .update(item['name'], (value) => value + item['lineTotal']);
+        _itemizedQuantityPerStatus[status]
+            .update(item['name'], (value) => value + item['quantity']);
       } else {
-        _itemizedSubTotalPerStatus[status].putIfAbsent(item['name'], () => item['lineTotal']);
-        _itemizedQuantityPerStatus[status].putIfAbsent(item['name'], () => item['quantity']);
+        _itemizedSubTotalPerStatus[status]
+            .putIfAbsent(item['name'], () => item['lineTotal']);
+        _itemizedQuantityPerStatus[status]
+            .putIfAbsent(item['name'], () => item['quantity']);
       }
     });
   }
@@ -45,16 +50,25 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
     _paymentMethodQuantityTotals.clear();
     _paymentMethodAmountTotals.clear();
     _tipsAndDiscountsAmountTotals.clear();
-    for (String status in ['Pending', 'Cancelled', 'Rejected', 'Active', 'Closed']) {
+    for (String status in [
+      'Pending',
+      'Cancelled',
+      'Rejected',
+      'Active',
+      'Closed'
+    ]) {
       _orderTotals.putIfAbsent(status, () => 0.00);
       _orderCounters.putIfAbsent(status, () => 0);
-      _itemizedSubTotalPerStatus.putIfAbsent(status, () => Map<String, dynamic>());
-      _itemizedQuantityPerStatus.putIfAbsent(status, () => Map<String, dynamic>());
+      _itemizedSubTotalPerStatus.putIfAbsent(
+          status, () => Map<String, dynamic>());
+      _itemizedQuantityPerStatus.putIfAbsent(
+          status, () => Map<String, dynamic>());
     }
     _tipsAndDiscountsAmountTotals.putIfAbsent('Tips', () => 0);
     _tipsAndDiscountsAmountTotals.putIfAbsent('Discounts', () => 0);
     _orderList!.forEach((order) {
-      final total = order.orderTotal - (order.orderTotal * order.discount!) + order.tip!;
+      final total =
+          order.orderTotal - (order.orderTotal * order.discount!) + order.tip!;
       if (order.status == ORDER_PLACED) {
         _orderTotals.update('Pending', (value) => value + total);
         _orderCounters.update('Pending', (value) => value + 1);
@@ -63,7 +77,8 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
         _orderTotals.update('Active', (value) => value + total);
         _orderCounters.update('Active', (value) => value + 1);
         _updateSubTotalPerStatus(order, 'Active');
-      } else if (order.status == ORDER_REJECTED_BUSY || order.status == ORDER_REJECTED_STOCK) {
+      } else if (order.status == ORDER_REJECTED_BUSY ||
+          order.status == ORDER_REJECTED_STOCK) {
         _orderTotals.update('Rejected', (value) => value + total);
         _orderCounters.update('Rejected', (value) => value + 1);
         _updateSubTotalPerStatus(order, 'Rejected');
@@ -76,7 +91,8 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
           _orderTotals.update('Closed', (value) => value + total);
           _orderCounters.update('Closed', (value) => value + 1);
           _updateSubTotalPerStatus(order, 'Closed');
-          if (order.paymentMethod != '') { // Old transaction with one payment method
+          if (order.paymentMethod != '') {
+            // Old transaction with one payment method
             if (_paymentMethodAmountTotals.containsKey(order.paymentMethod)) {
               _paymentMethodQuantityTotals.update(
                   order.paymentMethod, (value) => value + 1);
@@ -88,29 +104,30 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
               _paymentMethodAmountTotals.putIfAbsent(
                   order.paymentMethod, () => total);
             }
-          } else { // New transaction with multiple payment methods
+          } else {
+            // New transaction with multiple payment methods
             order.paymentMethods!.forEach((key, splitAmount) {
               if (_paymentMethodAmountTotals.containsKey(key)) {
-                _paymentMethodQuantityTotals.update(
-                    key, (value) => value + 1);
+                _paymentMethodQuantityTotals.update(key, (value) => value + 1);
                 _paymentMethodAmountTotals.update(
                     key, (value) => value! + splitAmount!);
               } else {
-                _paymentMethodQuantityTotals.putIfAbsent(
-                    key, () => 1);
-                _paymentMethodAmountTotals.putIfAbsent(
-                    key, () => splitAmount);
+                _paymentMethodQuantityTotals.putIfAbsent(key, () => 1);
+                _paymentMethodAmountTotals.putIfAbsent(key, () => splitAmount);
               }
             });
           }
-          _tipsAndDiscountsAmountTotals.update('Tips', (value) => value + order.tip!);
-          _tipsAndDiscountsAmountTotals.update('Discounts', (value) => value + (order.orderTotal * order.discount!));
+          _tipsAndDiscountsAmountTotals.update(
+              'Tips', (value) => value + order.tip!);
+          _tipsAndDiscountsAmountTotals.update('Discounts',
+              (value) => value + (order.orderTotal * order.discount!));
         }
       }
     });
   }
 
-  Widget _totalCard(BuildContext context, String totalName, bool withPaymentMethod, bool withTipsAndDiscounts) {
+  Widget _totalCard(BuildContext context, String totalName,
+      bool withPaymentMethod, bool withTipsAndDiscounts) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -123,30 +140,21 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
                   totalName,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Text(
                   '${_orderCounters['$totalName']}',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Text(
                   '${f.format(_orderTotals['$totalName'])}',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               Row(
@@ -162,15 +170,15 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
                     },
                   ),
                   if (withPaymentMethod)
-                  IconButton(
-                    icon: Icon(Icons.payment),
-                    onPressed: () {
-                      Navigator.of(context).push(ItemBreakdownReport(
-                        amounts: _paymentMethodAmountTotals,
-                        quantities: _paymentMethodQuantityTotals,
-                      ));
-                    },
-                  ),
+                    IconButton(
+                      icon: Icon(Icons.payment),
+                      onPressed: () {
+                        Navigator.of(context).push(ItemBreakdownReport(
+                          amounts: _paymentMethodAmountTotals,
+                          quantities: _paymentMethodQuantityTotals,
+                        ));
+                      },
+                    ),
                   if (withTipsAndDiscounts)
                     IconButton(
                       icon: Icon(Icons.monetization_on),
@@ -209,20 +217,14 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'Totals For The Day',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       widget.selectedStringDate!,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline5,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                   _totalCard(context, 'Closed', true, true),

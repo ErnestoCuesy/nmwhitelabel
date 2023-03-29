@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 class EmailSignInForm extends StatefulWidget {
-
   EmailSignInForm({required this.model, required this.convertAnonymous});
 
   final EmailSignInModel? model;
@@ -22,14 +21,19 @@ class EmailSignInForm extends StatefulWidget {
     final session = Provider.of<Session>(context);
     return ChangeNotifierProvider<EmailSignInModel>(
       create: (context) => EmailSignInModel(
-          auth: auth,
-          session: session,
-          formType: convertAnonymous! ? EmailSignInFormType.convert : EmailSignInFormType.signIn,
-          convertAnonymous: convertAnonymous,
-          acceptTermsAndConditions: false,
+        auth: auth,
+        session: session,
+        formType: convertAnonymous!
+            ? EmailSignInFormType.convert
+            : EmailSignInFormType.signIn,
+        convertAnonymous: convertAnonymous,
+        acceptTermsAndConditions: false,
       ),
       child: Consumer<EmailSignInModel>(
-        builder: (context, model, _) => EmailSignInForm(model: model, convertAnonymous: convertAnonymous,),
+        builder: (context, model, _) => EmailSignInForm(
+          model: model,
+          convertAnonymous: convertAnonymous,
+        ),
       ),
     );
   }
@@ -72,7 +76,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           FlavourConfig.isManager()) {
         PlatformAlertDialog(
           title: 'Log-out required',
-          content: 'You\'ll be logged-out so you can log back in with your new credentials.',
+          content:
+              'You\'ll be logged-out so you can log back in with your new credentials.',
           defaultActionText: 'Ok',
         ).show(context).then((value) async => await model!.auth.signOut());
       }
@@ -113,7 +118,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       if (model!.formType == EmailSignInFormType.register ||
           model!.formType == EmailSignInFormType.convert ||
           model!.formType == EmailSignInFormType.signIn)
-      _buildEmailPasswordField(),
+        _buildEmailPasswordField(),
       SizedBox(
         height: 8.0,
       ),
@@ -132,7 +137,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       FormSubmitButton(
         context: context,
         text: model!.primaryButtonText!,
-        color: model!.canSubmit ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
+        color: model!.canSubmit
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).disabledColor,
         onPressed: model!.canSubmit ? _submit : null,
       ),
       SizedBox(
@@ -214,17 +221,21 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   Widget _buildAcceptTermsAndConditionsBTN() {
     return TextButton(
       child: Text(
-          'Tap here to agree to our Terms and Conditions',
-          style: Theme.of(context).textTheme.bodyText2,
+        'Tap here to agree to our Terms and Conditions',
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
       onPressed: () async {
         if (!model!.isLoading) {
-          await Navigator.of(context).push(
-            MaterialPageRoute<bool>(
-              fullscreenDialog: true,
-              builder: (context) => TermsAndConditions(askAgreement: true,),
-            ),
-          ).then((value) => model!.updateTermsAndConditions(value));
+          await Navigator.of(context)
+              .push(
+                MaterialPageRoute<bool>(
+                  fullscreenDialog: true,
+                  builder: (context) => TermsAndConditions(
+                    askAgreement: true,
+                  ),
+                ),
+              )
+              .then((value) => model!.updateTermsAndConditions(value));
         }
       },
     );
@@ -232,16 +243,16 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   @override
   Widget build(BuildContext context) {
-      return Container(
-        color: Theme.of(context).dialogBackgroundColor,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: _buildChildren(),
-          ),
+    return Container(
+      color: Theme.of(context).dialogBackgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: _buildChildren(),
         ),
-      );
+      ),
+    );
   }
 }

@@ -28,15 +28,15 @@ class _ItemImagePageState extends State<ItemImagePage> {
             id: DateTime.now().millisecondsSinceEpoch + i,
             restaurantId: session.currentRestaurant!.id,
             description: 'Tap image to change',
-            url: ''
-        ));
+            url: ''));
       }
       session.currentRestaurant!.itemImagesInitialized = true;
       database.setRestaurant(session.currentRestaurant);
     }
   }
 
-  void _createItemImageDetailsPage(BuildContext context, ItemImage itemImage, Widget image) {
+  void _createItemImageDetailsPage(
+      BuildContext context, ItemImage itemImage, Widget image) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         fullscreenDialog: false,
@@ -52,80 +52,76 @@ class _ItemImagePageState extends State<ItemImagePage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return StreamBuilder<List<ItemImage>>(
-      stream: database.itemImages(session.currentRestaurant!.id),
-      builder: (context, snapshot) {
-        return ListItemsBuilder<ItemImage>(
-          axis: widget.viewOnly! ? Axis.horizontal : Axis.vertical,
-          title: 'No images found',
-          message: '',
-          snapshot: snapshot,
-          itemBuilder: (context, itemImage) {
-            final image = itemImage.url != ''
-                ? Image.network(itemImage.url!)
-                : Icon(Icons.image, size: 36.0,);
-            if (widget.viewOnly!) {
-              return Container(
-                width: width,
-                height: height,
-                child: Column(
-                  children: [
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: image,
-                    )),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        itemImage.url != '' ? itemImage.description! : '',
-                        textAlign: TextAlign.center,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline5,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  child: Row(
-                    //mainAxisAlignment: MainAxisAlignment.start,
+        stream: database.itemImages(session.currentRestaurant!.id),
+        builder: (context, snapshot) {
+          return ListItemsBuilder<ItemImage>(
+            axis: widget.viewOnly! ? Axis.horizontal : Axis.vertical,
+            title: 'No images found',
+            message: '',
+            snapshot: snapshot,
+            itemBuilder: (context, itemImage) {
+              final image = itemImage.url != ''
+                  ? Image.network(itemImage.url!)
+                  : Icon(
+                      Icons.image,
+                      size: 36.0,
+                    );
+              if (widget.viewOnly!) {
+                return Container(
+                  width: width,
+                  height: height,
+                  child: Column(
                     children: [
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: image,
+                      )),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 110,
-                          height: 110,
-                          child: IconButton(
-                            icon: image,
-                            onPressed: () =>
-                                _createItemImageDetailsPage(
-                                    context, itemImage, image),
-                          ),
-                        ),
-                      ),
-                      Expanded(
                         child: Text(
-                          itemImage.description!,
-                          overflow: TextOverflow.fade,
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline5,
+                          itemImage.url != '' ? itemImage.description! : '',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ),
                     ],
                   ),
-                ),
-              );
-            }
-          },
-        );
-      }
-    );
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: 110,
+                            height: 110,
+                            child: IconButton(
+                              icon: image,
+                              onPressed: () => _createItemImageDetailsPage(
+                                  context, itemImage, image),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            itemImage.description!,
+                            overflow: TextOverflow.fade,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+            },
+          );
+        });
   }
 
   @override
@@ -136,22 +132,17 @@ class _ItemImagePageState extends State<ItemImagePage> {
     if (Platform.isAndroid) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(
-              widget.viewOnly! ? 'Our specialities' : 'Upload images'
-          ),
+          title: Text(widget.viewOnly! ? 'Our specialities' : 'Upload images'),
         ),
         body: _buildContents(context),
       );
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text(
-              widget.viewOnly! ? 'Our specialities' : 'Upload images'
-          ),
+          title: Text(widget.viewOnly! ? 'Our specialities' : 'Upload images'),
         ),
         body: _buildContents(context),
       );
     }
   }
-
 }

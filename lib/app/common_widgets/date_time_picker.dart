@@ -33,7 +33,8 @@ class DateTimePicker extends StatelessWidget {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final pickedTime = await showTimePicker(context: context, initialTime: selectedTime!);
+    final pickedTime =
+        await showTimePicker(context: context, initialTime: selectedTime!);
     if (pickedTime != null && pickedTime != selectedTime) {
       onSelectedTime!(pickedTime);
     }
@@ -41,32 +42,31 @@ class DateTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valueStyle = Theme.of(context).textTheme.headline6;
+    final valueStyle = Theme.of(context).textTheme.titleLarge;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         if (selectedDate != null)
-        Expanded(
-          flex: 5,
-          child: InputDropdown(
-            labelText: labelText,
-            valueText: Format.date(selectedDate!),
-            valueStyle: valueStyle,
-            onPressed: () => _selectDate(context),
+          Expanded(
+            flex: 5,
+            child: InputDropdown(
+              labelText: labelText,
+              valueText: Format.date(selectedDate!),
+              valueStyle: valueStyle,
+              onPressed: () => _selectDate(context),
+            ),
           ),
-        ),
+        if (selectedTime != null) SizedBox(width: 12.0),
         if (selectedTime != null)
-        SizedBox(width: 12.0),
-        if (selectedTime != null)
-        Expanded(
-          flex: 4,
-          child: InputDropdown(
-            labelText: selectedDate == null ? labelText : '',
-            valueText: selectedTime!.format(context),
-            valueStyle: valueStyle,
-            onPressed: () => _selectTime(context),
+          Expanded(
+            flex: 4,
+            child: InputDropdown(
+              labelText: selectedDate == null ? labelText : '',
+              valueText: selectedTime!.format(context),
+              valueStyle: valueStyle,
+              onPressed: () => _selectTime(context),
+            ),
           ),
-        ),
       ],
     );
   }

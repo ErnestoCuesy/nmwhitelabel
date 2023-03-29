@@ -8,7 +8,12 @@ class LocationServicesError extends StatelessWidget {
   final Function? continueWithoutLocation;
   final String? message;
 
-  const LocationServicesError({Key? key, this.askPermission, this.continueWithoutLocation, this.message}) : super(key: key);
+  const LocationServicesError(
+      {Key? key,
+      this.askPermission,
+      this.continueWithoutLocation,
+      this.message})
+      : super(key: key);
 
   Color _buttonColor() {
     Color buttonColor = Colors.green;
@@ -30,7 +35,7 @@ class LocationServicesError extends StatelessWidget {
           children: [
             Text(
               'Nearby Menus',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             Container(
               padding: EdgeInsets.all(32.0),
@@ -45,7 +50,9 @@ class LocationServicesError extends StatelessWidget {
               text: 'Retry',
               onPressed: askPermission as void Function()?,
             ),
-            SizedBox(height: 16.0,),
+            SizedBox(
+              height: 16.0,
+            ),
             FormSubmitButton(
               context: context,
               color: _buttonColor(),
