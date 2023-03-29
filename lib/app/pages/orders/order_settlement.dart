@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
 
 class ExtraFields {
   double? tip;

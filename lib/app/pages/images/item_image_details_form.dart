@@ -1,13 +1,13 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nmwhitelabel/app/common_widgets/custom_raised_button.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/models/item_image.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/pages/images/item_image_details_model.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/common_widgets/custom_raised_button.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/models/item_image.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/pages/images/item_image_details_model.dart';
+import 'package:nearbymenus/app/services/database.dart';
 import 'package:provider/provider.dart';
 
 class ItemImageDetailsForm extends StatefulWidget {

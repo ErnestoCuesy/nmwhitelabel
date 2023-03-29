@@ -2,15 +2,15 @@ import 'package:calendarro/calendarro.dart';
 import 'package:calendarro/date_utils.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/common_widgets/custom_weekday_label_row.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/authorizations.dart';
-import 'package:nmwhitelabel/app/models/order.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/orders/order_totals_page.dart';
-import 'package:nmwhitelabel/app/pages/restaurant/venue_authorization_page.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/common_widgets/custom_weekday_label_row.dart';
+import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/authorizations.dart';
+import 'package:nearbymenus/app/models/order.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/orders/order_totals_page.dart';
+import 'package:nearbymenus/app/pages/restaurant/venue_authorization_page.dart';
+import 'package:nearbymenus/app/services/database.dart';
 import 'package:provider/provider.dart';
 
 class OrderTotals extends StatefulWidget {

@@ -60,9 +60,11 @@ class DefaultFirebaseOptions {
     projectId: 'nearby-menus-be6e3',
     databaseURL: 'https://nearby-menus-be6e3.firebaseio.com',
     storageBucket: 'nearby-menus-be6e3.appspot.com',
-    androidClientId: '216593913852-o0pvg9kmmh9vn4bnv0fld52p9dohicr9.apps.googleusercontent.com',
-    iosClientId: '216593913852-qai1sdmjei24mcgc35fv7p8f41m5vee3.apps.googleusercontent.com',
-    iosBundleId: 'com.ernestosoft.nmwhitelabel',
+    androidClientId:
+        '216593913852-o0pvg9kmmh9vn4bnv0fld52p9dohicr9.apps.googleusercontent.com',
+    iosClientId:
+        '216593913852-qai1sdmjei24mcgc35fv7p8f41m5vee3.apps.googleusercontent.com',
+    iosBundleId: 'com.ernestosoft.nearbymenus',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -72,8 +74,10 @@ class DefaultFirebaseOptions {
     projectId: 'nearby-menus-be6e3',
     databaseURL: 'https://nearby-menus-be6e3.firebaseio.com',
     storageBucket: 'nearby-menus-be6e3.appspot.com',
-    androidClientId: '216593913852-o0pvg9kmmh9vn4bnv0fld52p9dohicr9.apps.googleusercontent.com',
-    iosClientId: '216593913852-qai1sdmjei24mcgc35fv7p8f41m5vee3.apps.googleusercontent.com',
-    iosBundleId: 'com.ernestosoft.nmwhitelabel',
+    androidClientId:
+        '216593913852-o0pvg9kmmh9vn4bnv0fld52p9dohicr9.apps.googleusercontent.com',
+    iosClientId:
+        '216593913852-qai1sdmjei24mcgc35fv7p8f41m5vee3.apps.googleusercontent.com',
+    iosBundleId: 'com.ernestosoft.nearbymenus',
   );
 }

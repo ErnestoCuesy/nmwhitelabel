@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/option.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/option_observable_stream.dart';
-import 'package:nmwhitelabel/app/utilities/validators.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/models/option.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/option_observable_stream.dart';
+import 'package:nearbymenus/app/utilities/validators.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class OptionDetailsModel with RestaurantOptionValidators, ChangeNotifier {
   final Database database;
@@ -18,16 +18,16 @@ class OptionDetailsModel with RestaurantOptionValidators, ChangeNotifier {
   bool isLoading;
   bool submitted;
 
-  OptionDetailsModel(
-      {required this.database,
-       required this.session,
-       required this.optionStream,
-      this.restaurant,
-      this.id,
-      this.name,
-      this.numberAllowed,
-      this.isLoading = false,
-      this.submitted = false,
+  OptionDetailsModel({
+    required this.database,
+    required this.session,
+    required this.optionStream,
+    this.restaurant,
+    this.id,
+    this.name,
+    this.numberAllowed,
+    this.isLoading = false,
+    this.submitted = false,
   });
 
   Future<void> save() async {
@@ -53,7 +53,8 @@ class OptionDetailsModel with RestaurantOptionValidators, ChangeNotifier {
       } else {
         restaurant!.restaurantOptions!.putIfAbsent(id, () => option.toMap());
       }
-      optionStream!.broadcastEvent(restaurant!.restaurantOptions as Map<String?, dynamic>?);
+      optionStream!.broadcastEvent(
+          restaurant!.restaurantOptions as Map<String?, dynamic>?);
       Restaurant.setRestaurant(database, restaurant);
     } catch (e) {
       print(e);
@@ -64,8 +65,9 @@ class OptionDetailsModel with RestaurantOptionValidators, ChangeNotifier {
 
   String get primaryButtonText => 'Save';
 
-  bool get canSave => optionNameValidator.isValid(name) &&
-                      numberAllowedValidator.isValid(numberAllowed);
+  bool get canSave =>
+      optionNameValidator.isValid(name) &&
+      numberAllowedValidator.isValid(numberAllowed);
 
   String? get optionNameErrorText {
     bool showErrorText = !optionNameValidator.isValid(name);
@@ -79,7 +81,8 @@ class OptionDetailsModel with RestaurantOptionValidators, ChangeNotifier {
 
   void updateOptionName(String name) => updateWith(name: name);
 
-  void updateNumberAllowed(int? numberAllowed) => updateWith(numberAllowed: numberAllowed);
+  void updateNumberAllowed(int? numberAllowed) =>
+      updateWith(numberAllowed: numberAllowed);
 
   void updateWith({
     String? name,

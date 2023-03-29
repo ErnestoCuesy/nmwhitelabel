@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/user_details.dart';
-import 'package:nmwhitelabel/app/pages/user/user_details_model.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/user_details.dart';
+import 'package:nearbymenus/app/pages/user/user_details_model.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/models/session.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 class UserDetailsForm extends StatefulWidget {
-
   final UserDetailsModel? model;
 
   const UserDetailsForm({Key? key, this.model}) : super(key: key);
@@ -29,27 +28,28 @@ class UserDetailsForm extends StatefulWidget {
     }
     return ChangeNotifierProvider<UserDetailsModel>(
       create: (context) => UserDetailsModel(
-          session: session,
-          database: database,
-          role: role,
-          email: userDetails!.email,
-          userName: userDetails.name,
-          userAddress1: userDetails.address1,
-          userAddress2: userDetails.address2,
-          userAddress3: userDetails.address3,
-          userAddress4: userDetails.address4,
-          userTelephone: userDetails.telephone,
-          agreementDate: userDetails.agreementDate,
+        session: session,
+        database: database,
+        role: role,
+        email: userDetails!.email,
+        userName: userDetails.name,
+        userAddress1: userDetails.address1,
+        userAddress2: userDetails.address2,
+        userAddress3: userDetails.address3,
+        userAddress4: userDetails.address4,
+        userTelephone: userDetails.telephone,
+        agreementDate: userDetails.agreementDate,
       ),
       child: Consumer<UserDetailsModel>(
-        builder: (context, model, _) => UserDetailsForm(model: model,),
+        builder: (context, model, _) => UserDetailsForm(
+          model: model,
+        ),
       ),
     );
   }
 
   @override
   _UserDetailsFormState createState() => _UserDetailsFormState();
-
 }
 
 class _UserDetailsFormState extends State<UserDetailsForm> {
@@ -58,7 +58,8 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
   final TextEditingController _userAddress2Controller = TextEditingController();
   final TextEditingController _userAddress3Controller = TextEditingController();
   final TextEditingController _userAddress4Controller = TextEditingController();
-  final TextEditingController _userTelephoneController = TextEditingController();
+  final TextEditingController _userTelephoneController =
+      TextEditingController();
   final FocusNode _userNameFocusNode = FocusNode();
   final FocusNode _userAddress1FocusNode = FocusNode();
   final FocusNode _userAddress2FocusNode = FocusNode();
@@ -181,7 +182,9 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
       FormSubmitButton(
         context: context,
         text: model!.primaryButtonText,
-        color: model!.canSave ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
+        color: model!.canSave
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).disabledColor,
         onPressed: model!.canSave ? _save : null,
       ),
       SizedBox(
@@ -327,9 +330,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
   Widget build(BuildContext context) {
     session = Provider.of<Session>(context);
     return Container(
-      color: Theme
-          .of(context)
-          .dialogBackgroundColor,
+      color: Theme.of(context).dialogBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

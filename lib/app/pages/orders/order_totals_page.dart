@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
-import 'package:nmwhitelabel/app/models/order.dart';
-import 'package:nmwhitelabel/app/pages/reports/item_breakdown_report.dart';
+import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
+import 'package:nearbymenus/app/models/order.dart';
+import 'package:nearbymenus/app/pages/reports/item_breakdown_report.dart';
 
 class OrderTotalsPage extends StatefulWidget {
   final Stream<List<Order>>? stream;

@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/list_items_builder.dart';
-import 'package:nmwhitelabel/app/models/item_image.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/images/item_image_details_page.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/common_widgets/list_items_builder.dart';
+import 'package:nearbymenus/app/models/item_image.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/images/item_image_details_page.dart';
+import 'package:nearbymenus/app/services/database.dart';
 import 'package:provider/provider.dart';
 
 class ItemImagePage extends StatefulWidget {

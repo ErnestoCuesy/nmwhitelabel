@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/init_firebase.dart';
+import 'package:nearbymenus/app/init_firebase.dart';
 import 'app/config/flavour_config.dart';
 
 void main() {

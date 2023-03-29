@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:nmwhitelabel/app/models/map_marker.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/map/capture_marker_name.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/models/map_marker.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/map/capture_marker_name.dart';
+import 'package:nearbymenus/app/services/database.dart';
 import 'package:provider/provider.dart';
 
 class CaptureMapMarkers extends StatefulWidget {

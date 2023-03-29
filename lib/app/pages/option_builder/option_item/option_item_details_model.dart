@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/option.dart';
-import 'package:nmwhitelabel/app/models/option_item.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/option_item_observable_stream.dart';
-import 'package:nmwhitelabel/app/utilities/validators.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/models/option.dart';
+import 'package:nearbymenus/app/models/option_item.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/option_item_observable_stream.dart';
+import 'package:nearbymenus/app/utilities/validators.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class OptionItemDetailsModel with OptionItemValidators, ChangeNotifier {
   final Database database;
@@ -19,17 +19,17 @@ class OptionItemDetailsModel with OptionItemValidators, ChangeNotifier {
   bool isLoading;
   bool submitted;
 
-  OptionItemDetailsModel(
-      {required this.database,
-       required this.session,
-       required this.option,
-       required this.restaurant,
-       required this.optionItemStream,
-        this.id,
-        this.name,
-        this.isLoading = false,
-        this.submitted = false,
-      });
+  OptionItemDetailsModel({
+    required this.database,
+    required this.session,
+    required this.option,
+    required this.restaurant,
+    required this.optionItemStream,
+    this.id,
+    this.name,
+    this.isLoading = false,
+    this.submitted = false,
+  });
 
   Future<void> save() async {
     updateWith(isLoading: true, submitted: true);
@@ -43,13 +43,17 @@ class OptionItemDetailsModel with OptionItemValidators, ChangeNotifier {
       name: name,
     );
     try {
-      final Map<dynamic, dynamic> items = restaurant!.restaurantOptions![option!.id];
+      final Map<dynamic, dynamic> items =
+          restaurant!.restaurantOptions![option!.id];
       if (items.containsKey(id)) {
-        restaurant!.restaurantOptions![option!.id].update(id, (_) => item.toMap());
+        restaurant!.restaurantOptions![option!.id]
+            .update(id, (_) => item.toMap());
       } else {
-        restaurant!.restaurantOptions![option!.id].putIfAbsent(id, () => item.toMap());
+        restaurant!.restaurantOptions![option!.id]
+            .putIfAbsent(id, () => item.toMap());
       }
-      optionItemStream!.broadcastEvent(restaurant!.restaurantOptions![option!.id]);
+      optionItemStream!
+          .broadcastEvent(restaurant!.restaurantOptions![option!.id]);
       await Restaurant.setRestaurant(database, restaurant);
     } catch (e) {
       print(e);

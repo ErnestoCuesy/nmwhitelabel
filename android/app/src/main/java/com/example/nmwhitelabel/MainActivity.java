@@ -1,4 +1,4 @@
-package com.ernestosoft.nmwhitelabel;
+package com.ernestosoft.nearbymenus;
 
 import io.flutter.embedding.android.FlutterActivity;
 

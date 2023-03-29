@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/list_items_builder.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/pages/messages/messages_listener.dart';
-import 'package:nmwhitelabel/app/pages/restaurant/check_staff_authorization.dart';
-import 'package:nmwhitelabel/app/pages/restaurant/restaurant_options_page.dart';
-import 'package:nmwhitelabel/app/pages/restaurant/restaurant_list_tile.dart';
-import 'package:nmwhitelabel/app/services/near_restaurant_bloc.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
+import 'package:nearbymenus/app/common_widgets/list_items_builder.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/pages/messages/messages_listener.dart';
+import 'package:nearbymenus/app/pages/restaurant/check_staff_authorization.dart';
+import 'package:nearbymenus/app/pages/restaurant/restaurant_options_page.dart';
+import 'package:nearbymenus/app/pages/restaurant/restaurant_list_tile.dart';
+import 'package:nearbymenus/app/services/near_restaurant_bloc.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/models/session.dart';
 import 'package:provider/provider.dart';
 
 class RestaurantQuery extends StatefulWidget {
-
   @override
   _RestaurantQueryState createState() => _RestaurantQueryState();
 }
@@ -27,7 +26,9 @@ class _RestaurantQueryState extends State<RestaurantQuery> {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         fullscreenDialog: false,
-        builder: (context) => MessagesListener(child: RestaurantOptionsPage(),),
+        builder: (context) => MessagesListener(
+          child: RestaurantOptionsPage(),
+        ),
       ),
     );
   }
@@ -46,33 +47,34 @@ class _RestaurantQueryState extends State<RestaurantQuery> {
         stream: bloc.stream,
         builder: (context, snapshot) {
           return ListItemsBuilder<Restaurant>(
-            title: 'No nearby restaurants found',
-            message: 'You seem to be far away from them. Make sure location services are on and restart the app.',
-            snapshot: snapshot,
-            itemBuilder: (context, restaurant) {
-              return Card(
-                color: restaurant.adminVerified! ? Colors.transparent : Colors.red,
-                child: ListTile(
-                  leading: Icon(Icons.restaurant),
-                  // title: _buildTitle(index),
-                  title: RestaurantListTile(
-                    restaurant: restaurant,
-                    restaurantFound: true,
+              title: 'No nearby restaurants found',
+              message:
+                  'You seem to be far away from them. Make sure location services are on and restart the app.',
+              snapshot: snapshot,
+              itemBuilder: (context, restaurant) {
+                return Card(
+                  color: restaurant.adminVerified!
+                      ? Colors.transparent
+                      : Colors.red,
+                  child: ListTile(
+                    leading: Icon(Icons.restaurant),
+                    // title: _buildTitle(index),
+                    title: RestaurantListTile(
+                      restaurant: restaurant,
+                      restaurantFound: true,
+                    ),
+                    onTap: () {
+                      session.currentRestaurant = restaurant;
+                      if (role == ROLE_PATRON) {
+                        _menuAndOrdersPage(context);
+                      } else {
+                        _staffAuthorizationPage(context);
+                      }
+                    },
                   ),
-                  onTap: () {
-                    session.currentRestaurant = restaurant;
-                    if (role == ROLE_PATRON) {
-                      _menuAndOrdersPage(context);
-                    } else {
-                      _staffAuthorizationPage(context);
-                    }
-                  },
-                ),
-              );
-            }
-          );
-        }
-    );
+                );
+              });
+        });
   }
 
   @override
@@ -86,14 +88,15 @@ class _RestaurantQueryState extends State<RestaurantQuery> {
       role = ROLE_STAFF;
     }
     bloc = NearRestaurantBloc(
-        source: database.patronRestaurants(),
-        userCoordinates: userCoordinates,
+      source: database.patronRestaurants(),
+      userCoordinates: userCoordinates,
     );
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Restaurants near you',
-          style: TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.backgroundColor),
         ),
         elevation: 2.0,
       ),
@@ -101,5 +104,4 @@ class _RestaurantQueryState extends State<RestaurantQuery> {
       body: _buildContents(context),
     );
   }
-
 }

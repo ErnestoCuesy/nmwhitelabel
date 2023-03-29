@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/purchase_button.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
+import 'package:nearbymenus/app/common_widgets/purchase_button.dart';
+import 'package:nearbymenus/app/models/session.dart';
 import 'package:provider/provider.dart';
 
 class UpsellScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
+import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
 
 class LoadingProgressIndicator extends StatelessWidget {
   @override

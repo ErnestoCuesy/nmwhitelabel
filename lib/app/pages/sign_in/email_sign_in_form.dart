@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_alert_dialog.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/email_sign_in_model.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/terms_and_conditions.dart';
-import 'package:nmwhitelabel/app/services/auth.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/common_widgets/platform_alert_dialog.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/sign_in/email_sign_in_model.dart';
+import 'package:nearbymenus/app/pages/sign_in/terms_and_conditions.dart';
+import 'package:nearbymenus/app/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 

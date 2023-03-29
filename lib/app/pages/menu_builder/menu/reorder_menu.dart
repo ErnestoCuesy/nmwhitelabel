@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/menu.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/menu_observable_stream.dart';
+import 'package:nearbymenus/app/models/menu.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/menu_observable_stream.dart';
 import 'package:provider/provider.dart';
 
 class ReorderMenu extends StatefulWidget {

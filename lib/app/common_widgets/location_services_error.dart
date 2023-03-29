@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/empty_content.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/common_widgets/empty_content.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
 
 class LocationServicesError extends StatelessWidget {
   final Function? askPermission;

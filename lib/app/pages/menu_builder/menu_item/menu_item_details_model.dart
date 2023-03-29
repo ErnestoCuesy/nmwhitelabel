@@ -1,14 +1,14 @@
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/menu_item.dart';
-import 'package:nmwhitelabel/app/models/menu.dart';
-import 'package:nmwhitelabel/app/models/option.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/menu_item_observable_stream.dart';
-import 'package:nmwhitelabel/app/utilities/validators.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/models/menu_item.dart';
+import 'package:nearbymenus/app/models/menu.dart';
+import 'package:nearbymenus/app/models/option.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/menu_item_observable_stream.dart';
+import 'package:nearbymenus/app/utilities/validators.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
   final Database database;

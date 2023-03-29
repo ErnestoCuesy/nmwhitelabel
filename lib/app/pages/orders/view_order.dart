@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_alert_dialog.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/order.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/map/map_route.dart';
-import 'package:nmwhitelabel/app/pages/orders/order_settlement.dart';
-import 'package:nmwhitelabel/app/pages/orders/view_order_model.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/utilities/format.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/common_widgets/platform_alert_dialog.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/order.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/map/map_route.dart';
+import 'package:nearbymenus/app/pages/orders/order_settlement.dart';
+import 'package:nearbymenus/app/pages/orders/view_order_model.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/utilities/format.dart';
 import 'package:provider/provider.dart';
 
 class ViewOrder extends StatefulWidget {

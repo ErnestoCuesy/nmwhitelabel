@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/models/menu_item.dart';
-import 'package:nmwhitelabel/app/models/menu.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/menu_item_observable_stream.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/models/menu_item.dart';
+import 'package:nearbymenus/app/models/menu.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/menu_item_observable_stream.dart';
 import 'package:provider/provider.dart';
 
 import 'menu_item_details_model.dart';

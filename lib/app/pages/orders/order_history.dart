@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/common_widgets/list_items_builder.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/order.dart';
-import 'package:nmwhitelabel/app/pages/orders/view_order.dart';
-import 'package:nmwhitelabel/app/pages/user/upsell_screen.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/utilities/format.dart';
+import 'package:nearbymenus/app/common_widgets/list_items_builder.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/order.dart';
+import 'package:nearbymenus/app/pages/orders/view_order.dart';
+import 'package:nearbymenus/app/pages/user/upsell_screen.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/utilities/format.dart';
 import 'package:provider/provider.dart';
 
 class OrderHistory extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/sign_in_page.dart';
+import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/sign_in/sign_in_page.dart';
 import 'package:provider/provider.dart';
 
 class CheckConvertedUser extends StatefulWidget {
@@ -25,15 +25,18 @@ class _CheckConvertedUserState extends State<CheckConvertedUser> {
             bool userIsAnonymous = snapshot.data!;
             session.isAnonymousUser = userIsAnonymous;
             if (userIsAnonymous) {
-              return SignInPage(allowAnonymousSignIn: false, convertAnonymous: true,);
+              return SignInPage(
+                allowAnonymousSignIn: false,
+                convertAnonymous: true,
+              );
             } else {
               return widget.child!;
             }
           } else {
-            return Center(child: PlatformProgressIndicator(),);
+            return Center(
+              child: PlatformProgressIndicator(),
+            );
           }
-        }
-    );
+        });
   }
-
 }

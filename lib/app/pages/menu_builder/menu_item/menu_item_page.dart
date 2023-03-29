@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/common_widgets/list_items_builder.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_alert_dialog.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/models/menu_item.dart';
-import 'package:nmwhitelabel/app/models/menu.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/menu_builder/menu_item/menu_item_details_page.dart';
-import 'package:nmwhitelabel/app/pages/menu_builder/menu_item/reorder_menu_item.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/menu_item_observable_stream.dart';
+import 'package:nearbymenus/app/common_widgets/list_items_builder.dart';
+import 'package:nearbymenus/app/common_widgets/platform_alert_dialog.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/models/menu_item.dart';
+import 'package:nearbymenus/app/models/menu.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/menu_builder/menu_item/menu_item_details_page.dart';
+import 'package:nearbymenus/app/pages/menu_builder/menu_item/reorder_menu_item.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/menu_item_observable_stream.dart';
 import 'package:provider/provider.dart';
 
 class MenuItemPage extends StatefulWidget {

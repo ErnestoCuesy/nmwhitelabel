@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/utilities/map_utils.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/utilities/map_utils.dart';
 import 'package:provider/provider.dart';
 
 class MapRoute extends StatefulWidget {
@@ -52,14 +52,16 @@ class _MapRouteState extends State<MapRoute> {
         myLocationButtonEnabled: false,
         cameraTargetBounds: CameraTargetBounds(mapUtils.createTargetBounds()),
         initialCameraPosition: CameraPosition(
-            target:
-            LatLng(
-                (widget.currentLocation!.latitude + widget.destination!.latitude) / 2,
-                (widget.currentLocation!.longitude + widget.destination!.longitude) / 2),
+            target: LatLng(
+                (widget.currentLocation!.latitude +
+                        widget.destination!.latitude) /
+                    2,
+                (widget.currentLocation!.longitude +
+                        widget.destination!.longitude) /
+                    2),
             zoom: 18.0),
-            markers: Set<Marker>.of(markers.values),
+        markers: Set<Marker>.of(markers.values),
       ),
     );
   }
-
 }

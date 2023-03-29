@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "nmwhitelabel")
-set(APPLICATION_ID "com.ernestosoft.nmwhitelabel")
+set(BINARY_NAME "nearbymenus")
+set(APPLICATION_ID "com.ernestosoft.nearbymenus")
 
 cmake_policy(SET CMP0063 NEW)
 

@@ -1,4 +1,4 @@
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
 
 abstract class StringValidator {
   bool isValid(String? value);
@@ -41,7 +41,7 @@ class EmailStringValidator implements StringValidator {
   }
 }
 
-class NumericFieldValidator implements NumberValidator{
+class NumericFieldValidator implements NumberValidator {
   @override
   bool isValid(int? value) {
     if (value == null || value.isNaN) return false;
@@ -49,15 +49,16 @@ class NumericFieldValidator implements NumberValidator{
   }
 }
 
-class GreaterThanZeroValidator implements NumberValidator{
+class GreaterThanZeroValidator implements NumberValidator {
   @override
   bool isValid(int? value) {
-    if (value == null || value.toString().isEmpty || value.isNaN || value < 1) return false;
+    if (value == null || value.toString().isEmpty || value.isNaN || value < 1)
+      return false;
     return true;
   }
 }
 
-class DoubleNumericFieldValidator implements DoubleNumberValidator{
+class DoubleNumericFieldValidator implements DoubleNumberValidator {
   @override
   bool isValid(double value) {
     if (value.isNaN) return false;
@@ -89,11 +90,15 @@ class RestaurantDetailsValidators {
   final StringValidator typeOfFoodValidator = NonEmptyStringValidator();
   final NumberValidator deliveryRadiusValidator = GreaterThanZeroValidator();
   final StringValidator telephoneNumberValidator = NonEmptyStringValidator();
-  final String invalidRestaurantNameErrorText = 'Restaurant name can\'t be empty';
-  final String invalidRestaurantAddress1ErrorText = 'Restaurant address can\'t be empty';
+  final String invalidRestaurantNameErrorText =
+      'Restaurant name can\'t be empty';
+  final String invalidRestaurantAddress1ErrorText =
+      'Restaurant address can\'t be empty';
   final String invalidTypeOfFoodErrorText = 'Type of food can\'t be empty';
-  final String invalidDeliveryRadiusErrorText = 'Discovery radius must be greater than zero';
-  final String invalidTelephoneNumberErrorText = 'Telephone number can\'t be empty';
+  final String invalidDeliveryRadiusErrorText =
+      'Discovery radius must be greater than zero';
+  final String invalidTelephoneNumberErrorText =
+      'Telephone number can\'t be empty';
 }
 
 class RestaurantMenuValidators {
@@ -103,8 +108,10 @@ class RestaurantMenuValidators {
 
 class MenuItemValidators {
   final StringValidator menuItemNameValidator = NonEmptyStringValidator();
-  final StringValidator menuItemDescriptionValidator = NonEmptyStringValidator();
-  final DoubleNumberValidator menuItemPriceValidator = DoubleNumericFieldValidator();
+  final StringValidator menuItemDescriptionValidator =
+      NonEmptyStringValidator();
+  final DoubleNumberValidator menuItemPriceValidator =
+      DoubleNumericFieldValidator();
   final String invalidMenuItemNameText = 'Menu item name can\'t be empty';
   final String invalidMenuItemDescriptionText = 'Description can\'t be empty';
   final String invalidMenuItemPriceText = 'Price must be a number';
@@ -119,10 +126,12 @@ class RestaurantOptionValidators {
   final StringValidator optionNameValidator = NonEmptyStringValidator();
   final String invalidOptionNameText = 'Option name can\'t be empty';
   final NumberValidator numberAllowedValidator = NumericFieldValidator();
-  final String invalidNumberAllowedText = 'Must be greater than zero and less or equal to number of options.';
+  final String invalidNumberAllowedText =
+      'Must be greater than zero and less or equal to number of options.';
 }
 
 class ItemImageValidators {
-  final StringValidator itemImageDescriptionValidator = NonEmptyStringValidator();
+  final StringValidator itemImageDescriptionValidator =
+      NonEmptyStringValidator();
   final String invalidItemImageDescriptionText = 'Description can\'t be empty';
 }

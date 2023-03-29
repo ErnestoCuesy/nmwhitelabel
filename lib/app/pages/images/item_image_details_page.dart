@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/item_image.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/images/item_image_details_form.dart';
+import 'package:nearbymenus/app/models/item_image.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/images/item_image_details_form.dart';
 import 'package:provider/provider.dart';
 
 class ItemImageDetailsPage extends StatelessWidget {

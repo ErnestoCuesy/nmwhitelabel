@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/pages/restaurant/restaurant_details_form.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/pages/restaurant/restaurant_details_form.dart';
 
 class RestaurantDetailsPage extends StatelessWidget {
   final Restaurant? restaurant;
@@ -18,8 +18,7 @@ class RestaurantDetailsPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
-            child: RestaurantDetailsForm.create(
-                context, restaurant),
+            child: RestaurantDetailsForm.create(context, restaurant),
           ),
         ),
       ),

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/pages/messages/messages_listener.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/check_converted_user.dart';
-import 'package:nmwhitelabel/app/pages/home/cupertino_home_scaffold.dart';
-import 'package:nmwhitelabel/app/pages/home/tab_item.dart';
-import 'package:nmwhitelabel/app/pages/restaurant/restaurant_query.dart';
-import 'package:nmwhitelabel/app/pages/user/account_page.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/pages/messages/messages_listener.dart';
+import 'package:nearbymenus/app/pages/sign_in/check_converted_user.dart';
+import 'package:nearbymenus/app/pages/home/cupertino_home_scaffold.dart';
+import 'package:nearbymenus/app/pages/home/tab_item.dart';
+import 'package:nearbymenus/app/pages/restaurant/restaurant_query.dart';
+import 'package:nearbymenus/app/pages/user/account_page.dart';
 
 class HomePage extends StatefulWidget {
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
   TabItem _currentTab = TabItem.restaurant;
 
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
@@ -24,8 +22,14 @@ class _HomePageState extends State<HomePage> {
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
-      TabItem.restaurant: (_) => FlavourConfig.isAdmin() ? MessagesListener(child: RestaurantQuery(),) : RestaurantQuery(),
-      TabItem.userAccount: (_) => CheckConvertedUser(child: AccountPage(),),
+      TabItem.restaurant: (_) => FlavourConfig.isAdmin()
+          ? MessagesListener(
+              child: RestaurantQuery(),
+            )
+          : RestaurantQuery(),
+      TabItem.userAccount: (_) => CheckConvertedUser(
+            child: AccountPage(),
+          ),
     };
   }
 
@@ -40,7 +44,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async =>  !await navigatorKeys[_currentTab]!.currentState!.maybePop(),
+      onWillPop: () async =>
+          !await navigatorKeys[_currentTab]!.currentState!.maybePop(),
       child: CupertinoHomeScaffold(
         currentTab: _currentTab,
         onSelectTab: _select,

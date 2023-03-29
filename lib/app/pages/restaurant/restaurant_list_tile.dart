@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
 
 class RestaurantListTile extends StatelessWidget {
   final Restaurant? restaurant;

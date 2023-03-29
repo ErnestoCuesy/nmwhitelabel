@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/models/map_marker.dart';
+import 'package:nearbymenus/app/models/map_marker.dart';
 
 class CaptureMarkerName extends StatefulWidget {
   final String? name;
@@ -12,7 +12,7 @@ class CaptureMarkerName extends StatefulWidget {
 }
 
 class _CaptureMarkerNameState extends State<CaptureMarkerName> {
-  final TextEditingController _nameController =  TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final FocusNode _nameFocusNode = FocusNode();
   final f = NumberFormat.simpleCurrency(locale: "en_ZA");
   bool? isActive;
@@ -22,7 +22,7 @@ class _CaptureMarkerNameState extends State<CaptureMarkerName> {
   void initState() {
     super.initState();
     name = widget.name;
-    _nameController.text = name!.substring(0,2) == '>>' ? '' : name!;
+    _nameController.text = name!.substring(0, 2) == '>>' ? '' : name!;
     isActive = name!.length > 0;
   }
 
@@ -67,7 +67,8 @@ class _CaptureMarkerNameState extends State<CaptureMarkerName> {
       onChanged: (value) {
         name = value;
       },
-      onEditingComplete: () => FocusScope.of(context).requestFocus(_nameFocusNode),
+      onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
@@ -76,7 +77,7 @@ class _CaptureMarkerNameState extends State<CaptureMarkerName> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            'Location Name',
+          'Location Name',
         ),
       ),
       body: Center(
@@ -94,7 +95,9 @@ class _CaptureMarkerNameState extends State<CaptureMarkerName> {
                       child: Column(
                         children: [
                           _buildActivateMarkerCheckBox(),
-                          SizedBox(height: 16.0,),
+                          SizedBox(
+                            height: 16.0,
+                          ),
                           _buildNameTextField(context),
                         ],
                       ),
@@ -106,7 +109,8 @@ class _CaptureMarkerNameState extends State<CaptureMarkerName> {
                   child: FloatingActionButton(
                     backgroundColor: Colors.black,
                     child: Icon(Icons.save),
-                    onPressed: () => Navigator.of(context).pop(MapMarker(isActive: isActive, name: name)),
+                    onPressed: () => Navigator.of(context)
+                        .pop(MapMarker(isActive: isActive, name: name)),
                   ),
                 )
               ],

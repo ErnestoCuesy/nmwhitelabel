@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/models/user_message.dart';
-import 'package:nmwhitelabel/app/utilities/validators.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/models/user_message.dart';
+import 'package:nearbymenus/app/utilities/validators.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
   final Database database;
@@ -145,7 +145,8 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
           restaurantId: id,
           fromRole: ROLE_MANAGER,
           toRole: ROLE_ADMIN,
-          fromName: '${session!.userDetails!.name} (${session!.userDetails!.email})',
+          fromName:
+              '${session!.userDetails!.name} (${session!.userDetails!.email})',
           delivered: false,
           type: 'Admin verification required for $name',
           authFlag: false,
@@ -192,8 +193,7 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
   }
 
   String? get restaurantAddress1ErrorText {
-    bool showErrorText =
-        !restaurantAddress1Validator.isValid(address1);
+    bool showErrorText = !restaurantAddress1Validator.isValid(address1);
     return showErrorText ? invalidRestaurantAddress1ErrorText : null;
   }
 
@@ -214,17 +214,13 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
 
   void updateRestaurantName(String name) => updateWith(name: name);
 
-  void updateAddress1(String address1) =>
-      updateWith(address1: address1);
+  void updateAddress1(String address1) => updateWith(address1: address1);
 
-  void updateAddress2(String address2) =>
-      updateWith(address2: address2);
+  void updateAddress2(String address2) => updateWith(address2: address2);
 
-  void updateAddress3(String address3) =>
-      updateWith(address3: address3);
+  void updateAddress3(String address3) => updateWith(address3: address3);
 
-  void updateAddress4(String address4) =>
-      updateWith(address4: address4);
+  void updateAddress4(String address4) => updateWith(address4: address4);
 
   void updateTypeOfFood(String typeOfFood) =>
       updateWith(typeOfFood: typeOfFood);
@@ -257,17 +253,22 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
 
   void updateAcceptCard(bool? acceptCard) => updateWith(acceptCard: acceptCard);
 
-  void updateAcceptOther(bool? acceptOther) => updateWith(acceptOther: acceptOther);
+  void updateAcceptOther(bool? acceptOther) =>
+      updateWith(acceptOther: acceptOther);
 
-  void updateFoodDeliveries(bool? foodDeliveries) => updateWith(foodDeliveries: foodDeliveries);
+  void updateFoodDeliveries(bool? foodDeliveries) =>
+      updateWith(foodDeliveries: foodDeliveries);
 
-  void updateFoodCollection(bool? foodCollection) => updateWith(foodCollection: foodCollection);
+  void updateFoodCollection(bool? foodCollection) =>
+      updateWith(foodCollection: foodCollection);
 
-  void updateAllowCancellations(bool? allowCancellations) => updateWith(allowCancellations: allowCancellations);
+  void updateAllowCancellations(bool? allowCancellations) =>
+      updateWith(allowCancellations: allowCancellations);
 
   void updateVatNumber(String vatNumber) => updateWith(vatNumber: vatNumber);
 
-  void updateRegistrationNumber(String registrationNumber) => updateWith(registrationNumber: registrationNumber);
+  void updateRegistrationNumber(String registrationNumber) =>
+      updateWith(registrationNumber: registrationNumber);
 
   void updateWith({
     String? name,

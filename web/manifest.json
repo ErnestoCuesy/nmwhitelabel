@@ -1,6 +1,6 @@
 {
-    "name": "nmwhitelabel",
-    "short_name": "nmwhitelabel",
+    "name": "nearbymenus",
+    "short_name": "nearbymenus",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

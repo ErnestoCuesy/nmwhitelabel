@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/menu.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/menu_observable_stream.dart';
-import 'package:nmwhitelabel/app/utilities/validators.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/models/menu.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/menu_observable_stream.dart';
+import 'package:nearbymenus/app/utilities/validators.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class MenuDetailsModel with RestaurantMenuValidators, ChangeNotifier {
   final Database database;
@@ -22,18 +22,18 @@ class MenuDetailsModel with RestaurantMenuValidators, ChangeNotifier {
 
   List<int?> menuSequences = [];
 
-  MenuDetailsModel(
-      {required this.database,
-       required this.session,
-       required this.menuStream,
-      this.restaurant,
-      this.id,
-      this.name,
-      this.notes,
-      this.sequence,
-      this.hidden,
-      this.isLoading = false,
-      this.submitted = false,
+  MenuDetailsModel({
+    required this.database,
+    required this.session,
+    required this.menuStream,
+    this.restaurant,
+    this.id,
+    this.name,
+    this.notes,
+    this.sequence,
+    this.hidden,
+    this.isLoading = false,
+    this.submitted = false,
   }) {
     restaurant!.restaurantMenus!.forEach((key, value) {
       if (sequence != value['sequence']) {
@@ -69,7 +69,8 @@ class MenuDetailsModel with RestaurantMenuValidators, ChangeNotifier {
       } else {
         restaurant!.restaurantMenus!.putIfAbsent(id, () => menu.toMap());
       }
-      menuStream!.broadcastEvent(restaurant!.restaurantMenus as Map<String?, dynamic>?);
+      menuStream!.broadcastEvent(
+          restaurant!.restaurantMenus as Map<String?, dynamic>?);
       Restaurant.setRestaurant(database, restaurant);
     } catch (e) {
       print(e);

@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
-import 'package:nmwhitelabel/app/models/bundle.dart';
-import 'package:nmwhitelabel/app/pages/home/home_page_manager.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/messages/messages_listener.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/iap_manager.dart';
+import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
+import 'package:nearbymenus/app/models/bundle.dart';
+import 'package:nearbymenus/app/pages/home/home_page_manager.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/messages/messages_listener.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/iap_manager.dart';
 import 'package:provider/provider.dart';
 
 class CheckPurchases extends StatelessWidget {
-
-  Future<void> _setBundleAndUnlock(String? email, Database database, List<Bundle> bundleSnapshot, Map<String, dynamic> allPurchasesDates) async {
+  Future<void> _setBundleAndUnlock(
+      String? email,
+      Database database,
+      List<Bundle> bundleSnapshot,
+      Map<String, dynamic> allPurchasesDates) async {
     bundleSnapshot.forEach((bundle) {
-      allPurchasesDates.removeWhere((key, value) => value.toString().contains(bundle.id.toString()));
+      allPurchasesDates.removeWhere(
+          (key, value) => value.toString().contains(bundle.id.toString()));
     });
     String bundleDate;
     String bundleCode;
@@ -43,18 +47,19 @@ class CheckPurchases extends StatelessWidget {
           break;
       }
       try {
-        database.setBundle(email, Bundle(
-          id: bundleDate,
-          bundleCode: bundleCode,
-          ordersInBundle: ordersInBundle,
-        ));
+        database.setBundle(
+            email,
+            Bundle(
+              id: bundleDate,
+              bundleCode: bundleCode,
+              ordersInBundle: ordersInBundle,
+            ));
       } catch (e) {
         print('DB Bundle set and unlock failed: $e');
       }
     });
     if (totalOrders > 0) {
-      await database.setBundleCounterTransaction(
-          database.userId, totalOrders);
+      await database.setBundleCounterTransaction(database.userId, totalOrders);
     }
   }
 
@@ -74,13 +79,18 @@ class CheckPurchases extends StatelessWidget {
             session.subscription = subscription;
           }
           return FutureBuilder<List<Bundle>>(
-              future: database.bundlesSnapshot(session.userDetails!.email == '' || session.userDetails == null
-                  ? 'anon'
-                  : session.userDetails!.email),
+              future: database.bundlesSnapshot(
+                  session.userDetails!.email == '' ||
+                          session.userDetails == null
+                      ? 'anon'
+                      : session.userDetails!.email),
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.waiting &&
                     snapshot.hasData) {
-                  _setBundleAndUnlock(session.userDetails!.email, database, snapshot.data!,
+                  _setBundleAndUnlock(
+                      session.userDetails!.email,
+                      database,
+                      snapshot.data!,
                       session.subscription!.purchaserInfo!.allPurchaseDates);
                   return MessagesListener(child: HomePageManager());
                 } else {

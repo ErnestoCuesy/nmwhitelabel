@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/terms_and_conditions_text.dart';
+import 'package:nearbymenus/app/pages/sign_in/terms_and_conditions_text.dart';
 
 class TermsAndConditions extends StatelessWidget {
   final bool? askAgreement;

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/input_dropdown.dart';
-import 'package:nmwhitelabel/app/utilities/format.dart';
+import 'package:nearbymenus/app/common_widgets/input_dropdown.dart';
+import 'package:nearbymenus/app/utilities/format.dart';
 
 class DateTimePicker extends StatelessWidget {
   const DateTimePicker({

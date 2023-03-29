@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nmwhitelabel/app/common_widgets/list_items_builder.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/models/user_message.dart';
-import 'package:nmwhitelabel/app/pages/messages/access_options.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/conversion_process.dart';
-import 'package:nmwhitelabel/app/services/auth.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/navigation_service.dart';
-import 'package:nmwhitelabel/app/utilities/format.dart';
+import 'package:nearbymenus/app/common_widgets/list_items_builder.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/models/user_message.dart';
+import 'package:nearbymenus/app/pages/messages/access_options.dart';
+import 'package:nearbymenus/app/pages/sign_in/conversion_process.dart';
+import 'package:nearbymenus/app/services/auth.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/navigation_service.dart';
+import 'package:nearbymenus/app/utilities/format.dart';
 import 'package:provider/provider.dart';
 
 class MessagesPage extends StatefulWidget {

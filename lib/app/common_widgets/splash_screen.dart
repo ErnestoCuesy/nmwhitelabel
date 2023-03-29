@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
-import 'package:nmwhitelabel/app/utilities/logo_image_asset.dart';
+import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
+import 'package:nearbymenus/app/utilities/logo_image_asset.dart';
 
 class SplashScreen extends StatefulWidget {
   final LogoImageAsset imageAsset = LogoImageAsset();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/custom_raised_button.dart';
+import 'package:nearbymenus/app/common_widgets/custom_raised_button.dart';
 
 class SignInButton extends CustomRaisedButton {
   SignInButton({

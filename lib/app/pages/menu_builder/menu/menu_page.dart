@@ -2,18 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nmwhitelabel/app/common_widgets/list_items_builder.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_alert_dialog.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_trailing_icon.dart';
-import 'package:nmwhitelabel/app/models/menu.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/menu_builder/menu/reorder_menu.dart';
-import 'package:nmwhitelabel/app/pages/menu_builder/menu_item/menu_item_page.dart';
-import 'package:nmwhitelabel/app/pages/menu_builder/menu/menu_details_page.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/menu_observable_stream.dart';
+import 'package:nearbymenus/app/common_widgets/list_items_builder.dart';
+import 'package:nearbymenus/app/common_widgets/platform_alert_dialog.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/common_widgets/platform_trailing_icon.dart';
+import 'package:nearbymenus/app/models/menu.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/menu_builder/menu/reorder_menu.dart';
+import 'package:nearbymenus/app/pages/menu_builder/menu_item/menu_item_page.dart';
+import 'package:nearbymenus/app/pages/menu_builder/menu/menu_details_page.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/menu_observable_stream.dart';
 import 'package:provider/provider.dart';
 
 class MenuPage extends StatefulWidget {

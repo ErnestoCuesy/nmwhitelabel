@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/custom_raised_button.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/user_message.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/conversion_process.dart';
-import 'package:nmwhitelabel/app/services/auth.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/navigation_service.dart';
+import 'package:nearbymenus/app/common_widgets/custom_raised_button.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/user_message.dart';
+import 'package:nearbymenus/app/pages/sign_in/conversion_process.dart';
+import 'package:nearbymenus/app/services/auth.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 class StaffAuthorizationPage extends StatefulWidget {

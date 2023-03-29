@@ -1,10 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/utilities/format.dart';
+import 'package:nearbymenus/app/utilities/format.dart';
 
 void main() {
-
   group('hours', () {
     test('positive', () {
       expect(Format.hours(10), '10h');
@@ -21,7 +20,6 @@ void main() {
     test('decimal', () {
       expect(Format.hours(4.5), '4.5h');
     });
-
   });
 
   group('date - GB Locale', () {
@@ -31,13 +29,11 @@ void main() {
     });
 
     test('2019-08-12', () {
-      expect(Format.date(DateTime(2019, 8, 12)),
-      '12 Aug 2019');
+      expect(Format.date(DateTime(2019, 8, 12)), '12 Aug 2019');
     });
 
     test('2019-08-16', () {
-      expect(Format.date(DateTime(2019, 8, 16)),
-          '16 Aug 2019');
+      expect(Format.date(DateTime(2019, 8, 16)), '16 Aug 2019');
     });
   });
 
@@ -53,7 +49,6 @@ void main() {
         'Mon',
       );
     });
-
   });
 
   group('dayOfWeek - ES locale', () {
@@ -68,7 +63,6 @@ void main() {
         'lun.',
       );
     });
-
   });
 
   group('currency - US locale', () {

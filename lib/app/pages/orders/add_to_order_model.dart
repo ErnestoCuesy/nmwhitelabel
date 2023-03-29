@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/order_item.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/models/order_item.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class AddToOrderModel with ChangeNotifier {
   final Database database;
@@ -17,15 +17,15 @@ class AddToOrderModel with ChangeNotifier {
   int quantity = 1;
   String menuCodeAndItemName = '';
 
-  AddToOrderModel(
-      {required this.database,
-        required this.session,
-        required this.menuCode,
-        required this.item,
-        required this.options,
-        this.isLoading = false,
-        this.submitted = false,
-      });
+  AddToOrderModel({
+    required this.database,
+    required this.session,
+    required this.menuCode,
+    required this.item,
+    required this.options,
+    this.isLoading = false,
+    this.submitted = false,
+  });
 
   Future<void> save() async {
     updateWith(isLoading: true, submitted: true);
@@ -79,22 +79,22 @@ class AddToOrderModel with ChangeNotifier {
   }
 
   void updateOptionsList(String? key, String option, bool addFlag) {
-      if (addFlag) {
-        tempMenuItemOptions.add(option);
-        if (optionsSelectionCounters.containsKey(key)) {
-          optionsSelectionCounters.update(key, (value) => value + 1);
-        } else {
-          optionsSelectionCounters.putIfAbsent(key, () => 1);
-        }
+    if (addFlag) {
+      tempMenuItemOptions.add(option);
+      if (optionsSelectionCounters.containsKey(key)) {
+        optionsSelectionCounters.update(key, (value) => value + 1);
       } else {
-        tempMenuItemOptions.remove(option);
-        if (optionsSelectionCounters.containsKey(key)) {
-          optionsSelectionCounters.update(key, (value) => value - 1);
-        } else {
-          optionsSelectionCounters.putIfAbsent(key, () => 0);
-        }
+        optionsSelectionCounters.putIfAbsent(key, () => 1);
       }
-      updateWith(menuItemOptions: tempMenuItemOptions);
+    } else {
+      tempMenuItemOptions.remove(option);
+      if (optionsSelectionCounters.containsKey(key)) {
+        optionsSelectionCounters.update(key, (value) => value - 1);
+      } else {
+        optionsSelectionCounters.putIfAbsent(key, () => 0);
+      }
+    }
+    updateWith(menuItemOptions: tempMenuItemOptions);
   }
 
   bool optionCheck(String key) => menuItemOptions.contains(key);

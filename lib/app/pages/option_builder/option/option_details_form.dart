@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/models/option.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/option_builder/option/option_details_model.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/option_observable_stream.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/models/option.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/option_builder/option/option_details_model.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/option_observable_stream.dart';
 import 'package:provider/provider.dart';
 
 class OptionDetailsForm extends StatefulWidget {
@@ -46,7 +46,8 @@ class OptionDetailsForm extends StatefulWidget {
 
 class _OptionDetailsFormState extends State<OptionDetailsForm> {
   final TextEditingController _optionNameController = TextEditingController();
-  final TextEditingController _numberAllowedController = TextEditingController();
+  final TextEditingController _numberAllowedController =
+      TextEditingController();
   final FocusNode _optionNameFocusNode = FocusNode();
   final FocusNode _numberAllowedFocusNode = FocusNode();
 

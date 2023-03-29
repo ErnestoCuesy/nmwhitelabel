@@ -5,10 +5,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nmwhitelabel/app/models/item_image.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/utilities/validators.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/models/item_image.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/utilities/validators.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class ItemImageDetailsModel with ItemImageValidators, ChangeNotifier {
   final Database database;
@@ -64,8 +64,8 @@ class ItemImageDetailsModel with ItemImageValidators, ChangeNotifier {
   }
 
   Future getImage() async {
-    PickedFile? pickedImage =
-        await _imagePicker.pickImage(source: ImageSource.gallery) as PickedFile?;
+    PickedFile? pickedImage = await _imagePicker.pickImage(
+        source: ImageSource.gallery) as PickedFile?;
     if (pickedImage != null) {
       var tempPath = pickedImage.path.split('image_picker');
       var dirPath = tempPath[0];

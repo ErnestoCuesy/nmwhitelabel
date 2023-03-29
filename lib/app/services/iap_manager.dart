@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:nmwhitelabel/app/services/iap_test_data.dart';
+import 'package:nearbymenus/app/services/iap_test_data.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 enum SubscriptionType { Unsubscribed, Expired, Standard, Pro }

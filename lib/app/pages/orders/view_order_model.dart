@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/order.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/models/user_message.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/order.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/models/user_message.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class ViewOrderModel with ChangeNotifier {
   final Database database;
@@ -101,7 +101,8 @@ class ViewOrderModel with ChangeNotifier {
     String? message;
     switch (newOrderStatus) {
       case ORDER_ACCEPTED:
-        message = '${session.currentRestaurant!.name} is processing your order!';
+        message =
+            '${session.currentRestaurant!.name} is processing your order!';
         break;
       case ORDER_READY:
         message = 'Your order is ready!';
@@ -161,12 +162,14 @@ class ViewOrderModel with ChangeNotifier {
         deliveryOptionsOk = true;
       }
     }
-    double orderFinalAmount =
-        order!.orderTotal - double.parse((order!.orderTotal * order!.discount!).toStringAsFixed(2)) + order!.tip!;
+    double orderFinalAmount = order!.orderTotal -
+        double.parse(
+            (order!.orderTotal * order!.discount!).toStringAsFixed(2)) +
+        order!.tip!;
     double? paymentMethodsSum = 0;
     if (order!.paymentMethods!.length > 0) {
-      paymentMethodsSum =
-          order!.paymentMethods!.values.reduce((sum, element) => sum! + element!);
+      paymentMethodsSum = order!.paymentMethods!.values
+          .reduce((sum, element) => sum! + element!);
     }
     return paymentMethodsSum == orderFinalAmount &&
         deliveryOptionsOk &&
@@ -217,7 +220,8 @@ class ViewOrderModel with ChangeNotifier {
 
   bool paymentOptionCheck(String key) => order!.paymentMethod == key;
 
-  bool paymentOptionsCheck(String key) => order!.paymentMethods!.containsKey(key);
+  bool paymentOptionsCheck(String key) =>
+      order!.paymentMethods!.containsKey(key);
 
   bool foodDeliveryOptionCheck(String key) => order!.deliveryOption == key;
 
@@ -247,7 +251,8 @@ class ViewOrderModel with ChangeNotifier {
         }
         break;
       case ORDER_DELIVERING:
-        if (order!.status == ORDER_READY && order!.deliveryOption == 'Deliver') {
+        if (order!.status == ORDER_READY &&
+            order!.deliveryOption == 'Deliver') {
           proceed = true;
         } else {
           proceed = false;

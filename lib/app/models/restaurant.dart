@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/services/database.dart';
 
 class Restaurant {
   final String? id;
@@ -86,10 +86,11 @@ class Restaurant {
     final hoursFromMinutes = value['hoursFromMinutes'];
     final hoursToHours = value['hoursToHours'];
     final hoursToMinutes = value['hoursToMinutes'];
-    final markerCoordinates = value['markerCoordinates'] as List<dynamic>? ?? <dynamic>[];
+    final markerCoordinates =
+        value['markerCoordinates'] as List<dynamic>? ?? <dynamic>[];
     final markerNames = value['markerNames'] as List<dynamic>? ?? <dynamic>[];
-    List<Position> markerPositionList = List<Position>.from(markerCoordinates.map((element)
-          => Position(
+    List<Position> markerPositionList = List<Position>.from(
+        markerCoordinates.map((element) => Position(
             latitude: element.latitude,
             longitude: element.longitude,
             speed: 0,
@@ -97,9 +98,9 @@ class Restaurant {
             accuracy: 0,
             speedAccuracy: 0,
             altitude: 0,
-            timestamp: DateTime.now()
-            )));
-    List<String> markerNamesList = List<String>.from(markerNames.map((e) => e.toString()));
+            timestamp: DateTime.now())));
+    List<String> markerNamesList =
+        List<String>.from(markerNames.map((e) => e.toString()));
     return Restaurant(
         id: documentId,
         managerId: value['managerId'],
@@ -117,16 +118,17 @@ class Restaurant {
             speed: 0,
             heading: 0,
             accuracy: 0,
-            timestamp: DateTime.now()
-            ),
+            timestamp: DateTime.now()),
         deliveryRadius: deliveryRadius,
-        workingHoursFrom: TimeOfDay(hour: hoursFromHours, minute: hoursFromMinutes),
+        workingHoursFrom:
+            TimeOfDay(hour: hoursFromHours, minute: hoursFromMinutes),
         workingHoursTo: TimeOfDay(hour: hoursToHours, minute: hoursToMinutes),
         telephoneNumber: value['telephoneNumber'],
         notes: value['notes'],
         active: value['restaurantFlags']['active'],
         open: value['restaurantFlags']['open'],
-        acceptingStaffRequests: value['restaurantFlags']['acceptingStaffRequests'],
+        acceptingStaffRequests: value['restaurantFlags']
+            ['acceptingStaffRequests'],
         acceptCash: value['paymentFlags']['Cash'],
         acceptCard: value['paymentFlags']['Card'],
         acceptOther: value['paymentFlags']['Other'],
@@ -143,15 +145,14 @@ class Restaurant {
         itemImagesInitialized: value['itemImagesInitialized'] ?? false,
         adminVerified: value['adminVerified'] ?? false,
         markerCoordinates: markerPositionList,
-        markerNames: markerNamesList
-    );
+        markerNames: markerNamesList);
   }
 
   Map<String, dynamic> toMap() {
     final GeoPoint geoPoint =
         GeoPoint(coordinates!.latitude, coordinates!.longitude);
-    final List<GeoPoint> geoPointList = List<GeoPoint>.from(markerCoordinates!.map((e)
-          => GeoPoint(e.latitude, e.longitude)));
+    final List<GeoPoint> geoPointList = List<GeoPoint>.from(
+        markerCoordinates!.map((e) => GeoPoint(e.latitude, e.longitude)));
     return <String, dynamic>{
       'id': id,
       'managerId': managerId,
@@ -184,18 +185,22 @@ class Restaurant {
     };
   }
 
-  static Future<void> setRestaurant(Database database, Restaurant? restaurant) async {
+  static Future<void> setRestaurant(
+      Database database, Restaurant? restaurant) async {
     await database.setRestaurant(restaurant);
   }
 
   bool get isOpen {
-    final double hFrom = this.workingHoursFrom!.hour.toDouble() + this.workingHoursFrom!.minute.toDouble() / 60;
-    final double hTo = this.workingHoursTo!.hour.toDouble() + this.workingHoursTo!.minute.toDouble() / 60;
-    final double now = TimeOfDay.now().hour.toDouble() + TimeOfDay.now().minute.toDouble() / 60;
+    final double hFrom = this.workingHoursFrom!.hour.toDouble() +
+        this.workingHoursFrom!.minute.toDouble() / 60;
+    final double hTo = this.workingHoursTo!.hour.toDouble() +
+        this.workingHoursTo!.minute.toDouble() / 60;
+    final double now = TimeOfDay.now().hour.toDouble() +
+        TimeOfDay.now().minute.toDouble() / 60;
     bool openFlag = true;
     if (!this.open!) {
       openFlag = false;
-    } else if (now < hFrom || now > hTo){
+    } else if (now < hFrom || now > hTo) {
       openFlag = false;
     }
     return openFlag;

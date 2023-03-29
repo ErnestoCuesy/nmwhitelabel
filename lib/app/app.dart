@@ -10,19 +10,19 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/received_notification.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/landing/landing_page.dart';
-import 'package:nmwhitelabel/app/common_widgets/location_services_error.dart';
-import 'package:nmwhitelabel/app/common_widgets/splash_screen.dart';
-import 'package:nmwhitelabel/app/pages/rating/rate_app.dart';
-import 'package:nmwhitelabel/app/services/auth.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/navigation_service.dart';
-import 'package:nmwhitelabel/app/services/notification_streams.dart';
-import 'package:nmwhitelabel/app/utilities/app_theme.dart';
-import 'package:nmwhitelabel/app/utilities/logo_image_asset.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/received_notification.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/landing/landing_page.dart';
+import 'package:nearbymenus/app/common_widgets/location_services_error.dart';
+import 'package:nearbymenus/app/common_widgets/splash_screen.dart';
+import 'package:nearbymenus/app/pages/rating/rate_app.dart';
+import 'package:nearbymenus/app/services/auth.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/navigation_service.dart';
+import 'package:nearbymenus/app/services/notification_streams.dart';
+import 'package:nearbymenus/app/utilities/app_theme.dart';
+import 'package:nearbymenus/app/utilities/logo_image_asset.dart';
 
 class MyApp extends StatefulWidget {
   @override

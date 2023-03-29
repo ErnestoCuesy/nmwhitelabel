@@ -2,22 +2,22 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/custom_raised_button.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/images/item_image_page.dart';
-import 'package:nmwhitelabel/app/pages/map/capture_map_markers.dart';
-import 'package:nmwhitelabel/app/pages/menu_browser/menu_browser.dart';
-import 'package:nmwhitelabel/app/pages/menu_builder/menu/menu_page.dart';
-import 'package:nmwhitelabel/app/pages/option_builder/option/option_page.dart';
-import 'package:nmwhitelabel/app/pages/orders/active_orders.dart';
-import 'package:nmwhitelabel/app/pages/orders/inactive_orders.dart';
-import 'package:nmwhitelabel/app/pages/orders/order_totals.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/conversion_process.dart';
-import 'package:nmwhitelabel/app/services/auth.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/navigation_service.dart';
+import 'package:nearbymenus/app/common_widgets/custom_raised_button.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/images/item_image_page.dart';
+import 'package:nearbymenus/app/pages/map/capture_map_markers.dart';
+import 'package:nearbymenus/app/pages/menu_browser/menu_browser.dart';
+import 'package:nearbymenus/app/pages/menu_builder/menu/menu_page.dart';
+import 'package:nearbymenus/app/pages/option_builder/option/option_page.dart';
+import 'package:nearbymenus/app/pages/orders/active_orders.dart';
+import 'package:nearbymenus/app/pages/orders/inactive_orders.dart';
+import 'package:nearbymenus/app/pages/orders/order_totals.dart';
+import 'package:nearbymenus/app/pages/sign_in/conversion_process.dart';
+import 'package:nearbymenus/app/services/auth.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 class RestaurantAdministratorPage extends StatefulWidget {

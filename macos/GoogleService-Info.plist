@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ernestosoft.nmwhitelabel.manager</string>
+	<string>com.ernestosoft.nearbymenus.manager</string>
 	<key>PROJECT_ID</key>
 	<string>nearby-menus-be6e3</string>
 	<key>STORAGE_BUCKET</key>

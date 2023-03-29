@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
 
 class SubcategoryTotal {
   final String? categoryName;

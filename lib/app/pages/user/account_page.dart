@@ -3,22 +3,22 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_alert_dialog.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/bundle.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/user_details.dart';
-import 'package:nmwhitelabel/app/pages/orders/locked_orders.dart';
-import 'package:nmwhitelabel/app/pages/sign_in/conversion_process.dart';
-import 'package:nmwhitelabel/app/pages/user/about_page.dart';
-import 'package:nmwhitelabel/app/pages/user/upsell_screen.dart';
-import 'package:nmwhitelabel/app/pages/user/user_details_form.dart';
-import 'package:nmwhitelabel/app/services/auth.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/navigation_service.dart';
-import 'package:nmwhitelabel/app/utilities/logo_image_asset.dart';
+import 'package:nearbymenus/app/common_widgets/platform_alert_dialog.dart';
+import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/bundle.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/user_details.dart';
+import 'package:nearbymenus/app/pages/orders/locked_orders.dart';
+import 'package:nearbymenus/app/pages/sign_in/conversion_process.dart';
+import 'package:nearbymenus/app/pages/user/about_page.dart';
+import 'package:nearbymenus/app/pages/user/upsell_screen.dart';
+import 'package:nearbymenus/app/pages/user/user_details_form.dart';
+import 'package:nearbymenus/app/services/auth.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/navigation_service.dart';
+import 'package:nearbymenus/app/utilities/logo_image_asset.dart';
 import 'package:provider/provider.dart';
 
 class AccountPage extends StatefulWidget {

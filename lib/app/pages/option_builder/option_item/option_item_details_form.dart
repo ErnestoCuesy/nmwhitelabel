@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/models/option.dart';
-import 'package:nmwhitelabel/app/models/option_item.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/services/option_item_observable_stream.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/models/option.dart';
+import 'package:nearbymenus/app/models/option_item.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/services/option_item_observable_stream.dart';
 import 'package:provider/provider.dart';
 
 import 'option_item_details_model.dart';
@@ -49,7 +49,8 @@ class OptionItemDetailsForm extends StatefulWidget {
 }
 
 class _OptionItemDetailsFormState extends State<OptionItemDetailsForm> {
-  final TextEditingController _optionItemNameController = TextEditingController();
+  final TextEditingController _optionItemNameController =
+      TextEditingController();
   final FocusNode _optionItemNameFocusNode = FocusNode();
 
   OptionItemDetailsModel? get model => widget.model;

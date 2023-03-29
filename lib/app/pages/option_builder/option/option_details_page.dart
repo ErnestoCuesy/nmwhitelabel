@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/models/option.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/pages/option_builder/option/option_details_form.dart';
-import 'package:nmwhitelabel/app/services/option_observable_stream.dart';
+import 'package:nearbymenus/app/models/option.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/pages/option_builder/option/option_details_form.dart';
+import 'package:nearbymenus/app/services/option_observable_stream.dart';
 
 class OptionDetailsPage extends StatelessWidget {
   final Restaurant? restaurant;

@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/date_time_picker.dart';
-import 'package:nmwhitelabel/app/common_widgets/form_submit_button.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_alert_dialog.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/pages/restaurant/restaurant_details_model.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
+import 'package:nearbymenus/app/common_widgets/date_time_picker.dart';
+import 'package:nearbymenus/app/common_widgets/form_submit_button.dart';
+import 'package:nearbymenus/app/common_widgets/platform_alert_dialog.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/pages/restaurant/restaurant_details_model.dart';
+import 'package:nearbymenus/app/common_widgets/platform_exception_alert_dialog.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/models/session.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -70,17 +70,25 @@ class RestaurantDetailsForm extends StatefulWidget {
 }
 
 class _RestaurantDetailsFormState extends State<RestaurantDetailsForm> {
-  final TextEditingController _restaurantNameController = TextEditingController();
+  final TextEditingController _restaurantNameController =
+      TextEditingController();
   final TextEditingController _typeOfFoodController = TextEditingController();
-  final TextEditingController _restaurantAddress1Controller = TextEditingController();
-  final TextEditingController _restaurantAddress2Controller = TextEditingController();
-  final TextEditingController _restaurantAddress3Controller = TextEditingController();
-  final TextEditingController _restaurantAddress4Controller = TextEditingController();
-  final TextEditingController _deliveryRadiusController = TextEditingController();
+  final TextEditingController _restaurantAddress1Controller =
+      TextEditingController();
+  final TextEditingController _restaurantAddress2Controller =
+      TextEditingController();
+  final TextEditingController _restaurantAddress3Controller =
+      TextEditingController();
+  final TextEditingController _restaurantAddress4Controller =
+      TextEditingController();
+  final TextEditingController _deliveryRadiusController =
+      TextEditingController();
   final TextEditingController _notesController = TextEditingController();
   final TextEditingController _vatNumberController = TextEditingController();
-  final TextEditingController _registrationNumberController = TextEditingController();
-  final TextEditingController _telephoneNumberController = TextEditingController();
+  final TextEditingController _registrationNumberController =
+      TextEditingController();
+  final TextEditingController _telephoneNumberController =
+      TextEditingController();
   final FocusNode _restaurantNameFocusNode = FocusNode();
   final FocusNode _typeOfFoodFocusNode = FocusNode();
   final FocusNode _restaurantAddress1FocusNode = FocusNode();
@@ -100,7 +108,6 @@ class _RestaurantDetailsFormState extends State<RestaurantDetailsForm> {
   TimeOfDay? _openTo = TimeOfDay.now();
 
   RestaurantDetailsModel? get model => widget.model;
-
 
   @override
   void initState() {
@@ -157,7 +164,8 @@ class _RestaurantDetailsFormState extends State<RestaurantDetailsForm> {
       // await Future.delayed(Duration(seconds: 3)); // Simulate slow network
       final useCurrentLocation = await (PlatformAlertDialog(
         title: 'Confirm restaurant location',
-        content: 'Are you currently at the restaurant? If not, previously saved location, if any, will be preserved.',
+        content:
+            'Are you currently at the restaurant? If not, previously saved location, if any, will be preserved.',
         cancelActionText: 'No',
         defaultActionText: 'Yes',
       ).show(context));
@@ -165,7 +173,8 @@ class _RestaurantDetailsFormState extends State<RestaurantDetailsForm> {
       if (!model!.adminVerified) {
         await PlatformAlertDialog(
           title: 'Restaurant content verification',
-          content: 'Your restaurant content needs to be verified first by Nearby Menus before the listing can be activated. We\'ll send you a notification soon.\nHowever, you can continue with your menus set-up.',
+          content:
+              'Your restaurant content needs to be verified first by Nearby Menus before the listing can be activated. We\'ll send you a notification soon.\nHowever, you can continue with your menus set-up.',
           defaultActionText: 'Ok',
         ).show(context);
       }
@@ -221,16 +230,18 @@ class _RestaurantDetailsFormState extends State<RestaurantDetailsForm> {
   }
 
   void _deliveryRadiusEditingComplete() {
-    final newFocus = model!.deliveryRadiusValidator.isValid(model!.deliveryRadius)
-        ? _telephoneNumberFocusNode
-        : _deliveryRadiusFocusNode;
+    final newFocus =
+        model!.deliveryRadiusValidator.isValid(model!.deliveryRadius)
+            ? _telephoneNumberFocusNode
+            : _deliveryRadiusFocusNode;
     FocusScope.of(context).requestFocus(newFocus);
   }
 
   void _telephoneNumberEditingComplete() {
-    final newFocus = model!.telephoneNumberValidator.isValid(model!.telephoneNumber)
-        ? _notesFocusNode
-        : _telephoneNumberFocusNode;
+    final newFocus =
+        model!.telephoneNumberValidator.isValid(model!.telephoneNumber)
+            ? _notesFocusNode
+            : _telephoneNumberFocusNode;
     FocusScope.of(context).requestFocus(newFocus);
   }
 

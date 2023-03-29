@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/config/flavour_config.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/pages/orders/order_history.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
+import 'package:nearbymenus/app/config/flavour_config.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/pages/orders/order_history.dart';
+import 'package:nearbymenus/app/services/database.dart';
 import 'package:provider/provider.dart';
 
 class ActiveOrders extends StatefulWidget {
@@ -20,7 +20,8 @@ class _ActiveOrdersState extends State<ActiveOrders> {
     database = Provider.of<Database>(context);
     if (FlavourConfig.isPatron()) {
       return OrderHistory(
-        stream: database.userOrders(session.currentRestaurant!.id, database.userId),
+        stream:
+            database.userOrders(session.currentRestaurant!.id, database.userId),
         restaurantName: session.currentRestaurant!.name,
         showLocked: false,
         showActive: true,

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:nmwhitelabel/app/models/authorizations.dart';
-import 'package:nmwhitelabel/app/models/item_image.dart';
-import 'package:nmwhitelabel/app/models/order.dart';
-import 'package:nmwhitelabel/app/models/bundle.dart';
-import 'package:nmwhitelabel/app/models/user_message.dart';
-import 'package:nmwhitelabel/app/models/restaurant.dart';
-import 'package:nmwhitelabel/app/models/user_details.dart';
+import 'package:nearbymenus/app/models/authorizations.dart';
+import 'package:nearbymenus/app/models/item_image.dart';
+import 'package:nearbymenus/app/models/order.dart';
+import 'package:nearbymenus/app/models/bundle.dart';
+import 'package:nearbymenus/app/models/user_message.dart';
+import 'package:nearbymenus/app/models/restaurant.dart';
+import 'package:nearbymenus/app/models/user_details.dart';
 import 'api_path.dart';
 import 'firestore_service.dart';
 
@@ -219,7 +219,8 @@ class FirestoreDatabase implements Database {
       );
 
   @override
-  Stream<List<UserMessage>> staffMessages(String? restaurantId, String toRole) =>
+  Stream<List<UserMessage>> staffMessages(
+          String? restaurantId, String toRole) =>
       _service.collectionStream(
         path: APIPath.messages(),
         queryBuilder: restaurantId != null

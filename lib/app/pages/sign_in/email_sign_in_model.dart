@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
-import 'package:nmwhitelabel/app/models/session.dart';
-import 'package:nmwhitelabel/app/models/user_details.dart';
-import 'package:nmwhitelabel/app/services/database.dart';
-import 'package:nmwhitelabel/app/utilities/validators.dart';
-import 'package:nmwhitelabel/app/services/auth.dart';
+import 'package:nearbymenus/app/models/session.dart';
+import 'package:nearbymenus/app/models/user_details.dart';
+import 'package:nearbymenus/app/services/database.dart';
+import 'package:nearbymenus/app/utilities/validators.dart';
+import 'package:nearbymenus/app/services/auth.dart';
 import 'package:flutter/foundation.dart';
 
 enum EmailSignInFormType { signIn, register, resetPassword, convert }
@@ -35,30 +35,35 @@ class EmailSignInModel with UserCredentialsValidators, ChangeNotifier {
 
   Future<void> submit() async {
     updateWith(submitted: true, isLoading: true);
-    session.userDetails = UserDetails(email: email, agreementDate: documentIdFromCurrentDate());
+    session.userDetails =
+        UserDetails(email: email, agreementDate: documentIdFromCurrentDate());
     session.currentOrder = null;
     try {
       // await Future.delayed(Duration(seconds: 3)); // Simulate slow network
       switch (formType) {
-        case EmailSignInFormType.signIn: {
-          await auth.signInWithEmailAndPassword(email, password);
-        }
-        break;
-        case EmailSignInFormType.register: {
-          await auth.createUserWithEmailAndPassword(email, password);
-        }
-        break;
-        case EmailSignInFormType.resetPassword: {
-          await auth.resetPassword(email);
-        }
-        break;
-        case EmailSignInFormType.convert: {
-          await auth.convertUserWithEmail(email, password, name);
-          await auth.sendEmailVerification();
-          session.isAnonymousUser = false;
-          session.broadcastAnonymousUserStatus(false);
-        }
-        break;
+        case EmailSignInFormType.signIn:
+          {
+            await auth.signInWithEmailAndPassword(email, password);
+          }
+          break;
+        case EmailSignInFormType.register:
+          {
+            await auth.createUserWithEmailAndPassword(email, password);
+          }
+          break;
+        case EmailSignInFormType.resetPassword:
+          {
+            await auth.resetPassword(email);
+          }
+          break;
+        case EmailSignInFormType.convert:
+          {
+            await auth.convertUserWithEmail(email, password, name);
+            await auth.sendEmailVerification();
+            session.isAnonymousUser = false;
+            session.broadcastAnonymousUserStatus(false);
+          }
+          break;
         default:
       }
     } on PlatformException catch (e) {
@@ -73,19 +78,22 @@ class EmailSignInModel with UserCredentialsValidators, ChangeNotifier {
   String? get primaryButtonText {
     String? buttonText;
     switch (formType) {
-      case EmailSignInFormType.signIn: {
-        buttonText = 'Sign In';
-      }
-      break;
+      case EmailSignInFormType.signIn:
+        {
+          buttonText = 'Sign In';
+        }
+        break;
       case EmailSignInFormType.convert:
-      case EmailSignInFormType.register: {
-        buttonText = 'Create an account';
-      }
-      break;
-      case EmailSignInFormType.resetPassword: {
-        buttonText = 'Reset password';
-      }
-      break;
+      case EmailSignInFormType.register:
+        {
+          buttonText = 'Create an account';
+        }
+        break;
+      case EmailSignInFormType.resetPassword:
+        {
+          buttonText = 'Reset password';
+        }
+        break;
       default:
     }
     return buttonText;
@@ -94,54 +102,60 @@ class EmailSignInModel with UserCredentialsValidators, ChangeNotifier {
   String get secondaryButtonText {
     String buttonText = '';
     switch (formType) {
-      case EmailSignInFormType.signIn: {
-        buttonText = 'Don\'t have an account? Register';
-      }
-      break;
+      case EmailSignInFormType.signIn:
+        {
+          buttonText = 'Don\'t have an account? Register';
+        }
+        break;
       case EmailSignInFormType.convert:
-      case EmailSignInFormType.register: {
-        buttonText = 'Have an account? Sign In';
-      }
-      break;
-      case EmailSignInFormType.resetPassword: {
+      case EmailSignInFormType.register:
+        {
+          buttonText = 'Have an account? Sign In';
+        }
+        break;
+      case EmailSignInFormType.resetPassword:
+        {
           buttonText = 'Sign In';
-      }
-      break;
+        }
+        break;
       default:
     }
     return buttonText;
   }
 
-  String get tertiaryButtonText => formType == EmailSignInFormType.convert ? '' : 'Forgot your password?';
+  String get tertiaryButtonText =>
+      formType == EmailSignInFormType.convert ? '' : 'Forgot your password?';
 
   bool get canSubmit {
     bool canSubmitFlag = false;
     switch (formType) {
       case EmailSignInFormType.convert:
-      case EmailSignInFormType.register: {
-        if (emailValidator.isValid(email) &&
-            passwordValidator.isValid(password) &&
-            acceptTermsAndConditions! &&
-            !isLoading) {
-          canSubmitFlag = true;
+      case EmailSignInFormType.register:
+        {
+          if (emailValidator.isValid(email) &&
+              passwordValidator.isValid(password) &&
+              acceptTermsAndConditions! &&
+              !isLoading) {
+            canSubmitFlag = true;
+          }
         }
-      }
-      break;
-      case EmailSignInFormType.signIn: {
-        if (emailValidator.isValid(email) &&
-            passwordValidator.isValid(password) &&
-            !isLoading) {
-          canSubmitFlag = true;
+        break;
+      case EmailSignInFormType.signIn:
+        {
+          if (emailValidator.isValid(email) &&
+              passwordValidator.isValid(password) &&
+              !isLoading) {
+            canSubmitFlag = true;
+          }
         }
-      }
-      break;
-      case EmailSignInFormType.resetPassword: {
-        if (emailValidator.isValid(email) &&
-            !isLoading) {
-          canSubmitFlag = true;
+        break;
+      case EmailSignInFormType.resetPassword:
+        {
+          if (emailValidator.isValid(email) && !isLoading) {
+            canSubmitFlag = true;
+          }
         }
-      }
-      break;
+        break;
       default:
     }
     return canSubmitFlag;
@@ -169,7 +183,8 @@ class EmailSignInModel with UserCredentialsValidators, ChangeNotifier {
 
   void updatePassword(String password) => updateWith(password: password);
 
-  void updateTermsAndConditions(bool? acceptTermsAndConditions) => updateWith(acceptTermsAndConditions: acceptTermsAndConditions);
+  void updateTermsAndConditions(bool? acceptTermsAndConditions) =>
+      updateWith(acceptTermsAndConditions: acceptTermsAndConditions);
 
   void updateWith({
     String? email,
@@ -179,12 +194,13 @@ class EmailSignInModel with UserCredentialsValidators, ChangeNotifier {
     bool? isLoading,
     bool? submitted,
   }) {
-      this.email = email ?? this.email;
-      this.password = password ?? this.password;
-      this.formType = formType ?? this.formType;
-      this.acceptTermsAndConditions = acceptTermsAndConditions ?? this.acceptTermsAndConditions;
-      this.isLoading = isLoading ?? this.isLoading;
-      this.submitted = this.submitted;
-      notifyListeners();
+    this.email = email ?? this.email;
+    this.password = password ?? this.password;
+    this.formType = formType ?? this.formType;
+    this.acceptTermsAndConditions =
+        acceptTermsAndConditions ?? this.acceptTermsAndConditions;
+    this.isLoading = isLoading ?? this.isLoading;
+    this.submitted = this.submitted;
+    notifyListeners();
   }
 }

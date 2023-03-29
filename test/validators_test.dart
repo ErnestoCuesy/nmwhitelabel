@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:nmwhitelabel/app/utilities/validators.dart';
+import 'package:nearbymenus/app/utilities/validators.dart';
 
 void main() {
   test('non empty string', () {

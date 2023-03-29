@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:nmwhitelabel/app/common_widgets/empty_content.dart';
-import 'package:nmwhitelabel/app/common_widgets/platform_progress_indicator.dart';
+import 'package:nearbymenus/app/common_widgets/empty_content.dart';
+import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
 
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
 class ListItemsBuilder<T> extends StatelessWidget {
-  const ListItemsBuilder({Key? key, required this.snapshot, required this.itemBuilder, this.title, this.message, this.axis}) : super(key: key);
+  const ListItemsBuilder(
+      {Key? key,
+      required this.snapshot,
+      required this.itemBuilder,
+      this.title,
+      this.message,
+      this.axis})
+      : super(key: key);
 
   final AsyncSnapshot<List<T>> snapshot;
   final ItemWidgetBuilder<T> itemBuilder;
