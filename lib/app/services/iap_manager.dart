@@ -222,7 +222,8 @@ class IAPManager implements IAPManagerBase {
   Subscription? _subscription;
   StreamController<Subscription?> controller =
       StreamController<Subscription?>();
-  static const String API_KEY = 'AeegEYeSxBwqtfZXZtbeMWVTOnAhyxiA';
+  // static const String API_KEY = 'AeegEYeSxBwqtfZXZtbeMWVTOnAhyxiA';
+  static const String API_KEY = 'goog_ASSCccNCWTpiygkEEXerIkNOayJ';
 
   @override
   Stream<Subscription?> get onSubscriptionChanged => controller.stream;
