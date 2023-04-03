@@ -14,15 +14,16 @@ class CheckPurchases extends StatelessWidget {
       Database database,
       List<Bundle> bundleSnapshot,
       Map<String, dynamic> allPurchasesDates) async {
+    Map<String, dynamic> allPurchasesDatesClean = Map.from(allPurchasesDates);
     bundleSnapshot.forEach((bundle) {
-      allPurchasesDates.removeWhere(
+      allPurchasesDatesClean.removeWhere(
           (key, value) => value.toString().contains(bundle.id.toString()));
     });
     String bundleDate;
     String bundleCode;
     int ordersInBundle = 0;
     int totalOrders = 0;
-    allPurchasesDates.forEach((key, value) async {
+    allPurchasesDatesClean.forEach((key, value) async {
       bundleCode = key;
       String date = value;
       var tempSplitDate = date.split('.');
