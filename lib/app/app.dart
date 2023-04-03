@@ -186,8 +186,7 @@ class _MyAppState extends State<MyApp> {
         if (!snapshot.hasData && !Platform.isMacOS) {
           return SplashScreen();
         } else {
-          if (snapshot.data == LocationPermission.deniedForever &&
-              !_continueFlag) {
+          if (snapshot.data == LocationPermission.denied && !_continueFlag) {
             return LocationServicesError(
               askPermission: () => _askPermission(),
               continueWithoutLocation: () => _continueWithoutLocation(),
