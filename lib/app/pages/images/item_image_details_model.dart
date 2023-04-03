@@ -64,17 +64,16 @@ class ItemImageDetailsModel with ItemImageValidators, ChangeNotifier {
   }
 
   Future getImage() async {
-    PickedFile? pickedImage = await _imagePicker.pickImage(
-        source: ImageSource.gallery) as PickedFile?;
+    XFile? pickedImage =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
-      var tempPath = pickedImage.path.split('image_picker');
-      var dirPath = tempPath[0];
-      var tempName = tempPath[1].split('.');
+      var dirPath = pickedImage.path;
+      var tempName = pickedImage.name.split('.');
       var newPath = dirPath + tempName[0] + 'comp.' + tempName[1];
       var result = await (FlutterImageCompress.compressAndGetFile(
           pickedImage.path, newPath,
-          quality: 50) as FutureOr<File>);
-      imageFile = File(result.path);
+          quality: 50));
+      imageFile = File(result!.path);
       image = Image.file(result);
       updateWith(image: image, imageChanged: true);
     }
