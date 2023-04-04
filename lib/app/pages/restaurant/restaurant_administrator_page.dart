@@ -145,7 +145,7 @@ class _RestaurantAdministratorPageState
           SizedBox(
             width: 16.0,
           ),
-          _imageButton(),
+          if (FlavourConfig.isManager()) _imageButton(),
         ],
       ),
       SizedBox(
