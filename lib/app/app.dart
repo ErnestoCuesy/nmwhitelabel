@@ -191,7 +191,7 @@ class _MyAppState extends State<MyApp> {
               askPermission: () => _askPermission(),
               continueWithoutLocation: () => _continueWithoutLocation(),
               message:
-                  'Access to location not granted or location services are off. Please rectify and re-run LVE Navigator.',
+                  'Access to location not granted or location services are off.',
             );
           }
           return FutureBuilder<Position>(
