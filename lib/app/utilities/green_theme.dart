@@ -7,8 +7,6 @@ class GreenTheme {
     primaryColor: Color(0xff8bc34a),
     primaryColorLight: Color(0xffdcedc8),
     primaryColorDark: Color(0xff689f38),
-    //accentColor: Color(0xff8bc34a),
-    //accentColorBrightness: Brightness.light,
     canvasColor: Color(0xfffafafa),
     scaffoldBackgroundColor: Color(0xfffafafa),
     bottomAppBarTheme: BottomAppBarTheme(color: Color(0xffffffff)),
@@ -17,14 +15,9 @@ class GreenTheme {
     highlightColor: Color(0x66bcbcbc),
     splashColor: Color(0x66c8c8c8),
     secondaryHeaderColor: Color(0xfff1f8e9),
-    //textSelectionColor: Color(0xffc5e1a5),
-    //cursorColor: Color(0xff4285f4),
-    //textSelectionHandleColor: Color(0xffaed581),
-    backgroundColor: Color(0xffc5e1a5),
     dialogBackgroundColor: Color(0xffffffff),
     indicatorColor: Color(0xff8bc34a),
     hintColor: Color(0x8a000000),
-    errorColor: Color(0xffd32f2f),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.normal,
       minWidth: 88.0,
@@ -330,11 +323,6 @@ class GreenTheme {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       foregroundColor: Color(0xff000000),
     ),
-    // accentIconTheme: IconThemeData(
-    //   color: Color(0xff000000),
-    //   opacity: 1.0,
-    //   size: 24.0,
-    // ),
     sliderTheme: SliderThemeData(
       activeTrackColor: Color(0xff8bc34a),
       inactiveTrackColor: Color(0x3d8bc34a),

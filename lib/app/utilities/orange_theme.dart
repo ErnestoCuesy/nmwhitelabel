@@ -7,8 +7,6 @@ class OrangeTheme {
     primaryColor: Color(0xffff9800),
     primaryColorLight: Color(0xffffe0b2),
     primaryColorDark: Color(0xfff57c00),
-    //accentColor: Color(0xffff9800),
-    //accentColorBrightness: Brightness.light,
     canvasColor: Color(0xfffafafa),
     scaffoldBackgroundColor: Color(0xfffafafa),
     bottomAppBarTheme: BottomAppBarTheme(color: Color(0xffffffff)),
@@ -18,16 +16,10 @@ class OrangeTheme {
     splashColor: Color(0x66c8c8c8),
     unselectedWidgetColor: Color(0x8a000000),
     disabledColor: Color(0x61000000),
-    //buttonColor: Color(0xffe0e0e0),
     secondaryHeaderColor: Color(0xfffff3e0),
-    //textSelectionColor: Color(0xffffcc80),
-    //cursorColor: Color(0xff4285f4),
-    //textSelectionHandleColor: Color(0xffffb74d),
-    backgroundColor: Color(0xffffcc80),
     dialogBackgroundColor: Color(0xffffffff),
     indicatorColor: Color(0xffff9800),
     hintColor: Color(0x8a000000),
-    errorColor: Color(0xffd32f2f),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.normal,
       minWidth: 88.0,
@@ -333,11 +325,6 @@ class OrangeTheme {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       foregroundColor: Color(0xff000000),
     ),
-    // accentIconTheme: IconThemeData(
-    //   color: Color(0xff000000),
-    //   opacity: 1.0,
-    //   size: 24.0,
-    // ),
     sliderTheme: SliderThemeData(
       activeTrackColor: Color(0xffff9800),
       inactiveTrackColor: Color(0x3dff9800),
