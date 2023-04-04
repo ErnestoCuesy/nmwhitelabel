@@ -53,6 +53,7 @@ class _RestaurantQueryState extends State<RestaurantQuery> {
               snapshot: snapshot,
               itemBuilder: (context, restaurant) {
                 return Card(
+                  elevation: 0,
                   color: restaurant.adminVerified!
                       ? Colors.transparent
                       : Colors.red,
