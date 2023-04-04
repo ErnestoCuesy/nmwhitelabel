@@ -47,7 +47,7 @@ class LocationServicesError extends StatelessWidget {
             FormSubmitButton(
               context: context,
               color: Colors.grey,
-              text: 'Retry',
+              text: 'Ask for permission',
               onPressed: askPermission as void Function()?,
             ),
             SizedBox(
@@ -56,7 +56,7 @@ class LocationServicesError extends StatelessWidget {
             FormSubmitButton(
               context: context,
               color: _buttonColor(),
-              text: 'Continue',
+              text: 'Continue without permission',
               onPressed: continueWithoutLocation as void Function()?,
             ),
           ],
