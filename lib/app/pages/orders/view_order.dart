@@ -205,7 +205,7 @@ class _ViewOrderState extends State<ViewOrder> {
                   Padding(
                     padding: const EdgeInsets.only(left: 24, right: 24.0),
                     child: Text(
-                      'Deliver to:',
+                      model!.order!.deliveryOption!,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
