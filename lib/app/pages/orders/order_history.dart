@@ -57,6 +57,7 @@ class _OrderHistoryState extends State<OrderHistory> {
             snapshot: snapshot,
             itemBuilder: (context, order) {
               return Card(
+                elevation: 0,
                 color: _determineTileColor(order),
                 margin: EdgeInsets.all(12.0),
                 child: ListTile(
@@ -148,7 +149,7 @@ class _OrderHistoryState extends State<OrderHistory> {
   Color? _determineTileColor(Order order) {
     Color? tileColor;
     if (FlavourConfig.isPatron()) {
-      tileColor = Colors.black45;
+      tileColor = Colors.transparent;
     } else {
       if (order.isBlocked!) {
         tileColor = Colors.brown;
