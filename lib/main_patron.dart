@@ -6,7 +6,7 @@ void main() {
   var flavour = Flavour.PATRON;
   FlavourConfig(
     flavour: flavour,
-    colorTheme: ColorTheme.BLACK,
+    colorTheme: ColorTheme.GREEN,
     bannerColor: Colors.blue,
   );
 
