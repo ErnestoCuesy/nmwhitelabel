@@ -8,8 +8,6 @@ import 'package:nearbymenus/app/models/user_message.dart';
 import 'package:nearbymenus/app/services/database.dart';
 import 'package:provider/provider.dart';
 
-import 'authorized_dates.dart';
-
 class AccessOptions extends StatefulWidget {
   final UserMessage? message;
 
@@ -33,52 +31,6 @@ class _AccessOptionsState extends State<AccessOptions> {
   bool get hasVenueAuth =>
       authorizations.authorizedRoles!.containsKey(message!.fromUid) &&
       authorizations.authorizedRoles![message!.fromUid] == ROLE_VENUE;
-
-  void _changeVenueAuthorization() async {
-    List<dynamic> authorizedIntDates =
-        authorizations.authorizedDates![message!.fromUid] ?? [];
-    final authorizedDates = await Navigator.of(context).push(
-      MaterialPageRoute<List<DateTime>>(
-        fullscreenDialog: false,
-        builder: (context) => AuthorizedDates(
-          authorizedIntDates: authorizedIntDates,
-        ),
-      ),
-    );
-    if (authorizedDates != null && authorizedDates.length > 0) {
-      authorizedIntDates.clear();
-      authorizedDates.forEach((date) {
-        authorizedIntDates.add(date.millisecondsSinceEpoch);
-      });
-      if (hasPermAuth) {
-        authorizations.authorizedRoles!
-            .update(message!.fromUid, (value) => ROLE_VENUE);
-      } else {
-        authorizations.authorizedRoles!
-            .putIfAbsent(message!.fromUid, () => ROLE_VENUE);
-      }
-      authorizations.authorizedNames!
-          .putIfAbsent(message!.fromUid, () => message!.fromName);
-      if (authorizations.authorizedDates!.containsKey(message!.fromUid)) {
-        authorizations.authorizedDates!
-            .update(message!.fromUid, (value) => authorizedIntDates);
-      } else {
-        authorizations.authorizedDates!
-            .putIfAbsent(message!.fromUid, () => authorizedIntDates);
-      }
-      setState(() {
-        message!.authFlag = true;
-      });
-    } else {
-      authorizations.authorizedRoles!.remove(message!.fromUid);
-      authorizations.authorizedNames!.remove(message!.fromUid);
-      authorizations.authorizedDates!.remove(message!.fromUid);
-      setState(() {
-        message!.authFlag = false;
-      });
-    }
-    _setDatabaseAuthorization();
-  }
 
   void _changePermAuthorization(bool flag) {
     setState(() {
@@ -169,36 +121,6 @@ class _AccessOptionsState extends State<AccessOptions> {
       ),
       SizedBox(
         height: 16.0,
-      ),
-      Container(
-        height: buttonSize,
-        width: buttonSize,
-        decoration: BoxDecoration(
-          border: Border.all(),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.calendar_today,
-              size: 36.0,
-            ),
-            SizedBox(
-              height: 8.0,
-            ),
-            Text(
-              'Sales Access\n(Selected Dates)',
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            CupertinoSwitch(
-                value: hasVenueAuth,
-                onChanged: (flag) {
-                  _changeVenueAuthorization();
-                }),
-          ],
-        ),
       ),
     ];
   }
