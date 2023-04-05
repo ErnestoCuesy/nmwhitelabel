@@ -10,6 +10,8 @@ import 'package:nearbymenus/app/services/auth.dart';
 import 'package:nearbymenus/app/services/database.dart';
 import 'package:provider/provider.dart';
 
+import '../sign_in/privacy_policy.dart';
+
 class AboutPage extends StatefulWidget {
   @override
   _AboutPageState createState() => _AboutPageState();
@@ -59,6 +61,17 @@ class _AboutPageState extends State<AboutPage> {
     );
   }
 
+  void _privacyPolicy(BuildContext context) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => PrivacyPolicy(
+          askAgreement: false,
+        ),
+      ),
+    );
+  }
+
   List<Widget> _buildContents(BuildContext context) {
     return [
       CustomRaisedButton(
@@ -71,6 +84,31 @@ class _AboutPageState extends State<AboutPage> {
           children: [
             Text(
               'Terms And Conditions',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+            Icon(
+              Icons.info_outline,
+              size: 36.0,
+            ),
+          ],
+        ),
+      ),
+      SizedBox(
+        height: 32.0,
+      ),
+      CustomRaisedButton(
+        height: 150.0,
+        width: 250.0,
+        color: Theme.of(context).buttonTheme.colorScheme!.surface,
+        onPressed: () => _privacyPolicy(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Privacy Policy',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(
