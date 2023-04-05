@@ -1,8 +1,5 @@
-import 'package:calendarro/calendarro.dart';
-import 'package:calendarro/date_utils.dart';
 import 'package:flutter/material.dart' hide DateUtils;
-import 'package:intl/intl.dart';
-import 'package:nearbymenus/app/common_widgets/custom_weekday_label_row.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
 import 'package:nearbymenus/app/config/flavour_config.dart';
 import 'package:nearbymenus/app/models/authorizations.dart';
@@ -90,67 +87,6 @@ class _OrderTotalsState extends State<OrderTotals> {
     );
   }
 
-  Future<void> _calendarButton(BuildContext context) async {
-    var currentMonthStartDate = DateUtils.getFirstDayOfCurrentMonth();
-    var currentMonthEndDate = DateUtils.getLastDayOfCurrentMonth();
-    var lastMonthStartDate = DateUtils.getFirstDayOfMonth(DateTime(
-      currentMonthStartDate.year,
-      currentMonthStartDate.month - 1,
-      currentMonthStartDate.day,
-    ));
-    var lastMonthEndDate = DateUtils.getLastDayOfMonth(DateTime(
-      currentMonthStartDate.year,
-      currentMonthStartDate.month - 1,
-      currentMonthStartDate.day,
-    ));
-    final DateFormat monthName = DateFormat(DateFormat.MONTH);
-    final currentMonth = monthName.format(currentMonthStartDate);
-    final lastMonth = monthName.format(lastMonthStartDate);
-    _selectedDate = await Navigator.of(context).push(
-      MaterialPageRoute<DateTime>(
-          builder: (_) => Scaffold(
-                appBar: new AppBar(
-                  title: new Text('Select query date'),
-                ),
-                body: Column(
-                  children: [
-                    Container(height: 32.0),
-                    Text(
-                      lastMonth,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    Container(height: 32.0),
-                    Calendarro(
-                        startDate: lastMonthStartDate,
-                        endDate: lastMonthEndDate,
-                        displayMode: DisplayMode.MONTHS,
-                        selectionMode: SelectionMode.SINGLE,
-                        weekdayLabelsRow: CustomWeekdayLabelsRow(),
-                        onTap: (date) {
-                          Navigator.of(context).pop(date);
-                        }),
-                    Container(height: 16.0),
-                    Text(
-                      currentMonth,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    Container(height: 32.0),
-                    Calendarro(
-                        startDate: currentMonthStartDate,
-                        endDate: currentMonthEndDate,
-                        displayMode: DisplayMode.MONTHS,
-                        selectionMode: SelectionMode.SINGLE,
-                        weekdayLabelsRow: CustomWeekdayLabelsRow(),
-                        onTap: (date) {
-                          Navigator.of(context).pop(date);
-                        }),
-                  ],
-                ),
-              )),
-    );
-    setState(() {});
-  }
-
   Widget _buildContents(BuildContext context) {
     if (!FlavourConfig.isManager()) {
       return FutureBuilder<List<Authorizations>>(
@@ -192,6 +128,20 @@ class _OrderTotalsState extends State<OrderTotals> {
     }
   }
 
+  _pickDate() {
+    DatePicker.showDatePicker(context,
+        showTitleActions: true,
+        minTime: DateTime.now().subtract(Duration(days: 30)),
+        maxTime: DateTime.now(), onChanged: (date) {
+      print('change $date');
+    }, onConfirm: (date) {
+      print('confirm $date');
+      setState(() {
+        _selectedDate = date;
+      });
+    }, currentTime: DateTime.now(), locale: LocaleType.en);
+  }
+
   @override
   Widget build(BuildContext context) {
     session = Provider.of<Session>(context);
@@ -210,7 +160,7 @@ class _OrderTotalsState extends State<OrderTotals> {
               padding: const EdgeInsets.only(right: 16.0),
               child: IconButton(
                 icon: Icon(Icons.calendar_today),
-                onPressed: () => _calendarButton(context),
+                onPressed: () => _pickDate(),
               ),
             ),
           if (session.userDetails!.role == ROLE_VENUE) _datesMenuButton()
