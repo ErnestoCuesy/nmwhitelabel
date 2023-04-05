@@ -15,6 +15,8 @@ import 'package:nearbymenus/app/pages/orders/active_orders.dart';
 import 'package:nearbymenus/app/services/database.dart';
 import 'package:provider/provider.dart';
 
+import '../orders/order_totals.dart';
+
 class RestaurantOptionsPage extends StatefulWidget {
   @override
   _RestaurantOptionsPageState createState() => _RestaurantOptionsPageState();
@@ -56,6 +58,14 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
       MaterialPageRoute<void>(
         fullscreenDialog: false,
         builder: (context) => ActiveOrders(),
+      ),
+    );
+  }
+
+  void _orderTotals(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => OrderTotals(),
       ),
     );
   }
@@ -125,6 +135,33 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
           ],
         ),
       ),
+      if (FlavourConfig.isAdmin())
+        SizedBox(
+          height: 32.0,
+        ),
+      if (FlavourConfig.isAdmin())
+        CustomRaisedButton(
+          height: 150.0,
+          width: 250.0,
+          color: Theme.of(context).buttonTheme.colorScheme!.surface,
+          onPressed: () => _orderTotals(context),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Sales',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              Icon(
+                Icons.attach_money,
+                size: 36.0,
+              ),
+            ],
+          ),
+        ),
       if (!FlavourConfig.isAdmin())
         SizedBox(
           height: 32.0,

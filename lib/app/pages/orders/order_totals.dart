@@ -88,7 +88,7 @@ class _OrderTotalsState extends State<OrderTotals> {
   }
 
   Widget _buildContents(BuildContext context) {
-    if (!FlavourConfig.isManager()) {
+    if (!FlavourConfig.isManager() && !FlavourConfig.isAdmin()) {
       return FutureBuilder<List<Authorizations>>(
         future: database.authorizationsSnapshot(),
         builder: (context, snapshot) {
@@ -155,6 +155,7 @@ class _OrderTotalsState extends State<OrderTotals> {
         ),
         actions: [
           if (FlavourConfig.isManager() ||
+              FlavourConfig.isAdmin() ||
               session.userDetails!.role == ROLE_STAFF)
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
