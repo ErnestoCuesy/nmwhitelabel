@@ -84,7 +84,7 @@ class _AboutPageState extends State<AboutPage> {
           children: [
             Text(
               'Terms And Conditions',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).primaryTextTheme.titleLarge,
             ),
             SizedBox(
               height: 8.0,
@@ -109,7 +109,7 @@ class _AboutPageState extends State<AboutPage> {
           children: [
             Text(
               'Privacy Policy',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).primaryTextTheme.titleLarge,
             ),
             SizedBox(
               height: 8.0,
@@ -135,7 +135,7 @@ class _AboutPageState extends State<AboutPage> {
             children: [
               Text(
                 'Delete Account',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
               ),
               SizedBox(
                 height: 16.0,

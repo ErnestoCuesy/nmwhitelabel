@@ -65,7 +65,7 @@ class _RestaurantAdministratorPageState
                 children: [
                   Text(
                     'Menu Builder',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).primaryTextTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 8.0,
@@ -94,7 +94,7 @@ class _RestaurantAdministratorPageState
                 children: [
                   Text(
                     'Option Builder',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).primaryTextTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 8.0,
@@ -130,7 +130,7 @@ class _RestaurantAdministratorPageState
                 children: [
                   Text(
                     'Menu Browser',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).primaryTextTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 8.0,
@@ -165,7 +165,7 @@ class _RestaurantAdministratorPageState
                 children: [
                   Text(
                     'Active Orders',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).primaryTextTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 8.0,
@@ -190,7 +190,7 @@ class _RestaurantAdministratorPageState
                 children: [
                   Text(
                     'Inactive Orders',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).primaryTextTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 8.0,
@@ -226,7 +226,7 @@ class _RestaurantAdministratorPageState
             children: [
               Text(
                 'Map Markers',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
               ),
               SizedBox(
                 height: 8.0,
@@ -252,7 +252,7 @@ class _RestaurantAdministratorPageState
           children: [
             Text(
               'Sales',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).primaryTextTheme.titleLarge,
             ),
             SizedBox(
               height: 8.0,
@@ -296,7 +296,7 @@ class _RestaurantAdministratorPageState
         children: [
           Text(
             'Images',
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context).primaryTextTheme.titleLarge,
           ),
           SizedBox(
             height: 8.0,
