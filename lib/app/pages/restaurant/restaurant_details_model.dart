@@ -35,6 +35,7 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
   bool allowCancellations;
   String? vatNumber;
   String? registrationNumber;
+  bool itemImagesInitialized;
   bool adminVerified;
   Map<dynamic, dynamic>? restaurantMenus;
   Map<dynamic, dynamic>? restaurantOptions;
@@ -73,6 +74,7 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
     this.vatNumber,
     this.registrationNumber,
     this.adminVerified = false,
+    this.itemImagesInitialized = false,
     this.restaurantMenus,
     this.restaurantOptions,
     this.markerCoordinates,
@@ -115,6 +117,7 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
           vatNumber: vatNumber,
           registrationNumber: registrationNumber,
           adminVerified: adminVerified,
+          itemImagesInitialized: itemImagesInitialized,
           restaurantFlags: {
             'open': open,
             'active': active,

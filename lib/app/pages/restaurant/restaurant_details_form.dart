@@ -52,6 +52,7 @@ class RestaurantDetailsForm extends StatefulWidget {
         vatNumber: restaurant.vatNumber ?? '',
         registrationNumber: restaurant.registrationNumber ?? '',
         adminVerified: restaurant.adminVerified ?? false,
+        itemImagesInitialized: restaurant.itemImagesInitialized ?? false,
         restaurantMenus: restaurant.restaurantMenus ?? {},
         restaurantOptions: restaurant.restaurantOptions ?? {},
         markerCoordinates: restaurant.markerCoordinates ?? [],
