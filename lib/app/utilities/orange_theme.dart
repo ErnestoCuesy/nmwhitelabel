@@ -238,7 +238,7 @@ class OrangeTheme {
         fontStyle: FontStyle.normal,
       ),
       errorMaxLines: null,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
       isDense: false,
       contentPadding:
           EdgeInsets.only(top: 12.0, bottom: 12.0, left: 0.0, right: 0.0),

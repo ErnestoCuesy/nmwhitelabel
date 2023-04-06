@@ -98,7 +98,7 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
           children: [
             Text(
               'Food Gallery',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).primaryTextTheme.titleLarge,
             ),
             SizedBox(
               height: 8.0,
@@ -123,7 +123,7 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
           children: [
             Text(
               'Menu',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).primaryTextTheme.titleLarge,
             ),
             SizedBox(
               height: 16.0,
@@ -150,7 +150,7 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
             children: [
               Text(
                 'Sales',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
               ),
               SizedBox(
                 height: 8.0,
@@ -177,7 +177,7 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
             children: [
               Text(
                 'Order History',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
               ),
               SizedBox(
                 height: 16.0,
@@ -206,7 +206,7 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
                 session.currentRestaurant!.adminVerified!
                     ? 'Block Restaurant'
                     : 'Approve Restaurant',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
               ),
               SizedBox(
                 height: 16.0,
@@ -235,7 +235,7 @@ class _RestaurantOptionsPageState extends State<RestaurantOptionsPage> {
             children: [
               Text(
                 'Delete Restaurant',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
               ),
               SizedBox(
                 height: 16.0,
