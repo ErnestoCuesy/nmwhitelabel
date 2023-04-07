@@ -100,7 +100,6 @@ class _OrderSettlementState extends State<OrderSettlement> {
       style: Theme.of(context).inputDecorationTheme.labelStyle,
       controller: _tipController,
       focusNode: _tipFocusNode,
-      cursorColor: Colors.white,
       decoration: InputDecoration(
         labelText: 'Tip amount in ${f.currencySymbol}',
         hintText: 'i.e.: 5.00, 10.99',
@@ -127,7 +126,6 @@ class _OrderSettlementState extends State<OrderSettlement> {
       style: Theme.of(context).inputDecorationTheme.labelStyle,
       controller: _discountController,
       focusNode: _discountFocusNode,
-      cursorColor: Colors.white,
       decoration: InputDecoration(
         labelText: 'Discount percentage (%)',
         hintText: 'i.e.: 5, 10, 20',
@@ -156,7 +154,6 @@ class _OrderSettlementState extends State<OrderSettlement> {
       style: Theme.of(context).inputDecorationTheme.labelStyle,
       controller: _cashReceivedController,
       focusNode: _cashReceivedFocusNode,
-      cursorColor: Colors.white,
       decoration: InputDecoration(
         labelText: 'Cash received',
         hintText: 'i.e.: 5.00, 10.00, 20.00',
@@ -189,7 +186,6 @@ class _OrderSettlementState extends State<OrderSettlement> {
     return TextField(
       style: Theme.of(context).inputDecorationTheme.labelStyle,
       controller: _cashChangeController,
-      cursorColor: Colors.white,
       decoration: InputDecoration(
         labelText: 'Change',
         errorText: '',
@@ -230,7 +226,6 @@ class _OrderSettlementState extends State<OrderSettlement> {
         style: Theme.of(context).inputDecorationTheme.labelStyle,
         controller: _editingControllerMap[key],
         focusNode: _focusNodeMap[key],
-        cursorColor: Colors.white,
         decoration: InputDecoration(
           labelText: '$key amount',
           hintText: 'i.e.: 5.00, 10.99',

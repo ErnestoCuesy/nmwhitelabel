@@ -20,6 +20,9 @@ class OrangeTheme {
     dialogBackgroundColor: Color(0xffffffff),
     indicatorColor: Color(0xffff9800),
     hintColor: Color(0x8a000000),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: Colors.black,
+    ),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.normal,
       minWidth: 88.0,
