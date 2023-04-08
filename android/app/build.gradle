@@ -99,7 +99,7 @@ android {
         }
         patron {
             dimension "app"
-            resValue "string", "app_name", "NM Patron"
+            resValue "string", "app_name", "Nearby Menus"
         }
     }
 }
