@@ -53,3 +53,9 @@ ios/Runner/GoogleService-Info.plist
 ios/Runner/AppDelegate.swift
 macos/Runner/GoogleService-Info.plist
 macos/Runner/AppDelegate.swift
+# Images
+android/app/src/main/res/mipmap-hdpi/*.png
+ios/Runner/Assets.xcassets/AppIcon.appiconset/*.png
+assets/*.png
+images/*.png
+
