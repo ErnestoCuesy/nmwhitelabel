@@ -49,12 +49,12 @@ class PurchaseButton extends StatelessWidget {
           children: <Widget>[
             Text(
               "${package!.storeProduct.description}",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).primaryTextTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             Text(
               "Buy for ${package!.storeProduct.priceString}",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).primaryTextTheme.titleLarge,
             ),
           ],
         ),
