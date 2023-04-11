@@ -26,7 +26,8 @@ abstract class AuthBase {
   Future<void> createUserWithEmailAndPassword(String? email, String? password);
   Future<void> resetPassword(String? email);
   Future<void> signOut();
-  Future<void> convertUserWithEmail(String? email, String? password, String? name);
+  Future<void> convertUserWithEmail(
+      String? email, String? password, String? name);
   Future<void> updateUserName(String name, User currentUser);
   Future<bool> userIsAnonymous();
   Future<bool> userEmailVerified();
@@ -42,13 +43,12 @@ class Auth implements AuthBase {
   UserAuth? _userFromFirebase(User? user) {
     print('FirebaseUser => ${user!.displayName}');
     return UserAuth(
-            uid: user.uid,
-            displayName: user.displayName,
-            email: user.email,
-            photoUrl: user.photoURL,
-            isAnonymous: user.isAnonymous,
-            isEmailVerified: user.emailVerified
-          );
+        uid: user.uid,
+        displayName: user.displayName,
+        email: user.email,
+        photoUrl: user.photoURL,
+        isAnonymous: user.isAnonymous,
+        isEmailVerified: user.emailVerified);
   }
 
   @override
@@ -70,33 +70,33 @@ class Auth implements AuthBase {
 
   @override
   Future<UserAuth?> signInWithEmailAndPassword(
-    String? email, String? password) async {
+      String? email, String? password) async {
     User? userInfo;
     try {
       final credential = await _fireBaseAuth.signInWithEmailAndPassword(
-              email: email!, password: password!);
+          email: email!, password: password!);
       userInfo = credential.user;
       if (!userInfo!.emailVerified) {
-            throw PlatformException(
-                code: 'EMAIL_NOT_VERIFIED',
-                message:
-                    'Please verify your email address by clicking on the link emailed to you.');
+        throw PlatformException(
+            code: 'EMAIL_NOT_VERIFIED',
+            message:
+                'Please verify your email address by clicking on the link emailed to you. Check your inbox and spam folders!');
       } else {
         return _userFromFirebase(userInfo);
       }
     } catch (e) {
-      final FirebaseAuthException pe = e as FirebaseAuthException;
+      var pe = e as PlatformException;
       print(e);
       throw PlatformException(
-          code: pe.code,
-          message: pe.message,
-          );
+        code: pe.code,
+        message: pe.message,
+      );
     }
   }
 
   @override
   Future<void> createUserWithEmailAndPassword(
-    String? email, String? password) async {
+      String? email, String? password) async {
     final authResult = await _fireBaseAuth.createUserWithEmailAndPassword(
         email: email!, password: password!);
     // Hotmail filters verification email sent by Firebase - avoid Hotmail
@@ -123,7 +123,7 @@ class Auth implements AuthBase {
         throw PlatformException(
             code: 'PASSWORD_RESET',
             message:
-            'A password reset link has been emailed to you. Please click on it to enter your new password and try to sign in again.');
+                'A password reset link has been emailed to you. Please click on it to enter your new password and try to sign in again.');
       }
     }
   }
@@ -132,10 +132,13 @@ class Auth implements AuthBase {
   Future<void> signOut() async {
     await _fireBaseAuth.signOut();
   }
+
   @override
-  Future<void> convertUserWithEmail(String? email, String? password, String? name) async {
+  Future<void> convertUserWithEmail(
+      String? email, String? password, String? name) async {
     final currentUser = _fireBaseAuth.currentUser!;
-    final credential = EmailAuthProvider.credential(email: email!, password: password!);
+    final credential =
+        EmailAuthProvider.credential(email: email!, password: password!);
     await currentUser.linkWithCredential(credential);
     await updateUserName(name, currentUser);
   }

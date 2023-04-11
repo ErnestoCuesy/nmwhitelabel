@@ -86,7 +86,8 @@ class ConversionProcess {
     bool? detailsCaptured = false;
     session!.isAnonymousUser = await auth!.userIsAnonymous();
     if (session!.isAnonymousUser) {
-      if (await (_askForSignIn() as FutureOr<bool>)) {
+      var continueToSignIn = await (_askForSignIn());
+      if (continueToSignIn!) {
         _convertUser();
       }
     } else {
@@ -103,7 +104,8 @@ class ConversionProcess {
         }
         if (captureUserDetails!) {
           if (!session!.userDetailsCaptured()) {
-            if (await (_confirmDetailsCapture() as FutureOr<bool>)) {
+            var detailsCaptureConfirmed = await (_confirmDetailsCapture());
+            if (detailsCaptureConfirmed!) {
               detailsCaptured = await (navigationService!.push(
                 MaterialPageRoute<bool>(
                   fullscreenDialog: false,

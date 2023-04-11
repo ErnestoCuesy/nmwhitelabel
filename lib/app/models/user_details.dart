@@ -9,6 +9,8 @@ class UserDetails {
   String? telephone;
   String? agreementDate;
   bool? hasRestaurants;
+  int deletionTimeStamp;
+  bool markedForDeletion;
   Map<dynamic, dynamic>? orderOnHold;
 
   UserDetails({
@@ -22,6 +24,8 @@ class UserDetails {
     this.telephone = '',
     this.agreementDate,
     this.hasRestaurants,
+    this.deletionTimeStamp = 0,
+    this.markedForDeletion = false,
     this.orderOnHold,
   });
 
@@ -30,17 +34,19 @@ class UserDetails {
       return UserDetails();
     }
     return UserDetails(
-        email: data['email'],
-        name: data['name'],
-        role: data['role'] ?? '',
-        address1: data['address1'],
-        address2: data['address2'],
-        address3: data['address3'],
-        address4: data['address4'],
-        telephone: data['telephone'] ?? '',
-        agreementDate: data['agreementDate'].toString(),
-        hasRestaurants: data['hasRestaurants'] ?? false,
-        orderOnHold: data['orderOnHold'] ?? {},
+      email: data['email'],
+      name: data['name'],
+      role: data['role'] ?? '',
+      address1: data['address1'],
+      address2: data['address2'],
+      address3: data['address3'],
+      address4: data['address4'],
+      telephone: data['telephone'] ?? '',
+      agreementDate: data['agreementDate'].toString(),
+      hasRestaurants: data['hasRestaurants'] ?? false,
+      deletionTimeStamp: data['deletionTimeStamp'] ?? 0,
+      markedForDeletion: data['markedForDeletion'] ?? false,
+      orderOnHold: data['orderOnHold'] ?? {},
     );
   }
 
@@ -56,6 +62,8 @@ class UserDetails {
       'telephone': telephone,
       'agreementDate': agreementDate,
       'hasRestaurants': hasRestaurants,
+      'deletionTimeStamp': deletionTimeStamp,
+      'markedForDeletion': markedForDeletion,
       'orderOnHold': orderOnHold,
     };
   }

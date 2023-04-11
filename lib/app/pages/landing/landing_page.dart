@@ -53,14 +53,37 @@ class LandingPage extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 final userDetails = snapshot.data;
-                if (!user.isAnonymous) {
-                  if (userDetails!.email == null ||
-                      userDetails.email == '' ||
-                      userDetails.role == null ||
-                      userDetails.role == '') {
-                    database.setUserDetails(session.userDetails);
-                  } else {
-                    session.userDetails = userDetails;
+                DateTime deletionTimeStamp =
+                    DateTime.fromMillisecondsSinceEpoch(
+                        userDetails!.deletionTimeStamp);
+                DateTime deletionTimeLimit =
+                    deletionTimeStamp.add(Duration(minutes: 5));
+                if (deletionTimeLimit.isAfter(DateTime.now())) {
+                  session.userDetails!.markedForDeletion = true;
+                  try {
+                    print('Trying to delete DB user');
+                    database.deleteUser(database.userId).then((value) =>
+                        Future.delayed(Duration(seconds: 5)).then((value) {
+                          try {
+                            auth.deleteUser();
+                            auth.signOut();
+                          } on Exception catch (e) {
+                            print(e);
+                          }
+                        }));
+                  } catch (e) {
+                    print(e);
+                  }
+                } else {
+                  if (!user.isAnonymous) {
+                    if (userDetails.email == null ||
+                        userDetails.email == '' ||
+                        userDetails.role == null ||
+                        userDetails.role == '') {
+                      database.setUserDetails(session.userDetails);
+                    } else {
+                      session.userDetails = userDetails;
+                    }
                   }
                 }
                 if (!kIsWeb) {

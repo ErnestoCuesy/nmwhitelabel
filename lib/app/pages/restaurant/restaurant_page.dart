@@ -79,7 +79,9 @@ class _RestaurantPageState extends State<RestaurantPage> {
         if (snapshot.hasData && snapshot.data!.length > 0) {
           session.userDetails!.hasRestaurants = true;
         }
-        database.setUserDetails(session.userDetails);
+        if (!session.userDetails!.markedForDeletion) {
+          database.setUserDetails(session.userDetails);
+        }
         return ListItemsBuilder<Restaurant?>(
             title: 'No restaurants found',
             message: 'Tap the + button to add a new restaurant',

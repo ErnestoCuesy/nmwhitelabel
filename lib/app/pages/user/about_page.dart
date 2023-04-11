@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:nearbymenus/app/common_widgets/custom_raised_button.dart';
 import 'package:nearbymenus/app/common_widgets/platform_alert_dialog.dart';
@@ -34,18 +32,27 @@ class _AboutPageState extends State<AboutPage> {
             'Please delete all your restaurants first with NM Manager before deleting your account.',
         defaultActionText: 'OK',
       ).show(context);
-    } else if (await (PlatformAlertDialog(
-      title: 'Confirm account deletion',
-      content: 'Do you really want to delete your account?' + extraNotice,
-      cancelActionText: 'No',
-      defaultActionText: 'Yes',
-    ).show(context) as FutureOr<bool>)) {
-      try {
-        database.deleteUser(database.userId).then((value) =>
-            Future.delayed(Duration(seconds: 3))
-                .then((value) => auth.deleteUser()));
-      } catch (e) {
-        print(e);
+    } else {
+      var deleteConfirmed = await (PlatformAlertDialog(
+        title: 'Confirm account deletion',
+        content: 'Do you really want to delete your account?' + extraNotice,
+        cancelActionText: 'No',
+        defaultActionText: 'Yes',
+      ).show(context));
+      if (deleteConfirmed!) {
+        var okToContinue = await (PlatformAlertDialog(
+          title: 'Account will be scheduled for deletion',
+          content:
+              'You\'ll be logged out and you\'ll have to log back in again within 5 minutes in order for the account deletion process to complete. Do you want to continue?',
+          cancelActionText: 'No',
+          defaultActionText: 'Yes',
+        ).show(context));
+        if (okToContinue!) {
+          session.userDetails!.deletionTimeStamp =
+              DateTime.now().millisecondsSinceEpoch;
+          database.setUserDetails(session.userDetails);
+          auth.signOut();
+        }
       }
     }
   }
