@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nearbymenus/app/common_widgets/platform_progress_indicator.dart';
 import 'package:nearbymenus/app/config/flavour_config.dart';
@@ -44,6 +41,10 @@ class LandingPage extends StatelessWidget {
               allowAnonymousSignIn: FlavourConfig.isAdmin() ? false : true,
               convertAnonymous: false,
             );
+          } else {
+            if (!user.isAnonymous && !user.isEmailVerified) {
+              auth.signOut();
+            }
           }
           session.isAnonymousUser = user.isAnonymous;
           session.broadcastAnonymousUserStatus(user.isAnonymous);
@@ -69,6 +70,7 @@ class LandingPage extends StatelessWidget {
                             auth.signOut();
                           } on Exception catch (e) {
                             print(e);
+                            rethrow;
                           }
                         }));
                   } catch (e) {
@@ -86,23 +88,13 @@ class LandingPage extends StatelessWidget {
                     }
                   }
                 }
-                if (!kIsWeb) {
-                  if (FlavourConfig.isManager() && Platform.isAndroid) {
-                    return Provider<IAPManagerBase>(
-                      create: (context) => IAPManager(
-                          userID: user.isAnonymous
-                              ? null
-                              : session.userDetails!.email),
-                      child: CheckPurchases(),
-                    );
-                  } else {
-                    if (FlavourConfig.isManager() &&
-                        (Platform.isMacOS || Platform.isIOS)) {
-                      return HomePageManager();
-                    } else {
-                      return HomePage();
-                    }
-                  }
+                if (FlavourConfig.isManager() &&
+                    !user.isAnonymous &&
+                    user.isEmailVerified) {
+                  return Provider<IAPManagerBase>(
+                    create: (context) => IAPManager(userID: user.email),
+                    child: CheckPurchases(),
+                  );
                 } else {
                   if (FlavourConfig.isManager()) {
                     return HomePageManager();

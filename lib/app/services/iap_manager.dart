@@ -235,10 +235,10 @@ class IAPManager implements IAPManagerBase {
   Future<void> init() async {
     try {
       Purchases.setLogLevel(LogLevel.debug);
-      // String? rcUserID =
-      //     (userID == null || userID == '') ? 'anonymous' : userID;
-      await Purchases.configure(
-          PurchasesConfiguration(API_KEY)); //(API_KEY, appUserId: rcUserID);
+      String? rcUserID =
+          (userID == null || userID == '') ? 'anonymous' : userID;
+      await Purchases.configure(PurchasesConfiguration(API_KEY)
+        ..appUserID = rcUserID); //(API_KEY, appUserId: rcUserID);
       //await Purchases.setAllowSharingStoreAccount(false);
       _purchaserInfo = await Purchases.getCustomerInfo();
       _offerings = await Purchases.getOfferings();

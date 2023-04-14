@@ -67,7 +67,9 @@ class EmailSignInModel with UserCredentialsValidators, ChangeNotifier {
         default:
       }
     } on PlatformException catch (e) {
-      if (e.code == 'PASSWORD_RESET' || e.code == 'EMAIL_NOT_VERIFIED') {
+      if (e.code == 'PASSWORD_RESET' ||
+          e.code == 'EMAIL_NOT_VERIFIED' ||
+          e.code == 'INVALID_CREDENTIALS') {
         updateWith(formType: EmailSignInFormType.signIn);
       }
       updateWith(isLoading: false);
