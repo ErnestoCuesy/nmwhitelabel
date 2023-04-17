@@ -23,7 +23,7 @@ class UserDetails {
     this.address4 = '',
     this.telephone = '',
     this.agreementDate,
-    this.hasRestaurants,
+    this.hasRestaurants = false,
     this.deletionTimeStamp = 0,
     this.markedForDeletion = false,
     this.orderOnHold,

@@ -106,7 +106,7 @@ class SignInPage extends StatelessWidget {
 
   void _displayWhy(BuildContext context) {
     String reason =
-        'If you want to continue you need to register an account for the following reason(s): \n\n- We want to keep a clean database and discourage spammers';
+        'If you want to continue you need to register an account for the following reason(s): \n\n- We want to keep a clean database and discourage spammers\n\n- Nearby Menus will never share your details or spam you with unsolicited information\n';
     if (FlavourConfig.isManager()) {
       reason = reason +
           '\n\n- You will be able to purchase order bundles to unlock your restaurant orders\n\n- You will be able to add images to your restaurant gallery\n\n- You will be able to grant access to restaurant orders to NM Staff users';
@@ -114,8 +114,8 @@ class SignInPage extends StatelessWidget {
       reason = reason +
           '\n- Restaurant managers need to know who you are to grant you restaurant access';
     } else {
-      reason =
-          reason + '\n- Your contact details are needed for order deliveries';
+      reason = reason +
+          '\n- Your contact details are needed for order deliveries and other notifications from restaurants';
     }
     PlatformAlertDialog(
       title: 'Why you need an account',
