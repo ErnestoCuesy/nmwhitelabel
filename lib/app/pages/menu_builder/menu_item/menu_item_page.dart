@@ -112,39 +112,49 @@ class _MenuItemPageState extends State<MenuItemPage> {
                 onDismissed: (direction) => _deleteItem(context, item),
                 child: Card(
                   margin: EdgeInsets.all(12.0),
-                  child: ListTile(
-                    isThreeLine: true,
-                    leading: item.hidden!
-                        ? Icon(Icons.visibility_off)
-                        : Icon(Icons.visibility),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          item.name!,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        SizedBox(
-                          height: 4.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          child: Text(
-                            adjustedDescription,
-                            style: Theme.of(context).textTheme.titleMedium,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        image: !item.outOfStock!
+                            ? null
+                            : DecorationImage(
+                                opacity: 0.3,
+                                image: AssetImage('assets/outofstock.png'),
+                                fit: BoxFit.fitWidth)),
+                    child: ListTile(
+                      isThreeLine: true,
+                      leading: item.hidden!
+                          ? Icon(Icons.visibility_off)
+                          : Icon(Icons.visibility),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            item.name!,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            height: 4.0,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            child: Text(
+                              adjustedDescription,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        ],
+                      ),
+                      subtitle: Column(
+                        children: _buildOptions(item),
+                      ),
+                      trailing: Text(
+                        f.format(item.price),
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      onTap: () => _createMenuItemDetailsPage(
+                          context, item, item.sequence),
                     ),
-                    subtitle: Column(
-                      children: _buildOptions(item),
-                    ),
-                    trailing: Text(
-                      f.format(item.price),
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    onTap: () => _createMenuItemDetailsPage(
-                        context, item, item.sequence),
                   ),
                 ),
               );

@@ -93,6 +93,7 @@ class _MenuItemViewState extends State<MenuItemView> {
       itemBuilder: (BuildContext context, int index) {
         final menuItem = sortedMenuItems[sortedKeys[index]];
         String adjustedName = menuItem['name'];
+        bool outOfStock = menuItem['outOfStock'] ?? false;
         int descriptionLength = 70;
         if (adjustedName.length > 20) {
           adjustedName = adjustedName.substring(0, 20) + '...(more)';
@@ -106,11 +107,17 @@ class _MenuItemViewState extends State<MenuItemView> {
         return Container(
           height: 90.0,
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 0.5,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
+              border: Border.all(
+                width: 0.5,
+                color: Theme.of(context).primaryColor,
+              ),
+              image: !outOfStock
+                  ? null
+                  : DecorationImage(
+                      image: AssetImage('assets/outofstock.png'),
+                      opacity: 0.3,
+                      fit: BoxFit.fitWidth,
+                    )),
           child: ListTile(
             title: Padding(
               padding: const EdgeInsets.only(left: 8.0),
@@ -129,8 +136,10 @@ class _MenuItemViewState extends State<MenuItemView> {
               f.format(menuItem['price']),
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            onTap: () =>
-                _addMenuItemToOrder(context, _menuCode(menuName!), menuItem),
+            onTap: outOfStock
+                ? null
+                : () => _addMenuItemToOrder(
+                    context, _menuCode(menuName!), menuItem),
           ),
         );
       },

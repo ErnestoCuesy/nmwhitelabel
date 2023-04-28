@@ -20,6 +20,7 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
   String? description;
   int? sequence;
   bool? hidden;
+  bool? outOfStock;
   List<String?>? optionIdList;
   double price;
   bool isLoading;
@@ -40,6 +41,7 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
     this.description,
     this.sequence,
     this.hidden,
+    this.outOfStock,
     this.price = 0.00,
     this.optionIdList,
     this.isLoading = false,
@@ -73,6 +75,7 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
       description: description,
       sequence: sequence,
       hidden: hidden,
+      outOfStock: outOfStock,
       price: price,
       options: optionIdList,
     );
@@ -136,6 +139,7 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
       description: description,
       sequence: targetMenuSequence,
       hidden: hidden,
+      outOfStock: outOfStock,
       price: price,
       options: optionIdList,
     );
@@ -187,11 +191,14 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
 
   void updateHidden(bool? hidden) => updateWith(hidden: hidden);
 
+  void updateOutOfStock(bool? outOfStock) => updateWith(outOfStock: outOfStock);
+
   void updateWith({
     String? name,
     String? description,
     int? sequence,
     bool? hidden,
+    bool? outOfStock,
     double? price,
     List<String?>? optionIdList,
     bool? isLoading,
@@ -201,6 +208,7 @@ class MenuItemDetailsModel with MenuItemValidators, ChangeNotifier {
     this.description = description ?? this.description;
     this.sequence = sequence ?? this.sequence;
     this.hidden = hidden ?? this.hidden;
+    this.outOfStock = outOfStock ?? this.outOfStock;
     this.price = price ?? this.price;
     this.optionIdList = optionIdList ?? this.optionIdList;
     this.isLoading = isLoading ?? this.isLoading;

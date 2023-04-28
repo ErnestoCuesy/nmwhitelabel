@@ -41,6 +41,7 @@ class MenuItemDetailsForm extends StatefulWidget {
         description: item.description ?? '',
         sequence: item.sequence ?? sequence,
         hidden: item.hidden ?? false,
+        outOfStock: item.outOfStock ?? false,
         price: item.price ?? 0.0,
         optionIdList: item.options ?? [],
       ),
@@ -139,6 +140,10 @@ class _MenuItemDetailsFormState extends State<MenuItemDetailsForm> {
         height: 8.0,
       ),
       _buildHiddenCheckBox(),
+      SizedBox(
+        height: 16.0,
+      ),
+      _buildOutOfStockCheckBox(),
       SizedBox(
         height: 16.0,
       ),
@@ -248,6 +253,14 @@ class _MenuItemDetailsFormState extends State<MenuItemDetailsForm> {
       title: const Text('Hide this menu item'),
       value: model!.hidden,
       onChanged: model!.updateHidden,
+    );
+  }
+
+  Widget _buildOutOfStockCheckBox() {
+    return CheckboxListTile(
+      title: const Text('Mark out of stock'),
+      value: model!.outOfStock,
+      onChanged: model!.updateOutOfStock,
     );
   }
 
