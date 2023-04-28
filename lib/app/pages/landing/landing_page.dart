@@ -52,7 +52,8 @@ class LandingPage extends StatelessWidget {
           return FutureBuilder<UserDetails>(
             future: database.userDetailsSnapshot(user.uid),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
                 final userDetails = snapshot.data;
                 DateTime deletionTimeStamp =
                     DateTime.fromMillisecondsSinceEpoch(
