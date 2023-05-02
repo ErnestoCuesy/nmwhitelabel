@@ -216,7 +216,7 @@ class _OrderTotalsPageState extends State<OrderTotalsPage> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      'Totals For The Day',
+                      'Sales Totals',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
