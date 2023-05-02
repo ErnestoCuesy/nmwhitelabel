@@ -43,8 +43,8 @@ abstract class Database {
   Stream<Restaurant> selectedRestaurantStream(String? restaurantId);
   Stream<List<Order>> activeRestaurantOrders(String? restaurantId);
   Stream<List<Order>> inactiveRestaurantOrders(String? restaurantId);
-  Stream<List<Order>> dayRestaurantOrders(
-      String? restaurantId, DateTime dateTime);
+  Stream<List<Order>> dateRangeRestaurantOrders(
+      String? restaurantId, DateTime startDateTime, DateTime endDateTime);
   Stream<List<Order>> userOrders(String? restaurantId, String? uid);
   Stream<List<Order>> blockedOrders(String? managerId);
   Stream<List<ItemImage>> itemImages(String? itemImageId);
@@ -290,17 +290,18 @@ class FirestoreDatabase implements Database {
       );
 
   @override
-  Stream<List<Order>> dayRestaurantOrders(
-          String? restaurantId, DateTime dateTime) =>
+  Stream<List<Order>> dateRangeRestaurantOrders(
+          String? restaurantId, DateTime startDateTime, DateTime endDateTime) =>
       _service.collectionStream(
         path: APIPath.orders(),
         queryBuilder: restaurantId != null
             ? (query) => query
                 .where('restaurantId', isEqualTo: restaurantId)
                 .where('timestamp',
-                    isGreaterThanOrEqualTo: dateTime.millisecondsSinceEpoch)
+                    isGreaterThanOrEqualTo:
+                        startDateTime.millisecondsSinceEpoch)
                 .where('timestamp',
-                    isLessThanOrEqualTo: dateTime
+                    isLessThanOrEqualTo: endDateTime
                         .add(Duration(hours: 24))
                         .millisecondsSinceEpoch)
             : null,

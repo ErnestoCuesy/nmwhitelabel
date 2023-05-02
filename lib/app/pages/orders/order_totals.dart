@@ -23,9 +23,11 @@ class _OrderTotalsState extends State<OrderTotals> {
       authorizedRoles: {}, authorizedNames: {}, authorizedDates: {});
   List<dynamic> _intDates = [];
   List<String> _stringDates = [];
-  String _selectedStringDate = '';
-  DateTime? _selectedDate;
-  late dynamic _searchDate;
+  String _selectedStringDateRange = '';
+  DateTime? _selectedStartDate;
+  DateTime? _selectedEndDate;
+  late dynamic _searchStartDate;
+  late dynamic _searchEndDate;
   static const String NOT_AUTH = '9999/12/31';
 
   void _determineSearchDate() {
@@ -40,51 +42,42 @@ class _OrderTotalsState extends State<OrderTotals> {
             '${date.year}' + '/' + '${date.month}' + '/' + '${date.day}';
         _stringDates.add(strDate);
       });
-      if (_selectedStringDate == '') {
-        _selectedStringDate = NOT_AUTH;
+      if (_selectedStringDateRange == '') {
+        _selectedStringDateRange = NOT_AUTH;
         if (_stringDates.length > 0) {
-          _selectedStringDate = _stringDates[0];
+          _selectedStringDateRange = _stringDates[0];
         }
       }
-      final yearMonthArr = _selectedStringDate.split('/');
+      final yearMonthArr = _selectedStringDateRange.split('/');
       final year = int.parse(yearMonthArr[0]);
       final month = int.parse(yearMonthArr[1]);
       final day = int.parse(yearMonthArr[2]);
-      _searchDate = DateTime(year, month, day).millisecondsSinceEpoch;
+      _searchStartDate = DateTime(year, month, day).millisecondsSinceEpoch;
     } else {
       DateTime? startDate = DateTime.now();
-      if (_selectedDate != null) {
-        startDate = _selectedDate;
+      DateTime? endDate = DateTime.now();
+      if (_selectedStartDate != null) {
+        startDate = _selectedStartDate;
       }
-      _searchDate = DateTime(startDate!.year, startDate.month, startDate.day)
+      if (_selectedEndDate != null) {
+        endDate = _selectedEndDate;
+      }
+      _searchStartDate =
+          DateTime(startDate!.year, startDate.month, startDate.day)
+              .millisecondsSinceEpoch;
+      _searchEndDate = DateTime(endDate!.year, endDate.month, endDate.day)
           .millisecondsSinceEpoch;
-      _selectedStringDate = '${startDate.year}' +
+      _selectedStringDateRange = '${startDate.year}' +
           '/' +
           '${startDate.month}' +
           '/' +
-          '${startDate.day}';
+          '${startDate.day} - ' +
+          '${endDate.year}' +
+          '/' +
+          '${endDate.month}' +
+          '/' +
+          '${endDate.day}';
     }
-  }
-
-  Widget _datesMenuButton() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16.0),
-      child: PopupMenuButton<String>(
-          icon: Icon(Icons.calendar_today),
-          onSelected: (String date) {
-            setState(() {
-              _selectedStringDate = date;
-            });
-          },
-          itemBuilder: (BuildContext context) {
-            return _stringDates.map((String date) {
-              return PopupMenuItem<String>(
-                child: Text(date),
-                value: date,
-              );
-            }).toList();
-          }),
-    );
   }
 
   Widget _buildContents(BuildContext context) {
@@ -97,15 +90,16 @@ class _OrderTotalsState extends State<OrderTotals> {
             _authorizations = snapshot.data!.firstWhere((authorization) =>
                 authorization.id == session.currentRestaurant!.id);
             _determineSearchDate();
-            if (_selectedStringDate == NOT_AUTH) {
+            if (_selectedStringDateRange == NOT_AUTH) {
               return VenueAuthorizationPage();
             } else {
-              _stream = database.dayRestaurantOrders(
+              _stream = database.dateRangeRestaurantOrders(
                   session.currentRestaurant!.id,
-                  DateTime.fromMillisecondsSinceEpoch(_searchDate));
+                  DateTime.fromMillisecondsSinceEpoch(_searchStartDate),
+                  DateTime.fromMillisecondsSinceEpoch(_searchEndDate));
               return OrderTotalsPage(
                 stream: _stream,
-                selectedStringDate: _selectedStringDate,
+                selectedStringDate: _selectedStringDateRange,
               );
             }
           } else {
@@ -119,11 +113,13 @@ class _OrderTotalsState extends State<OrderTotals> {
       );
     } else {
       _determineSearchDate();
-      _stream = database.dayRestaurantOrders(session.currentRestaurant!.id,
-          DateTime.fromMillisecondsSinceEpoch(_searchDate));
+      _stream = database.dateRangeRestaurantOrders(
+          session.currentRestaurant!.id,
+          DateTime.fromMillisecondsSinceEpoch(_searchStartDate),
+          DateTime.fromMillisecondsSinceEpoch(_searchEndDate));
       return OrderTotalsPage(
         stream: _stream,
-        selectedStringDate: _selectedStringDate,
+        selectedStringDate: _selectedStringDateRange,
       );
     }
   }
@@ -133,11 +129,22 @@ class _OrderTotalsState extends State<OrderTotals> {
         showTitleActions: true,
         minTime: DateTime.now().subtract(Duration(days: 30)),
         maxTime: DateTime.now(), onChanged: (date) {
-      print('change $date');
+      print('end change $date');
     }, onConfirm: (date) {
-      print('confirm $date');
+      print('end confirm $date');
       setState(() {
-        _selectedDate = date;
+        _selectedEndDate = date;
+      });
+    }, currentTime: DateTime.now(), locale: LocaleType.en);
+    DatePicker.showDatePicker(context,
+        showTitleActions: true,
+        minTime: DateTime.now().subtract(Duration(days: 30)),
+        maxTime: DateTime.now(), onChanged: (date) {
+      print('start change $date');
+    }, onConfirm: (date) {
+      print('start confirm $date');
+      setState(() {
+        _selectedStartDate = date;
       });
     }, currentTime: DateTime.now(), locale: LocaleType.en);
   }
@@ -164,7 +171,6 @@ class _OrderTotalsState extends State<OrderTotals> {
                 onPressed: () => _pickDate(),
               ),
             ),
-          if (session.userDetails!.role == ROLE_VENUE) _datesMenuButton()
         ],
       ),
       body: _buildContents(context),
