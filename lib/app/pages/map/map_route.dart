@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nearbymenus/app/models/session.dart';
 import 'package:nearbymenus/app/utilities/map_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MapRoute extends StatefulWidget {
   final Position? currentLocation;
@@ -62,6 +63,21 @@ class _MapRouteState extends State<MapRoute> {
             zoom: 18.0),
         markers: Set<Marker>.of(markers.values),
       ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.blue,
+          onPressed: useGoogleNavigation,
+          child: Icon(Icons.directions)),
     );
+  }
+
+  useGoogleNavigation() async {
+    Uri googleApiUrlString = Uri.parse(
+        "http://maps.google.com/maps?saddr=${widget.currentLocation!.latitude},${widget.currentLocation!.longitude}&daddr=${widget.destination!.latitude},${widget.destination!.longitude}");
+    print(googleApiUrlString);
+    if (await canLaunchUrl(googleApiUrlString)) {
+      await launchUrl(googleApiUrlString, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $googleApiUrlString';
+    }
   }
 }

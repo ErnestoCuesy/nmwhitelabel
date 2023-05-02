@@ -14,7 +14,7 @@ description: Nearby Menus White Label.
 # Last iOS version
 # version: 1.0.15
 # Last Android version
-version: 1.0.0+25
+version: 1.0.0+26
 publish_to: none
 
 environment:
@@ -42,13 +42,14 @@ dependencies:
   image_picker: ^0.8.4
   intl: ^0.18.0
   location: ^4.3.0
+  macos_ui: ^1.4.1
   permission_handler: ^10.0.0
   provider: ^6.0.0
   purchases_flutter: ^4.11.1
   rate_my_app: ^1.1.1
   responsive_framework: ^0.2.0
   rxdart: ^0.27.2
-  macos_ui: ^1.4.1
+  url_launcher: ^6.0.2
 
 #dependency_overrides:
 #  firebase_core: 0.4.4

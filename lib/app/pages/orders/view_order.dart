@@ -513,6 +513,23 @@ class _ViewOrderState extends State<ViewOrder> {
                             width: 200.0,
                             child: FormSubmitButton(
                               context: context,
+                              text: 'OPEN MAP',
+                              color: model!.order!.deliveryOption == 'Deliver'
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).disabledColor,
+                              onPressed:
+                                  model!.order!.deliveryOption == 'Deliver'
+                                      ? () => _openMap(context)
+                                      : null,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16.0,
+                          ),
+                          SizedBox(
+                            width: 200.0,
+                            child: FormSubmitButton(
+                              context: context,
                               text: 'CLOSE',
                               color: model!.canDoThis(ORDER_CLOSED)!
                                   ? Theme.of(context).primaryColor
@@ -536,6 +553,10 @@ class _ViewOrderState extends State<ViewOrder> {
 
   void _deliverOrder(BuildContext context) {
     _processOrder(context, ORDER_DELIVERING);
+    _openMap(context);
+  }
+
+  void _openMap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         fullscreenDialog: false,
