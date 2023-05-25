@@ -74,7 +74,7 @@ class ItemImageDetailsModel with ItemImageValidators, ChangeNotifier {
           pickedImage.path, newPath,
           quality: 50));
       imageFile = File(result!.path);
-      image = Image.file(result);
+      image = Image.file(result as File);
       updateWith(image: image, imageChanged: true);
     }
   }

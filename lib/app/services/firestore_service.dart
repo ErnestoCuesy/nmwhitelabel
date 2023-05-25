@@ -32,7 +32,8 @@ class FirestoreService {
     final Stream<QuerySnapshot> snapshots = query.snapshots();
     return snapshots.map((snapshot) {
       final result = snapshot.docs
-          .map((snapshot) => builder(snapshot.data() as Map<String, dynamic>, snapshot.id))
+          .map((snapshot) =>
+              builder(snapshot.data() as Map<String, dynamic>, snapshot.id))
           .where((value) => value != null)
           .toList();
       if (sort != null) {
@@ -42,21 +43,20 @@ class FirestoreService {
     });
   }
 
-  Future<void> deleteCollectionData({
-    required String collectionPath,
-    required String fieldName,
-    required String? fieldValue
-  }) async {
+  Future<void> deleteCollectionData(
+      {required String collectionPath,
+      required String fieldName,
+      required String? fieldValue}) async {
     print('$collectionPath, $fieldValue, $fieldValue');
     FirebaseFirestore.instance
         .collection(collectionPath)
         .where(fieldName, isEqualTo: fieldValue)
         .get()
         .then((value) {
-          value.docs.forEach((element) {
-            print('$collectionPath/${element.id}');
-            deleteData(path: '$collectionPath/${element.id}');
-          });
+      value.docs.forEach((element) {
+        print('$collectionPath/${element.id}');
+        deleteData(path: '$collectionPath/${element.id}');
+      });
     });
   }
 
@@ -66,15 +66,19 @@ class FirestoreService {
   }) {
     final DocumentReference reference = FirebaseFirestore.instance.doc(path);
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
-    return snapshots.map((snapshot) => builder(snapshot.data() as Map<String, dynamic>?, snapshot.id));
+    return snapshots.map((snapshot) =>
+        builder(snapshot.data() as Map<String, dynamic>?, snapshot.id));
   }
 
   Future<List<T>> collectionSnapshot<T>({
     required String path,
     required T builder(Map<String, dynamic> data, String documentID),
   }) async {
-    final QuerySnapshot snapshot = await FirebaseFirestore.instance.collection(path).get();
-    return snapshot.docs.map((snaps) => builder(snaps.data() as Map<String, dynamic>, snaps.id)).toList();
+    final QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection(path).get();
+    return snapshot.docs
+        .map((snaps) => builder(snaps.data() as Map<String, dynamic>, snaps.id))
+        .toList();
   }
 
   Future<T> documentSnapshot<T>({
@@ -83,7 +87,8 @@ class FirestoreService {
   }) {
     final DocumentReference reference = FirebaseFirestore.instance.doc(path);
     final Future<DocumentSnapshot> snapshots = reference.get();
-    return snapshots.then((value) => builder(value.data() as Map<String, dynamic>?, value.id));
+    return snapshots.then(
+        (value) => builder(value.data() as Map<String, dynamic>?, value.id));
   }
 
   Future<int?> runUpdateCounterTransaction({
@@ -93,7 +98,8 @@ class FirestoreService {
     required int quantity,
   }) async {
     int? updatedCounter;
-    DocumentReference document = FirebaseFirestore.instance.collection(counterPath).doc(documentId);
+    DocumentReference document =
+        FirebaseFirestore.instance.collection(counterPath).doc(documentId);
     FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentSnapshot freshSnap = await transaction.get(document);
       if (freshSnap.exists) {
@@ -109,10 +115,7 @@ class FirestoreService {
       }
     }).catchError((e) {
       print('Transaction failed: $updatedCounter');
-    })
-    .whenComplete(() => {
-      print('Transaction completed: $updatedCounter')
-    });
+    }).whenComplete(() => print('Transaction completed: $updatedCounter'));
     return updatedCounter;
   }
 
@@ -127,62 +130,70 @@ class FirestoreService {
     required String? orderDocumentId,
     required Map<String, dynamic> orderData,
   }) async {
-    DocumentReference<Map<String, dynamic>> orderNumberDocument = FirebaseFirestore.instance.collection(orderNumberPath).doc(orderNumberDocumentId);
-    DocumentReference<Map<String, dynamic>> bundleCounterDocument = FirebaseFirestore.instance.collection(bundleCounterPath).doc(bundleCounterDocumentId);
-    DocumentReference<Map<String, dynamic>> orderDocument = FirebaseFirestore.instance.collection(orderPath).doc(orderDocumentId);
+    DocumentReference<Map<String, dynamic>> orderNumberDocument =
+        FirebaseFirestore.instance
+            .collection(orderNumberPath)
+            .doc(orderNumberDocumentId);
+    DocumentReference<Map<String, dynamic>> bundleCounterDocument =
+        FirebaseFirestore.instance
+            .collection(bundleCounterPath)
+            .doc(bundleCounterDocumentId);
+    DocumentReference<Map<String, dynamic>> orderDocument =
+        FirebaseFirestore.instance.collection(orderPath).doc(orderDocumentId);
     try {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
-            DocumentSnapshot<Map<String, dynamic>> freshSnapOrderNumber = await transaction.get(orderNumberDocument);
-            DocumentSnapshot<Map<String, dynamic>> freshSnapOrder = await transaction.get(orderDocument);
-            DocumentSnapshot<Map<String, dynamic>> freshSnapBundleCounter = await transaction.get(bundleCounterDocument);
-            // ORDER NUMBER PROCESSING
-            int? newOrderNumber;
-            if (freshSnapOrderNumber.exists) {
-              final Map<String, dynamic>? snapData = freshSnapOrderNumber.data();
-              newOrderNumber = snapData!['$orderNumberFieldName'] + 1;
-              transaction.update(freshSnapOrderNumber.reference, {
-                '$orderNumberFieldName': newOrderNumber,
-              });
-            } else {
-              newOrderNumber = 1;
-              transaction.set<Map<String, dynamic>>(orderNumberDocument, {
-                '$orderNumberFieldName': newOrderNumber,
-              });
-            }
-            // BUNDLE COUNTER PROCESSING
-            int? newBundleCounter;
-            if (freshSnapBundleCounter.exists) {
-              final Map<String, dynamic>? snapData = freshSnapBundleCounter.data();
-              newBundleCounter = snapData!['$bundleCounterFieldName'] - 1;
-              transaction.update(freshSnapBundleCounter.reference, {
-                '$bundleCounterFieldName': newBundleCounter,
-              });
-            } else {
-              newBundleCounter = -1;
-              transaction.set<Map<String, dynamic>>(bundleCounterDocument, {
-                '$bundleCounterFieldName': newBundleCounter,
-              });
-            }
-            // ORDER PROCESSING
-            orderData['orderNumber'] = newOrderNumber;
-            if (newBundleCounter! < 0) {
-              orderData['isBlocked'] = true;
-            }
-            if (freshSnapOrder.exists) {
-              transaction.update(freshSnapOrder.reference, orderData);
-            } else {
-              transaction.set<Map<String, dynamic>>(orderDocument, orderData);
-            }
-          }).catchError((e) {
-            print('Transaction failed: $e');
-          })
-            .whenComplete(() {
-            print('Transaction completed');
+        DocumentSnapshot<Map<String, dynamic>> freshSnapOrderNumber =
+            await transaction.get(orderNumberDocument);
+        DocumentSnapshot<Map<String, dynamic>> freshSnapOrder =
+            await transaction.get(orderDocument);
+        DocumentSnapshot<Map<String, dynamic>> freshSnapBundleCounter =
+            await transaction.get(bundleCounterDocument);
+        // ORDER NUMBER PROCESSING
+        int? newOrderNumber;
+        if (freshSnapOrderNumber.exists) {
+          final Map<String, dynamic>? snapData = freshSnapOrderNumber.data();
+          newOrderNumber = snapData!['$orderNumberFieldName'] + 1;
+          transaction.update(freshSnapOrderNumber.reference, {
+            '$orderNumberFieldName': newOrderNumber,
           });
+        } else {
+          newOrderNumber = 1;
+          transaction.set<Map<String, dynamic>>(orderNumberDocument, {
+            '$orderNumberFieldName': newOrderNumber,
+          });
+        }
+        // BUNDLE COUNTER PROCESSING
+        int? newBundleCounter;
+        if (freshSnapBundleCounter.exists) {
+          final Map<String, dynamic>? snapData = freshSnapBundleCounter.data();
+          newBundleCounter = snapData!['$bundleCounterFieldName'] - 1;
+          transaction.update(freshSnapBundleCounter.reference, {
+            '$bundleCounterFieldName': newBundleCounter,
+          });
+        } else {
+          newBundleCounter = -1;
+          transaction.set<Map<String, dynamic>>(bundleCounterDocument, {
+            '$bundleCounterFieldName': newBundleCounter,
+          });
+        }
+        // ORDER PROCESSING
+        orderData['orderNumber'] = newOrderNumber;
+        if (newBundleCounter! < 0) {
+          orderData['isBlocked'] = true;
+        }
+        if (freshSnapOrder.exists) {
+          transaction.update(freshSnapOrder.reference, orderData);
+        } else {
+          transaction.set<Map<String, dynamic>>(orderDocument, orderData);
+        }
+      }).catchError((e) {
+        print('Transaction failed: $e');
+      }).whenComplete(() {
+        print('Transaction completed');
+      });
     } catch (e) {
       print('Try catch failed: $e');
       rethrow;
     }
   }
 }
-

@@ -32,9 +32,13 @@ dependencies:
   firebase_auth: ^4.2.2
   firebase_core: ^2.8.0
   firebase_storage: ^11.0.16
-  flutter_datetime_picker: ^1.5.1
-  flutter_image_compress: ^1.1.0
-  flutter_launcher_icons: ^0.12.0
+  # flutter_datetime_picker: ^1.5.1
+  flutter_datetime_picker: 
+    git: 
+      url: https://github.com/ryojiro/flutter_datetime_picker.git 
+      ref: 32ea47240c10469ad31db0084f5d9b7a12d16e01  
+  flutter_image_compress: ^2.0.3
+  flutter_launcher_icons: ^0.13.1
   flutter_local_notifications: ^14.0.0-dev.2
   geolocator: ^9.0.2
   google_fonts: ^4.0.3
@@ -42,11 +46,11 @@ dependencies:
   image_picker: ^0.8.4
   intl: ^0.18.0
   location: ^4.3.0
-  macos_ui: ^1.4.1
+  maps_toolkit: ^2.0.1
   permission_handler: ^10.0.0
   provider: ^6.0.0
   purchases_flutter: ^4.11.1
-  rate_my_app: ^1.1.1
+  rate_my_app: ^2.0.0
   responsive_framework: ^0.2.0
   rxdart: ^0.27.2
   url_launcher: ^6.0.2
