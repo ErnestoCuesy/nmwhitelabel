@@ -8,6 +8,7 @@ import 'package:nearbymenus/app/models/restaurant.dart';
 import 'package:nearbymenus/app/models/session.dart';
 import 'package:nearbymenus/app/pages/images/item_image_page.dart';
 import 'package:nearbymenus/app/pages/map/capture_map_markers.dart';
+import 'package:nearbymenus/app/pages/map/map_geofence.dart';
 import 'package:nearbymenus/app/pages/menu_browser/menu_browser.dart';
 import 'package:nearbymenus/app/pages/menu_builder/menu/menu_page.dart';
 import 'package:nearbymenus/app/pages/option_builder/option/option_page.dart';
@@ -207,12 +208,21 @@ class _RestaurantAdministratorPageState
       SizedBox(
         height: 16.0,
       ),
-      _markersAndSalesRow(),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _salesButton(),
+        ],
+      ),
+      SizedBox(
+        height: 16.0,
+      ),
+      _markersAndGeofencingRow(),
       if (FlavourConfig.isManager()) _copyRestaurantMenu(),
     ];
   }
 
-  Widget _markersAndSalesRow() {
+  Widget _markersAndGeofencingRow() {
     Widget row;
     row = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       if (FlavourConfig.isManager())
@@ -246,19 +256,19 @@ class _RestaurantAdministratorPageState
         height: buttonSize,
         width: buttonSize,
         color: Theme.of(context).buttonTheme.colorScheme!.surface,
-        onPressed: () => _convertUser(context, _orderTotals),
+        onPressed: () => _convertUser(context, _captureMapGeofence),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Sales',
+              'Geofencing',
               style: Theme.of(context).primaryTextTheme.titleLarge,
             ),
             SizedBox(
               height: 8.0,
             ),
             Icon(
-              Icons.attach_money,
+              Icons.location_searching_outlined,
               size: 36.0,
             ),
           ],
@@ -274,6 +284,49 @@ class _RestaurantAdministratorPageState
         );
       } else {
         return row;
+      }
+    } else {
+      return SizedBox(
+        child: Placeholder(),
+        height: buttonSize,
+        width: buttonSize,
+      );
+    }
+  }
+
+  Widget _salesButton() {
+    Widget button;
+    button = CustomRaisedButton(
+      height: buttonSize,
+      width: buttonSize,
+      color: Theme.of(context).buttonTheme.colorScheme!.surface,
+      onPressed: () => _convertUser(context, _orderTotals),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Sales',
+            style: Theme.of(context).primaryTextTheme.titleLarge,
+          ),
+          SizedBox(
+            height: 8.0,
+          ),
+          Icon(
+            Icons.attach_money,
+            size: 36.0,
+          ),
+        ],
+      ),
+    );
+    if (!kIsWeb) {
+      if (FlavourConfig.isManager() && !Platform.isMacOS) {
+        return button;
+      } else {
+        return SizedBox(
+          child: Placeholder(),
+          height: buttonSize,
+          width: buttonSize,
+        );
       }
     } else {
       return SizedBox(
@@ -401,6 +454,14 @@ class _RestaurantAdministratorPageState
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => CaptureMapMarkers(),
+      ),
+    );
+  }
+
+  void _captureMapGeofence(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => CaptureMapGeofence(),
       ),
     );
   }

@@ -53,6 +53,7 @@ dependencies:
   rate_my_app: ^2.0.0
   responsive_framework: ^0.2.0
   rxdart: ^0.27.2
+  speed_dial_fab: ^2.3.0
   url_launcher: ^6.0.2
 
 #dependency_overrides:

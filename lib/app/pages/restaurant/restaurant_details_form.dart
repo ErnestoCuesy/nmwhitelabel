@@ -57,6 +57,7 @@ class RestaurantDetailsForm extends StatefulWidget {
         restaurantOptions: restaurant.restaurantOptions ?? {},
         markerCoordinates: restaurant.markerCoordinates ?? [],
         markerDescription: restaurant.markerNames ?? [],
+        geofencingCoordinates: restaurant.geofencingCoordinates ?? [],
       ),
       child: Consumer<RestaurantDetailsModel>(
         builder: (context, model, _) => RestaurantDetailsForm(

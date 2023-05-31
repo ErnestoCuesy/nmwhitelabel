@@ -36,6 +36,7 @@ class Restaurant {
   Map<dynamic, dynamic>? restaurantOptions;
   List<Position>? markerCoordinates;
   List<String?>? markerNames;
+  List<Position>? geofencingCoordinates;
   bool? itemImagesInitialized;
   bool? adminVerified;
 
@@ -74,6 +75,7 @@ class Restaurant {
     this.adminVerified,
     this.markerCoordinates,
     this.markerNames,
+    this.geofencingCoordinates,
   });
 
   static Restaurant fromMap(Map<dynamic, dynamic>? value, String documentId) {
@@ -101,6 +103,18 @@ class Restaurant {
             timestamp: DateTime.now())));
     List<String> markerNamesList =
         List<String>.from(markerNames.map((e) => e.toString()));
+    final geofencingCoordinates =
+        value['geofencingCoordinates'] as List<dynamic>? ?? <dynamic>[];
+    List<Position> geofencingPointsList = List<Position>.from(
+        geofencingCoordinates.map((element) => Position(
+            latitude: element.latitude,
+            longitude: element.longitude,
+            speed: 0,
+            heading: 0,
+            accuracy: 0,
+            speedAccuracy: 0,
+            altitude: 0,
+            timestamp: DateTime.now())));
     return Restaurant(
         id: documentId,
         managerId: value['managerId'],
@@ -145,7 +159,8 @@ class Restaurant {
         itemImagesInitialized: value['itemImagesInitialized'] ?? false,
         adminVerified: value['adminVerified'] ?? false,
         markerCoordinates: markerPositionList,
-        markerNames: markerNamesList);
+        markerNames: markerNamesList,
+        geofencingCoordinates: geofencingPointsList);
   }
 
   Map<String, dynamic> toMap() {
@@ -153,6 +168,8 @@ class Restaurant {
         GeoPoint(coordinates!.latitude, coordinates!.longitude);
     final List<GeoPoint> geoPointList = List<GeoPoint>.from(
         markerCoordinates!.map((e) => GeoPoint(e.latitude, e.longitude)));
+    final List<GeoPoint> geofencingPoints = List<GeoPoint>.from(
+        geofencingCoordinates!.map((e) => GeoPoint(e.latitude, e.longitude)));
     return <String, dynamic>{
       'id': id,
       'managerId': managerId,
@@ -182,6 +199,7 @@ class Restaurant {
       'adminVerified': adminVerified ?? false,
       'markerCoordinates': geoPointList,
       'markerNames': markerNames,
+      'geofencingCoordinates': geofencingPoints,
     };
   }
 

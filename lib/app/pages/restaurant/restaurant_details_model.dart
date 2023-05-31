@@ -41,6 +41,7 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
   Map<dynamic, dynamic>? restaurantOptions;
   List<Position>? markerCoordinates;
   List<String?>? markerDescription;
+  List<Position>? geofencingCoordinates;
   bool isLoading;
   bool submitted;
   bool dataHasChanged = false;
@@ -79,6 +80,7 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
     this.restaurantOptions,
     this.markerCoordinates,
     this.markerDescription,
+    this.geofencingCoordinates,
     this.isLoading = false,
     this.submitted = false,
   });
@@ -136,6 +138,7 @@ class RestaurantDetailsModel with RestaurantDetailsValidators, ChangeNotifier {
           restaurantOptions: restaurantOptions,
           markerCoordinates: markerCoordinates,
           markerNames: markerDescription,
+          geofencingCoordinates: geofencingCoordinates,
         ),
       );
       if (!adminVerified) {

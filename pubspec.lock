@@ -958,6 +958,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  speed_dial_fab:
+    dependency: "direct main"
+    description:
+      name: speed_dial_fab
+      sha256: "466ab01825a4e8167e44d57674f4efe4a2364b2d01982e3d02dd0210b9107f9b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   stack_trace:
     dependency: transitive
     description:
