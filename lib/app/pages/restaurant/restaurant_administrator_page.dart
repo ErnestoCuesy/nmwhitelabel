@@ -40,6 +40,57 @@ class _RestaurantAdministratorPageState
   NavigationService? navigationService;
   Restaurant? get restaurant => session!.currentRestaurant;
   double buttonSize = 180.0;
+  double iconSize = 36.0;
+
+  void _checkAndProceed(
+      {required Widget nextAction, required bool convertUser}) async {
+    if (convertUser) {
+      if (!session!.userProcessComplete) {
+        final ConversionProcess conversionProcess = ConversionProcess(
+          navigationService: navigationService,
+          session: session,
+          auth: auth,
+          database: database,
+          captureUserDetails: true,
+        );
+        if (!await conversionProcess.userCanProceed()) {
+          return;
+        }
+      }
+    }
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => nextAction,
+      ),
+    );
+  }
+
+  Widget _restaurantAdministratorButton(
+      {required String text,
+      required Icon icon,
+      required Widget nextAction,
+      required bool convertUser}) {
+    return CustomRaisedButton(
+      height: buttonSize,
+      width: buttonSize,
+      color: Theme.of(context).buttonTheme.colorScheme!.surface,
+      onPressed: () =>
+          _checkAndProceed(nextAction: nextAction, convertUser: convertUser),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: Theme.of(context).primaryTextTheme.titleLarge,
+          ),
+          SizedBox(
+            height: 8.0,
+          ),
+          icon,
+        ],
+      ),
+    );
+  }
 
   List<Widget> _buildContents(BuildContext context) {
     return [
@@ -52,60 +103,26 @@ class _RestaurantAdministratorPageState
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomRaisedButton(
-              height: buttonSize,
-              width: buttonSize,
-              color: Theme.of(context).buttonTheme.colorScheme!.surface,
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => MenuPage(),
-                ),
+            _restaurantAdministratorButton(
+              text: 'Menu Builder',
+              icon: Icon(
+                Icons.format_list_bulleted,
+                size: iconSize,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Menu Builder',
-                    style: Theme.of(context).primaryTextTheme.titleLarge,
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Icon(
-                    Icons.format_list_bulleted,
-                    size: 36.0,
-                  ),
-                ],
-              ),
+              nextAction: MenuPage(),
+              convertUser: false,
             ),
             SizedBox(
               width: 16.0,
             ),
-            CustomRaisedButton(
-              height: buttonSize,
-              width: buttonSize,
-              color: Theme.of(context).buttonTheme.colorScheme!.surface,
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => OptionPage(),
-                ),
+            _restaurantAdministratorButton(
+              text: 'Option Builder',
+              icon: Icon(
+                Icons.check_box,
+                size: iconSize,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Option Builder',
-                    style: Theme.of(context).primaryTextTheme.titleLarge,
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Icon(
-                    Icons.check_box,
-                    size: 36.0,
-                  ),
-                ],
-              ),
+              nextAction: OptionPage(),
+              convertUser: false,
             ),
           ],
         ),
@@ -117,31 +134,14 @@ class _RestaurantAdministratorPageState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (session!.userDetails!.role != ROLE_VENUE)
-            CustomRaisedButton(
-              height: buttonSize,
-              width: buttonSize,
-              color: Theme.of(context).buttonTheme.colorScheme!.surface,
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => MenuBrowser(),
-                ),
+            _restaurantAdministratorButton(
+              text: 'Menu Browser',
+              icon: Icon(
+                Icons.import_contacts,
+                size: iconSize,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Menu Browser',
-                    style: Theme.of(context).primaryTextTheme.titleLarge,
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Icon(
-                    Icons.import_contacts,
-                    size: 36.0,
-                  ),
-                ],
-              ),
+              nextAction: MenuBrowser(),
+              convertUser: false,
             ),
           SizedBox(
             width: 16.0,
@@ -156,52 +156,26 @@ class _RestaurantAdministratorPageState
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomRaisedButton(
-              height: buttonSize,
-              width: buttonSize,
-              color: Theme.of(context).buttonTheme.colorScheme!.surface,
-              onPressed: () => _convertUser(context, _activeOrders),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Active Orders',
-                    style: Theme.of(context).primaryTextTheme.titleLarge,
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Icon(
-                    Icons.assignment,
-                    size: 36.0,
-                  ),
-                ],
+            _restaurantAdministratorButton(
+              text: 'Active Orders',
+              icon: Icon(
+                Icons.assignment,
+                size: iconSize,
               ),
+              nextAction: ActiveOrders(),
+              convertUser: true,
             ),
             SizedBox(
               width: 16.0,
             ),
-            CustomRaisedButton(
-              height: buttonSize,
-              width: buttonSize,
-              color: Theme.of(context).buttonTheme.colorScheme!.surface,
-              onPressed: () => _convertUser(context, _inactiveOrders),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Inactive Orders',
-                    style: Theme.of(context).primaryTextTheme.titleLarge,
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Icon(
-                    Icons.assignment,
-                    size: 36.0,
-                  ),
-                ],
+            _restaurantAdministratorButton(
+              text: 'Inactive Orders',
+              icon: Icon(
+                Icons.assignment,
+                size: iconSize,
               ),
+              nextAction: InactiveOrders(),
+              convertUser: true,
             ),
           ],
         ),
@@ -226,53 +200,27 @@ class _RestaurantAdministratorPageState
     Widget row;
     row = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       if (FlavourConfig.isManager())
-        CustomRaisedButton(
-          height: buttonSize,
-          width: buttonSize,
-          color: Theme.of(context).buttonTheme.colorScheme!.surface,
-          onPressed: () => _convertUser(context, _captureMapMarkers),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Map Markers',
-                style: Theme.of(context).primaryTextTheme.titleLarge,
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              Icon(
-                Icons.location_on,
-                size: 36.0,
-              ),
-            ],
+        _restaurantAdministratorButton(
+          text: 'Map Markers',
+          icon: Icon(
+            Icons.location_on,
+            size: iconSize,
           ),
+          nextAction: CaptureMapMarkers(),
+          convertUser: true,
         ),
       if (FlavourConfig.isManager())
         SizedBox(
           width: 16.0,
         ),
-      CustomRaisedButton(
-        height: buttonSize,
-        width: buttonSize,
-        color: Theme.of(context).buttonTheme.colorScheme!.surface,
-        onPressed: () => _convertUser(context, _captureMapGeofence),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Geofencing',
-              style: Theme.of(context).primaryTextTheme.titleLarge,
-            ),
-            SizedBox(
-              height: 8.0,
-            ),
-            Icon(
-              Icons.location_searching_outlined,
-              size: 36.0,
-            ),
-          ],
+      _restaurantAdministratorButton(
+        text: 'Geofencing',
+        icon: Icon(
+          Icons.location_searching_outlined,
+          size: iconSize,
         ),
+        nextAction: CaptureMapGeofence(),
+        convertUser: true,
       ),
     ]);
     if (!kIsWeb) {
@@ -295,89 +243,27 @@ class _RestaurantAdministratorPageState
   }
 
   Widget _salesButton() {
-    Widget button;
-    button = CustomRaisedButton(
-      height: buttonSize,
-      width: buttonSize,
-      color: Theme.of(context).buttonTheme.colorScheme!.surface,
-      onPressed: () => _convertUser(context, _orderTotals),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Sales',
-            style: Theme.of(context).primaryTextTheme.titleLarge,
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          Icon(
-            Icons.attach_money,
-            size: 36.0,
-          ),
-        ],
+    return _restaurantAdministratorButton(
+      text: 'Sales',
+      icon: Icon(
+        Icons.attach_money,
+        size: iconSize,
       ),
+      nextAction: OrderTotals(),
+      convertUser: true,
     );
-    if (!kIsWeb) {
-      if (FlavourConfig.isManager() && !Platform.isMacOS) {
-        return button;
-      } else {
-        return SizedBox(
-          child: Placeholder(),
-          height: buttonSize,
-          width: buttonSize,
-        );
-      }
-    } else {
-      return SizedBox(
-        child: Placeholder(),
-        height: buttonSize,
-        width: buttonSize,
-      );
-    }
   }
 
   Widget _imageButton() {
-    Widget button;
-    button = CustomRaisedButton(
-      height: buttonSize,
-      width: buttonSize,
-      color: Theme.of(context).buttonTheme.colorScheme!.surface,
-      onPressed: () => _convertUser(context, _images),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Images',
-            style: Theme.of(context).primaryTextTheme.titleLarge,
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          Icon(
-            Icons.image,
-            size: 36.0,
-          ),
-        ],
+    return _restaurantAdministratorButton(
+      text: 'Images',
+      icon: Icon(
+        Icons.image,
+        size: iconSize,
       ),
+      nextAction: ItemImagePage(viewOnly: false),
+      convertUser: true,
     );
-    if (!kIsWeb) {
-      if (FlavourConfig.isManager() && !Platform.isMacOS) {
-        return button;
-      } else {
-        return SizedBox(
-          child: Placeholder(),
-          height: buttonSize,
-          width: buttonSize,
-        );
-      }
-    } else {
-      return SizedBox(
-        child: Placeholder(),
-        height: buttonSize,
-        width: buttonSize,
-      );
-    }
   }
 
   Widget _copyRestaurantMenu() {
@@ -414,73 +300,6 @@ class _RestaurantAdministratorPageState
             }
           }).toList();
         });
-  }
-
-  void _images(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => ItemImagePage(
-          viewOnly: false,
-        ),
-      ),
-    );
-  }
-
-  void _activeOrders(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => ActiveOrders(),
-      ),
-    );
-  }
-
-  void _inactiveOrders(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => InactiveOrders(),
-      ),
-    );
-  }
-
-  void _orderTotals(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => OrderTotals(),
-      ),
-    );
-  }
-
-  void _captureMapMarkers(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => CaptureMapMarkers(),
-      ),
-    );
-  }
-
-  void _captureMapGeofence(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => CaptureMapGeofence(),
-      ),
-    );
-  }
-
-  void _convertUser(
-      BuildContext context, Function(BuildContext) nextAction) async {
-    if (!session!.userProcessComplete) {
-      final ConversionProcess conversionProcess = ConversionProcess(
-        navigationService: navigationService,
-        session: session,
-        auth: auth,
-        database: database,
-        captureUserDetails: true,
-      );
-      if (!await conversionProcess.userCanProceed()) {
-        return;
-      }
-    }
-    nextAction(context);
   }
 
   @override

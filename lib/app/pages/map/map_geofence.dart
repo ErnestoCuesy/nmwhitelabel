@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,8 +23,10 @@ class _CaptureMapGeofenceState extends State<CaptureMapGeofence> {
   late Database database;
   late MapUtils mapUtils;
   Position? currentLocation;
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  List<toolkit.LatLng> polygon = [];
+  Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
+  List<toolkit.LatLng> _polygonPointsForTesting = [];
+  List<LatLng> _polygonPointsForDrawing = [];
+  Set<Polygon> _polygon = HashSet<Polygon>();
 
   Future<BitmapDescriptor> get chequeredFlag async {
     return BitmapDescriptor.fromAssetImage(
@@ -36,8 +40,11 @@ class _CaptureMapGeofenceState extends State<CaptureMapGeofence> {
       icon: await chequeredFlag,
     );
     setState(() {
-      markers[MarkerId(position.latitude.toString())] = marker;
-      polygon.add(toolkit.LatLng(position.latitude, position.longitude));
+      _markers[MarkerId(position.latitude.toString())] = marker;
+      _polygonPointsForTesting
+          .add(toolkit.LatLng(position.latitude, position.longitude));
+      _polygonPointsForDrawing
+          .add(LatLng(position.latitude, position.longitude));
     });
   }
 
@@ -45,7 +52,8 @@ class _CaptureMapGeofenceState extends State<CaptureMapGeofence> {
     toolkit.LatLng tkLatLng =
         toolkit.LatLng(position.latitude, position.longitude);
     SnackBar snackBar;
-    if (toolkit.PolygonUtil.containsLocation(tkLatLng, polygon, false)) {
+    if (toolkit.PolygonUtil.containsLocation(
+        tkLatLng, _polygonPointsForTesting, false)) {
       snackBar = const SnackBar(
         content: Text('In bounds'),
         duration: Duration(milliseconds: 200),
@@ -60,13 +68,18 @@ class _CaptureMapGeofenceState extends State<CaptureMapGeofence> {
   }
 
   _testCurrentLocation() {
+    setState(() {
+      _addPolygon();
+    });
     _testTap(LatLng(currentLocation!.latitude, currentLocation!.longitude));
   }
 
   _resetMarkers() {
     setState(() {
-      markers.clear();
-      polygon.clear();
+      _markers.clear();
+      _polygonPointsForTesting.clear();
+      _polygonPointsForDrawing.clear();
+      _polygon.clear();
       session.currentRestaurant!.geofencingCoordinates!.clear();
       database.setRestaurant(session.currentRestaurant);
       _addCurrentLocationMarker();
@@ -75,7 +88,7 @@ class _CaptureMapGeofenceState extends State<CaptureMapGeofence> {
 
   _saveMarkers() {
     List<Position>? geofencingCoordinates = [];
-    for (var coordinate in polygon) {
+    for (var coordinate in _polygonPointsForTesting) {
       geofencingCoordinates.add(Position(
           longitude: coordinate.longitude,
           latitude: coordinate.latitude,
@@ -99,24 +112,44 @@ class _CaptureMapGeofenceState extends State<CaptureMapGeofence> {
       markerId: MarkerId(currentLocation!.latitude.toString()),
       position: LatLng(currentLocation!.latitude, currentLocation!.longitude),
     );
-    markers[MarkerId(currentLocation!.latitude.toString())] = marker;
+    _markers[MarkerId(currentLocation!.latitude.toString())] = marker;
   }
 
   _loadMarkers() async {
-    if (polygon.isNotEmpty) return;
+    if (_polygonPointsForTesting.isNotEmpty) return;
     currentLocation = session.currentRestaurant!.coordinates;
     var geofencingCoordinates =
         session.currentRestaurant!.geofencingCoordinates;
     for (var coordinate in geofencingCoordinates!) {
       var position1 = toolkit.LatLng(coordinate.latitude, coordinate.longitude);
       var position2 = LatLng(coordinate.latitude, coordinate.longitude);
-      polygon.add(position1);
+      _polygonPointsForTesting.add(position1);
+      _polygonPointsForDrawing.add(position2);
       Marker marker = Marker(
         markerId: MarkerId(coordinate.latitude.toString()),
         position: position2,
         icon: await chequeredFlag,
       );
-      markers[MarkerId(position2.latitude.toString())] = marker;
+      _markers[MarkerId(position2.latitude.toString())] = marker;
+    }
+    _addPolygon();
+  }
+
+  void _addPolygon() {
+    if (_polygonPointsForDrawing.isNotEmpty) {
+      _polygon.add(Polygon(
+        // given polygonId
+        polygonId: PolygonId('1'),
+        // initialize the list of points to display polygon
+        points: _polygonPointsForDrawing,
+        // given color to polygon
+        fillColor: Colors.green.withOpacity(0.3),
+        // given border color to polygon
+        strokeColor: Colors.green,
+        geodesic: true,
+        // given width of border
+        strokeWidth: 4,
+      ));
     }
   }
 
@@ -172,7 +205,8 @@ class _CaptureMapGeofenceState extends State<CaptureMapGeofence> {
             target:
                 LatLng(currentLocation!.latitude, currentLocation!.longitude),
             zoom: 18.0),
-        markers: Set<Marker>.of(markers.values),
+        markers: Set<Marker>.of(_markers.values),
+        polygons: _polygon,
         onLongPress: _setMarker,
         onTap: _testTap,
       ),
